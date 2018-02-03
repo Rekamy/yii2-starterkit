@@ -88,6 +88,7 @@ return [
         ],
         'dynagrid' => [
             'class' => '\kartik\dynagrid\Module',
+            'showPersonalize'=>true,
             'maxPageSize' => 200,
             'defaultPageSize' => 10,
             'dynaGridOptions' => [
@@ -106,7 +107,6 @@ return [
                 'gridOptions'=>[
                     'filterSelector' => 'select[name="per-page"]',
                     'responsiveWrap'=>false,
-                    'showPersonalize'=>true,
                 ],
             ],
         ],
