@@ -45,6 +45,39 @@ class m130524_201442_init extends Migration
             'deleted_by' => $this->timestamp(),
         ], $tableOptions);
 
+        $this->createTable('{{%company}}', [
+            'id' => $this->primaryKey(),
+            'name' => $this->string(),
+            'address' => $this->string(),
+            'contact' => $this->string(),
+            'email' => $this->string()->notNull()->unique(),
+
+            'status' => $this->smallInteger()->defaultValue(10),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->timestamp(),
+            'updated_by' => $this->timestamp(),
+            'deleted_by' => $this->timestamp(),
+        ], $tableOptions);
+
+        $this->createTable('{{%branch}}', [
+            'id' => $this->primaryKey(),
+            'company_id' => $this->integer(),
+            'name' => $this->string(),
+            'address' => $this->string(),
+            'contact' => $this->string(),
+            'email' => $this->string()->notNull()->unique(),
+
+            'status' => $this->smallInteger()->defaultValue(10),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->timestamp(),
+            'updated_by' => $this->timestamp(),
+            'deleted_by' => $this->timestamp(),
+        ], $tableOptions);
+
         $this->insertFk();
     }
 
@@ -57,6 +90,7 @@ class m130524_201442_init extends Migration
         $i = 1;
         $this->addForeignKey('fk'.$i++,'{{user}}','id','{{profile}}','id');
         $this->addForeignKey('fk'.$i++,'{{profile}}','id','{{user}}','id');
+        $this->addForeignKey('fk'.$i++,'{{branch}}','company_id','{{company}}','id');
 
         // $this->addForeignKey('fk'.$i++,'{{location}}','company_id','{{company}}','id');
         // $this->addForeignKey('fk'.$i++,'{{efies}}','company_id','{{company}}','id');
