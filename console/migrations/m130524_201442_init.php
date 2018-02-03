@@ -58,10 +58,10 @@ class m130524_201442_init extends Migration
         $this->addForeignKey('fk'.$i++,'{{user}}','id','{{profile}}','id');
         $this->addForeignKey('fk'.$i++,'{{profile}}','id','{{user}}','id');
 
-        $this->addForeignKey('fk'.$i++,'{{location}}','company_id','{{company}}','id');
-        $this->addForeignKey('fk'.$i++,'{{efies}}','company_id','{{company}}','id');
-        $this->addForeignKey('fk'.$i++,'{{company_pic}}','company_id','{{company}}','id');
-        $this->addForeignKey('fk'.$i++,'{{company_pic}}','user_id','{{user}}','id');
-        $this->addForeignKey('fk'.$i++,'{{user_attachment}}','user_id','{{user}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{location}}','company_id','{{company}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{efies}}','company_id','{{company}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{company_pic}}','company_id','{{company}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{company_pic}}','user_id','{{user}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{user_attachment}}','user_id','{{user}}','id');
     }
 }
