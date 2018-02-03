@@ -88,10 +88,10 @@ return [
         ],
         'dynagrid' => [
             'class' => '\kartik\dynagrid\Module',
-            'showPersonalize'=>true,
             'maxPageSize' => 200,
             'defaultPageSize' => 10,
             'dynaGridOptions' => [
+                'showPersonalize'=>true,
                 'storage' => kartik\dynagrid\DynaGrid::TYPE_SESSION,
                 'gridOptions' => [],
                 'matchPanelStyle' => false,
