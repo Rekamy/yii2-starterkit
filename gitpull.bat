@@ -11,10 +11,9 @@ rem -------------------------------------------------------------
 
 @setlocal
 
-set YII_PATH=%~dp0
+"git" "add" "." %*
+"git" "commit" "-m" "%"update%"" %*
+"git" "push"
 
-if "%PHP_COMMAND%" == "" set PHP_COMMAND=php.exe
-
-git add .
 
 @endlocal
