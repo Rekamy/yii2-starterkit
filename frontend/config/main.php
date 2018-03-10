@@ -125,6 +125,7 @@ $config = [
             'maxPageSize' => 200,
             'defaultPageSize' => 10,
             'dynaGridOptions' => [
+                'showPersonalize'=>true,
                 'storage' => kartik\dynagrid\DynaGrid::TYPE_SESSION,
                 'gridOptions' => [],
                 'matchPanelStyle' => false,
@@ -140,7 +141,6 @@ $config = [
                 'gridOptions'=>[
                     'filterSelector' => 'select[name="per-page"]',
                     'responsiveWrap'=>false,
-                    'showPersonalize'=>true,
                 ],
             ],
         ],

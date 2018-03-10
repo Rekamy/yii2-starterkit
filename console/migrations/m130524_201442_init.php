@@ -61,7 +61,6 @@ class m130524_201442_init extends Migration
             'created_by' => $this->integer(),
             'updated_by' => $this->integer(),
             'deleted_by' => $this->integer()->defaultValue(0),
-        ], $tableOptions);
 
         $this->insertFk();
     }
@@ -75,6 +74,7 @@ class m130524_201442_init extends Migration
         $i = 1;
         $this->addForeignKey('fk'.$i++,'{{user}}','id','{{profile}}','id');
         $this->addForeignKey('fk'.$i++,'{{profile}}','id','{{user}}','id');
+        $this->addForeignKey('fk'.$i++,'{{branch}}','company_id','{{company}}','id');
 
         // $this->addForeignKey('fk'.$i++,'{{location}}','company_id','{{company}}','id');
         // $this->addForeignKey('fk'.$i++,'{{efies}}','company_id','{{company}}','id');

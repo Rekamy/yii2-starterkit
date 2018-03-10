@@ -1,9 +1,10 @@
 <?php
+$dbName = \common\components\Migration::getDbName();
 switch (Yii::$app->db->driverName) {
     case 'mysql':
     $script = "SELECT table_name as TABLE_NAME
     FROM information_schema.tables
-    WHERE table_schema = 'estor4'";
+    WHERE table_schema = '$dbName'";
     break;
     case 'oci':
     $script = "
