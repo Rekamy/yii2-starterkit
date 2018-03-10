@@ -11,6 +11,16 @@ return [
             // 'schemaCacheDuration' => false,
             'charset' => 'utf8',
         ],
+        'db2' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'oci:host=localhost:1521;dbname=yii2dev',
+            'username' => 'root',
+            'password' => '',
+            // 'enableQueryCache' => true,
+            // 'enableSchemaCache' => true,
+            // 'schemaCacheDuration' => false,
+            'charset' => 'utf8',
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',

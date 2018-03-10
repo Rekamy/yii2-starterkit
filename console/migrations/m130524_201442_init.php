@@ -6,6 +6,7 @@ class m130524_201442_init extends Migration
 {
     public function up()
     {
+        $this->customDrop();
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
@@ -45,6 +46,23 @@ class m130524_201442_init extends Migration
             'deleted_by' => $this->timestamp(),
         ], $tableOptions);
 
+        $this->createTable('{{%setting}}', [
+            'id' => $this->primaryKey(),
+            'key' => $this->string(),
+            'label' => $this->string(),
+            'value' => $this->string(),
+            'description' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->smallInteger()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
         $this->insertFk();
     }
 
@@ -58,10 +76,10 @@ class m130524_201442_init extends Migration
         $this->addForeignKey('fk'.$i++,'{{user}}','id','{{profile}}','id');
         $this->addForeignKey('fk'.$i++,'{{profile}}','id','{{user}}','id');
 
-        $this->addForeignKey('fk'.$i++,'{{location}}','company_id','{{company}}','id');
-        $this->addForeignKey('fk'.$i++,'{{efies}}','company_id','{{company}}','id');
-        $this->addForeignKey('fk'.$i++,'{{company_pic}}','company_id','{{company}}','id');
-        $this->addForeignKey('fk'.$i++,'{{company_pic}}','user_id','{{user}}','id');
-        $this->addForeignKey('fk'.$i++,'{{user_attachment}}','user_id','{{user}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{location}}','company_id','{{company}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{efies}}','company_id','{{company}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{company_pic}}','company_id','{{company}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{company_pic}}','user_id','{{user}}','id');
+        // $this->addForeignKey('fk'.$i++,'{{user_attachment}}','user_id','{{user}}','id');
     }
 }

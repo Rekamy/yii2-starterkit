@@ -29,9 +29,8 @@ class Bootstrap implements BootstrapInterface
     public function bootstrap($app)
     {
 //        \Yii::setAlias('@mtengii','@vendor/mootensai/yii2-enhanced-gii');
-        if ($app->hasModule('gii')) {
+/*        if ($app->hasModule('gii') && YII_ENV_DEV) {
             if (!isset($app->getModule('gii')->generators['kidzen-enhanced-gii'])) {
-                die;
                 $app->getModule('gii')->generators['enhanced-gii-model'] = 'mootensai\enhancedgii\model\Generator';
                 $app->getModule('gii')->generators['enhanced-gii-crud']['class'] = 'mootensai\enhancedgii\crud\Generator';
 //                $app->getModule('gii')->generators['enhanced-gii-crud']['templates'] = [
@@ -41,5 +40,14 @@ class Bootstrap implements BootstrapInterface
                 $app->getModule('gii')->generators['enhanced-gii-migration'] = 'mootensai\enhancedgii\migration\Generator';
             }
         }
+*/
+        // Get settings from database
+        $sql = $app->db->createCommand('SELECT [[key]],[[value]] FROM [[setting]]');
+        $settings = $sql->queryAll();
+        // Now let's load the settings into the global params array
+        foreach ($settings as $key => $val) {
+            $app->params['settings'][$val['key']] = $val['value'];
+        }
+
     }
 }

@@ -21,10 +21,12 @@ class MigrateController extends BaseMigrateController
 		$migrate = new Migration();
 		$auth = Yii::$app->authManager;
 
-		$this->stdOut("Remove all auth settings\n");
-		$auth->removeAll();
+		if($auth) {
+			$this->stdOut("Remove all auth settings\n");
+			$auth->removeAll();
 
-		$auth = Yii::$app->authManager;
+		}
+
 		// add crud permission : add table name that require complex user management
 		// get all table
 		$query = new \yii\db\Query();
@@ -211,6 +213,7 @@ class MigrateController extends BaseMigrateController
 		$auth = \Yii::$app->authManager;
 		foreach ($roles as $key => $roleName) {
 			$role = $auth->getRole($roleName);
+			$role = isset($role) ? $auth->getRole($roleName) : $auth->getPermission($roleName);
 			$auth->assign($role, $userId);
 			$this->stdOut("Append $role->name to Admin User\n");
 		}

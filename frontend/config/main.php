@@ -3,16 +3,20 @@ $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
     require __DIR__ . '/params.php',
-    require __DIR__ . '/params-local.php'
+    require __DIR__ . '/params-local.php',
+    require __DIR__ . '/container.php'
 );
 
-return [
+$config = [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    // 'timeZone' => 'Asia/Kuala_Lumpur',
+    // 'homeUrl'=>['/site/index2'],
     'controllerNamespace' => 'frontend\controllers',
     'language' => 'ms-MY',
     'sourceLanguage' => 'en-US',
+    'container' => $container,
     'components' => [
         'i18n' => [
             'translations' => [
@@ -46,25 +50,55 @@ return [
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
+        // uncomment to use rbac
+/*        'authManager' => [
+            // use php file
+            'class' => 'yii\rbac\PhpManager',
+            'assignmentFile' => '@common/rbac/assignments.php'
+            // use db
+            // 'class' => 'yii\rbac\DbManager',
+        ],*/
         'notify' => [
             'class' => 'common\components\Notify',
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => 'app-frontend',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
+            // 'flushInterval' => 100,   // default is 1000
             'targets' => [
-                [
+                'file' => [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    // 'exportInterval' => 100,  // default is 1000
                 ],
+                // uncomment to use db logger
+/*                'db' => [
+                    'class' => 'yii\log\DbTarget',
+                    'levels' => ['error', 'warning'],
+                ],*/
+                // uncomment to use email logger
+/*                'email' => [
+                    'class' => 'yii\log\EmailTarget',
+                    'levels' => ['error'],
+                    'categories' => ['yii\db\*'],
+                    'message' => [
+                       'from' => ['log@example.com'],
+                       'to' => ['admin@example.com', 'developer@example.com'],
+                       'subject' => 'Database errors at example.com',
+                    ],
+                ],*/
             ],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+/*        'assetManager' => [
+            'appendTimestamp' => true,
+           // 'forceCopy' => false,
+        ],*/
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -110,7 +144,11 @@ return [
                 ],
             ],
         ],
-        'debug' => ['class' => 'yii\debug\Module'], //remove on production
     ],
     'params' => $params,
 ];
+
+$config['bootstrap'] = ['log','common\components\Bootstrap','debug'];
+$config['modules']['debug'] = ['class' => 'yii\debug\Module','allowedIPs' => ['*']]; //remove on production
+
+return $config;

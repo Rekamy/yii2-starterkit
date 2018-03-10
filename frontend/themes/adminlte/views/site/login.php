@@ -20,24 +20,24 @@ $fieldOptions2 = [
 ?>
 
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
-    </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <div class="login-logo">
+            <a href="#"><b><?= Yii::$app->params['appNameShort'] ?></b> System</a>
+        </div>
+        <p class="login-box-msg"><?= Yii::t('app','Sign in to start your session') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
         <?= $form
-            ->field($model, 'username', $fieldOptions1)
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+        ->field($model, 'username', $fieldOptions1)
+        ->label(false)
+        ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
 
         <?= $form
-            ->field($model, 'password', $fieldOptions2)
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+        ->field($model, 'password', $fieldOptions2)
+        ->label(false)
+        ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
         <div class="row">
             <div class="col-xs-8">
@@ -45,7 +45,7 @@ $fieldOptions2 = [
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(Yii::t('app','Sign in'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
             </div>
             <!-- /.col -->
         </div>
@@ -53,8 +53,8 @@ $fieldOptions2 = [
 
         <?php ActiveForm::end(); ?>
 
-        <?= Html::a('I forgot my password',['/site/request-password-reset']) ?><br>
-        <?= Html::a('Already register',['/site/login']) ?>
+        <?= Html::a(Yii::t('app','I forgot my password'),['/site/request-password-reset']) ?><br>
+        <?= Html::a(Yii::t('app','Register'),['/site/signup']) ?>
 
     </div>
     <!-- /.login-box-body -->

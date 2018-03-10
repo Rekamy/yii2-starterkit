@@ -72,9 +72,70 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        // $output = exec('php ../../yii migrate/reset');
+        $output = exec('php ../../gitpull.bat');
+        // echo "<pre>$output</pre>";
+        // $output = exec('git commit -m "update"');
+        // echo "<pre>$output</pre>";
+        // $output = exec('git push');
+        // echo "<pre>$output</pre>";
+        // $output = exec('git status');
+        // $output = system('git add .');
+        // $output = proc_open('git add .');
+        // $output = shell_exec('git add .');
+        // $output = shell_exec('git status');
+
+        echo "<pre>$output</pre>";
+        die;
         return $this->render('index');
     }
 
+    public function actionInfo()
+    {
+        return $this->render('info');
+    }
+
+    /**
+     * Switch Theme.
+     *
+     * @return mixed
+     */
+    public function actionSwitchTheme($theme = 'adminlte')
+    {
+        if (Yii::$app->request->get('themed')) {
+            switch ($theme) {
+                case 'adminlte':
+                $themeConfig = [
+                    // 'basePath' => '@app/themes/basic',
+                    // 'baseUrl' => '@web/themes/basic',
+                    'pathMap' => [
+                        '@frontend/views' => '@frontend/themes/adminlte/views',
+                    ]
+                ];
+                break;
+                case 'gentella':
+                $themeConfig = [
+                    // 'basePath' => '@app/themes/basic',
+                    // 'baseUrl' => '@web/themes/basic',
+                    'pathMap' => [
+                        '@frontend/views' => '@frontend/themes/gentella/views',
+                    ]
+                ];
+                break;
+
+                default:
+                $themeConfig = [
+                    // 'basePath' => '@app/views',
+                    'pathMap' => [
+                        '@frontend/views' => '@frontend/views',
+                    ]
+                ];
+                break;
+            }
+            Yii::$app->getView()->theme = new Theme($themeConfig);
+        }
+        return $this->render('index');
+    }
     /**
      * Logs in a user.
      *
