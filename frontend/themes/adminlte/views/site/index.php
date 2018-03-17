@@ -24,14 +24,14 @@ use kartik\widgets\Growl;
                         <!-- small box -->
                         <div class="small-box bg-aqua-gradient">
                             <div class="inner">
-                                <h3>1</h3>
+                                <h3><?= $data[0]['value'] ?></h3>
 
-                                <p>Kemasukan Stok Baru Bulan Ini</p>
+                                <p><?= $data[0]['description'] ?></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                            <?= Html::a('More info <i class="fa fa-arrow-circle-right"></i>',$data[0]['url'],['class' => 'small-box-footer']) ?>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -39,13 +39,13 @@ use kartik\widgets\Growl;
                         <!-- small box -->
                         <div class="small-box bg-green-gradient">
                             <div class="inner">
-                                <h3>1</h3>
-                                <p>Pengeluaran Stok Bulan Ini</p>
+                                <h3><?= $data[1]['value'] ?></h3>
+                                <p><?= $data[0]['description'] ?></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                            <?= Html::a('More info <i class="fa fa-arrow-circle-right"></i>',$data[0]['url'],['class' => 'small-box-footer']) ?>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -53,14 +53,14 @@ use kartik\widgets\Growl;
                         <!-- small box -->
                         <div class="small-box bg-yellow-gradient">
                             <div class="inner">
-                                <h3>1</h3>
+                                <h3><?= $data[2]['value'] ?></h3>
 
-                                <p>Pendaftaran Kad Inventori Bulan Ini</p>
+                                <p><?= $data[0]['description'] ?></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                            <?= Html::a('More info <i class="fa fa-arrow-circle-right"></i>',$data[0]['url'],['class' => 'small-box-footer']) ?>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -68,13 +68,13 @@ use kartik\widgets\Growl;
                         <!-- small box -->
                         <div class="small-box bg-red-gradient">
                             <div class="inner">
-                                <h3>1</h3>
-                                <p>Pengesahan Pengeluaran Stok Bulan Ini</p>
+                                <h3><?= $data[3]['value'] ?></h3>
+                                <p><?= $data[0]['description'] ?></p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                            <?= Html::a('More info <i class="fa fa-arrow-circle-right"></i>',$data[0]['url'],['class' => 'small-box-footer']) ?>
                         </div>
                     </div>
                     <!-- ./col -->

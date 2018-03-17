@@ -27,10 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
 
     <div class="row">
-        <div class="<?= ($generator->saveAsNew) ? "col-sm-8" : "col-sm-9";?>">
-            <h2><?= "<?= " ?><?= $generator->generateString(Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>.' '. Html::encode($this->title) ?></h2>
+    <div class="col-sm-12">
+    <div class="box">
+        <div class="box-header">
+            <h2 class="box-title"><?= "<?= " ?><?= $generator->generateString(Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>.' '. Html::encode($this->title) ?></h2>
         </div>
-        <div class="<?= ($generator->saveAsNew) ? "col-sm-4" : "col-sm-3";?>" style="margin-top: 15px">
+        <div class="box-body">
+        <div class="col-sm-4">
 <?php if ($generator->pdf): ?>
 <?= "<?= " ?>
             <?= "
@@ -59,9 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ])
             ?>\n" ?>
         </div>
-    </div>
 
-    <div class="row">
+        <div class="col-sm-12">
 <?= "<?php \n" ?>
     $gridColumn = [
 <?php
@@ -91,7 +93,7 @@ if ($tableSchema === false) {
 <?php foreach ($relations as $name => $rel): ?>
 <?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations)): ?>
 
-    <div class="row">
+        <div class="col-sm-12">
 <?= "<?php\n" ?>
 if($provider<?= $rel[1] ?>->totalCount){
     $gridColumn<?= $rel[1] ?> = [
@@ -130,12 +132,13 @@ if($provider<?= $rel[1] ?>->totalCount){
 }
 <?= "?>\n" ?>
 
-    </div>
-<?php //elseif(empty($rel[2])): ?>
-<?php elseif($rel[2]): ?>
-    <div class="row">
-        <h4><?= $rel[1] ?><?= "<?= " ?>' '. Html::encode($this->title) ?></h4>
-    </div>
+        </div>
+<?php elseif(empty($rel[2])): ?>
+    <?= "<?php " ?>if ($model-><?= $name ?>) : ?>
+    <div class="col-sm-12">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="title"><?= $rel[1] ?><?= "<?= " ?>' '. Html::encode($this->title) ?></h4>
     <?= "<?php \n" ?>
     $gridColumn<?= $rel[1] ?> = [
 <?php
@@ -162,6 +165,14 @@ if($provider<?= $rel[1] ?>->totalCount){
         'attributes' => $gridColumn<?= $rel[1] ?>
     ]);
     ?>
+        </div>
+        </div>
+    </div>
+    <?= "<?php " ?>endif; ?>
 <?php endif; ?>
 <?php endforeach; ?>
+    </div>
+    </div>
+    </div>
+    </div>
 </div>

@@ -9,10 +9,12 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        // 'authManager' => [
-        //     'class' => 'yii\rbac\DbManager',
-        //     // 'cache' => 'cache',
-        // ],
+        'authManager' => [
+            // 'class' => 'yii\rbac\DbManager',
+            'class' => 'yii\rbac\PhpManager',
+            // 'cache' => 'cache',
+            // 'defaultRoles' => ['guest'],
+        ],
         // 'log' => ['class' => 'yii\log\Dispatcher'],
         'formatter' => ['class' => 'yii\i18n\Formatter'],
         'i18n' => ['class' => 'yii\i18n\I18N'],

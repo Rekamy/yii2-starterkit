@@ -20,6 +20,7 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
+use kartik\dynagrid\DynaGrid;
 use <?= $generator->indexWidgetType === 'grid' ? "kartik\\grid\\GridView;" : "yii\\widgets\\ListView;" ?>
 
 
@@ -33,24 +34,13 @@ $this->registerJs($search);
 ?>
 <div class="<?= Inflector::camel2id($baseModelClass) ?>-index">
 
-    <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
-<?php if (!empty($generator->searchModelClass)): ?>
-<?= "    <?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
-<?php endif; ?>
-
-    <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Create ' . Inflector::camel2words($baseModelClass)) ?>, ['create'], ['class' => 'btn btn-success']) ?>
-<?php if (!empty($generator->searchModelClass)): ?>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Advance Search')?>, '#', ['class' => 'btn btn-info search-button']) ?>
-<?php endif; ?>
-    </p>
 <?php if (!empty($generator->searchModelClass)): ?>
     <div class="search-form" style="display:none">
         <?= "<?= " ?> $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <?php endif; ?>
-<?php 
-if ($generator->indexWidgetType === 'grid'): 
+<?php
+if ($generator->indexWidgetType === 'grid'):
 ?>
 <?= "<?php \n" ?>
     $gridColumn = [
@@ -68,12 +58,13 @@ if ($generator->indexWidgetType === 'grid'):
                 return Yii::$app->controller->renderPartial('_expand', ['model' => $model]);
             },
             'headerOptions' => ['class' => 'kartik-sheet-style'],
-            'expandOneOnly' => true
+            'expandOneOnly' => true,
+            'visible' => false
         ],
 <?php
     endif;
 ?>
-<?php   
+<?php
     if ($tableSchema === false) :
         foreach ($generator->getColumnNames() as $name) {
             if (++$count < 6) {
@@ -83,7 +74,7 @@ if ($generator->indexWidgetType === 'grid'):
             }
         }
     else :
-        foreach ($tableSchema->getColumnNames() as $attribute): 
+        foreach ($tableSchema->getColumnNames() as $attribute):
             if (!in_array($attribute, $generator->skippedColumns)) :
 ?>
         <?= $generator->generateGridViewFieldIndex($attribute, $fk, $tableSchema)?>
@@ -101,48 +92,55 @@ if ($generator->indexWidgetType === 'grid'):
             ],
 <?php endif; ?>
         ],
-    ]; 
-<?php 
-    endif; 
+    ];
+<?php
+    endif;
 ?>
     ?>
-    <?= "<?= " ?>GridView::widget([
-        'dataProvider' => $dataProvider,
-        <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => \$gridColumn,\n" : "'columns' => \$gridColumn,\n"; ?>
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id(StringHelper::basename($generator->modelClass))?>']],
-        'panel' => [
-            'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
-        ],
+    <?= "<?= " ?>DynaGrid::widget([
+        'columns'=>$gridColumn,
+        'storage'=>DynaGrid::TYPE_COOKIE,
+        'theme'=>'panel-primary',
+        'showPersonalize'=>true,
+        'gridOptions'=>[
+            'dataProvider' => $dataProvider,
+            <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n" : ""; ?>
+            'filterSelector' => 'select[name="per-page"]',
+            // 'showPageSummary'=>true,
+            //'floatHeader'=>true,
+            'responsiveWrap'=>false,
+            'pjax' => true,
+            'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id(StringHelper::basename($generator->modelClass))?>']],
+            'panel' => [
+                'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
+                'before' =>  '<div style="padding-top: 7px;"><em>* The table header sticks to the top in this demo as you scroll</em></div>',
+                'after' => false,
+            ],
 <?php if(!$generator->pdf) : ?>
-        'export' => false,
+            // 'export' => false,
 <?php endif; ?>
-        // your toolbar can include the additional full export menu
-        'toolbar' => [
-            '{export}',
-            ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => true,
-                'dropdownOptions' => [
-                    'label' => 'Full',
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">Export All Data</li>',
-                    ],
+            // your toolbar can include the additional full export menu
+            'toolbar' => [
+                ['content'=>
+                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['class' => 'btn btn-success', 'title'=><?= $generator->generateString('Create ' . Inflector::camel2words($baseModelClass)) ?>]) . ' '.
+<?php if (!empty($generator->searchModelClass)): ?>
+                    Html::a(<?= $generator->generateString('Advance Search')?>, '#', ['class' => 'btn btn-info search-button'])
+<?php endif; ?>
                 ],
+                ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],
+                '{export}',
+                '{toggleData}',
 <?php if(!$generator->pdf):?>
                 'exportConfig' => [
-                    ExportMenu::FORMAT_PDF => false
+                    // ExportMenu::FORMAT_PDF => false
                 ]
 <?php endif;?>
-            ]) ,
+            ],
         ],
+        'options'=>['id'=>'dynagrid-1'] // a unique identifier is important
     ]); ?>
-<?php 
-else: 
+<?php
+else:
 ?>
     <?= "<?= " ?>ListView::widget([
         'dataProvider' => $dataProvider,
@@ -151,8 +149,8 @@ else:
             return $this->render('_index',['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget, 'view' => $this]);
         },
     ]) ?>
-<?php 
-endif; 
+<?php
+endif;
 ?>
 
 </div>

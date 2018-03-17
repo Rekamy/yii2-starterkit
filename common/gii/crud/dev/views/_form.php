@@ -46,7 +46,11 @@ foreach ($relations as $name => $rel) {
 <?php
 foreach ($tableSchema->getColumnNames() as $attribute) {
     if (!in_array($attribute, $generator->skippedColumns)) {
-        echo "    <?= " . $generator->generateActiveField($attribute, $fk) . " ?>\n\n";
+        if($attribute != 'id') {
+            echo "<div class=\"col-md-4\">\n";
+            echo "    <?= " . $generator->generateActiveField($attribute, $fk) . " ?>\n";
+            echo "</div>\n\n";
+        }
     }
 }
 
@@ -70,7 +74,9 @@ foreach ($relations as $name => $rel) {
             "        ],\n";
     }
 }
+echo "    <div class=\"clearfix\"></div>\n";
 if(!empty($forms)){
+    echo "<div class=\"col-md-12\">\n";
     echo "    <?php\n";
     echo "    \$forms = [\n";
     echo $forms;
@@ -86,8 +92,11 @@ if(!empty($forms)){
         "        ],\n" .
         "    ]);\n" .
         "    ?>\n";
+    echo "</div>\n";
 }
 ?>
+    <div class="clearfix"></div>
+    <div class="col-md-4">
     <div class="form-group">
 <?php if($generator->saveAsNew): ?>
 <?= "    <?php if(Yii::\$app->controller->action->id != 'save-as-new'): ?>\n" ?>
@@ -102,6 +111,7 @@ if(!empty($forms)){
 <?php if ($generator->cancelable): ?>
         <?= "<?= " ?>Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
 <?php endif; ?>
+    </div>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

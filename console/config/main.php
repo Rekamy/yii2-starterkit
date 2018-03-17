@@ -24,6 +24,8 @@ return [
             'class' => \console\controllers\MigrateController::class,
             'migrationPath' => [
                 '@app/migrations',
+                // uncomment to db log
+                // '@yii/log/migrations', // Just in case you forgot to run it on console (see next note)
                 // uncomment to use rbac
                 // '@yii/rbac/migrations', // Just in case you forgot to run it on console (see next note)
             ],
@@ -32,10 +34,27 @@ return [
     'components' => [
         'log' => [
             'targets' => [
-                [
+                'file' => [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    // 'exportInterval' => 100,  // default is 1000
                 ],
+                // uncomment to use db logger
+                'db' => [
+                    'class' => 'yii\log\DbTarget',
+                    'levels' => ['error', 'warning'],
+                ],
+                // uncomment to use email logger
+/*                'email' => [
+                    'class' => 'yii\log\EmailTarget',
+                    'levels' => ['error'],
+                    'categories' => ['yii\db\*'],
+                    'message' => [
+                       'from' => ['log@example.com'],
+                       'to' => ['admin@example.com', 'developer@example.com'],
+                       'subject' => 'Database errors at example.com',
+                    ],
+                ],*/
             ],
         ],
     ],

@@ -5,7 +5,13 @@ use yii\helpers\Html;
 /* @var $content string */
 
 
-
+$serviceWorker = "
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker
+           .register('/sw.js')
+           .then(function() { console.log(\"Service Worker Registered\"); });
+}
+";
 if (class_exists('backend\assets\AppAsset')) {
     backend\assets\AppAsset::register($this);
 } else {
@@ -14,6 +20,7 @@ if (class_exists('backend\assets\AppAsset')) {
 
 // dmstr\web\AdminLteAsset::register($this);
 frontend\assets\CustomAsset::register($this);
+// $this->registerJs($serviceWorker);
 
 $directoryAsset = Yii::getAlias('@web/dist');
 // $this->registerJsFile($directoryAsset.'/js/custom.js', ['depends' => [yii\web\JqueryAsset::className()]]);
@@ -28,6 +35,7 @@ $directoryAsset = Yii::getAlias('@web/dist');
     <title><?= Html::encode(Yii::t('app',Yii::$app->params['appName'])) ?></title>
     <!-- <link rel="manifest" href="manifest.json"> -->
     <!-- <meta name="mobile-web-app-capable" content="yes"> -->
+  <link rel="manifest" href="manifest.json" />
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
     <?php $this->head() ?>
 </head>

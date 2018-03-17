@@ -8,7 +8,7 @@
 
 namespace common\gii\model;
 
-use mootensai\enhancedgii\BaseGenerator as BaseGenerator;
+use mootensai\enhancedgii\model\Generator as BaseGenerator;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\db\Schema;

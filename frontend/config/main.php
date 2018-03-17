@@ -75,10 +75,10 @@ $config = [
                     // 'exportInterval' => 100,  // default is 1000
                 ],
                 // uncomment to use db logger
-/*                'db' => [
+                'db' => [
                     'class' => 'yii\log\DbTarget',
                     'levels' => ['error', 'warning'],
-                ],*/
+                ],
                 // uncomment to use email logger
 /*                'email' => [
                     'class' => 'yii\log\EmailTarget',
@@ -150,5 +150,4 @@ $config = [
 
 $config['bootstrap'] = ['log','common\components\Bootstrap','debug'];
 $config['modules']['debug'] = ['class' => 'yii\debug\Module','allowedIPs' => ['*']]; //remove on production
-
 return $config;

@@ -72,8 +72,25 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        // $output = shell_exec('git add .');
+        // $output = shell_exec('git commit -m "update"');
+        // $output = shell_exec('git push');
+        // $output = shell_exec('git status');
+        // $output = exec('whoami');
+        // $output = shell_exec('whoami');
+        // $output = passthru('whoami');
+        // $output = proc_open('whoami', descriptorspec, pipes);
+        // $output = popen('whoami', mode);
+        // die;
         // $output = exec('php ../../yii migrate/reset');
-        $output = exec('php ../../gitpull.bat');
+        // $output = exec('php ../../yii migrate/reset');
+        // $output = exec('php ../../yii migrate/reset');
+        // $output = exec('php ../../yii migrate/reset');
+
+
+
+        // $output = exec('php ../../yii migrate/reset');
+        // $output = exec('php ../../gitpull.bat');
         // echo "<pre>$output</pre>";
         // $output = exec('git commit -m "update"');
         // echo "<pre>$output</pre>";
@@ -85,9 +102,29 @@ class SiteController extends Controller
         // $output = shell_exec('git add .');
         // $output = shell_exec('git status');
 
-        echo "<pre>$output</pre>";
-        die;
-        return $this->render('index');
+        // echo "<pre>$output</pre>";
+        // die;
+        $data[0] = [
+            'value'=>1,
+            'description'=>'Stock In',
+            'url'=>['/site/index'],
+        ];
+        $data[1] = [
+            'value'=>1,
+            'description'=>'Stock Out',
+            'url'=>['/site/index'],
+        ];
+        $data[2] = [
+            'value'=>1,
+            'description'=>'Stock Roll',
+            'url'=>['/site/index'],
+        ];
+        $data[3] = [
+            'value'=>1,
+            'description'=>'Stock Count',
+            'url'=>['/site/index'],
+        ];
+        return $this->render('index',['data' => $data]);
     }
 
     public function actionInfo()

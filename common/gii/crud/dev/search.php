@@ -35,6 +35,13 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
  class <?= StringHelper::basename($generator->searchModelClass) ?> extends <?= isset($modelAlias) ? $modelAlias : $modelClass ?>
 
 {
+    // use \common\components\RelationSFTrait;
+
+<?php if (false) : ?>
+<?php foreach ($generator->relationAttributes($generator->nsModel . '\\' . $modelClass) as $key => $value) : ?>
+    public $<?= $key ?>;
+<?php endforeach; ?>
+<?php endif; ?>
     /**
      * @inheritdoc
      */
@@ -68,6 +75,10 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        // $dataProvider->sort->attributes[$property] = [
+        //     'asc' => [$attribute => SORT_ASC],
+        //     'desc' => [$attribute => SORT_DESC],
+        // ];
 
         $this->load($params);
 
@@ -78,6 +89,8 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
         }
 
         <?= implode("\n        ", $searchConditions) ?>
+
+        // $query->andFilterWhere(['like', 'attribute', $this->$property]);
 
         return $dataProvider;
     }
