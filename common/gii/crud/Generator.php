@@ -3,15 +3,15 @@ namespace common\gii\crud;
 
 use mootensai\enhancedgii\crud\Generator as BaseGenerator;
 use Yii;
-use yii\db\ActiveRecord;
-use yii\db\ColumnSchema;
-use yii\db\Schema;
-use yii\db\TableSchema;
-use yii\gii\CodeFile;
-use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
-use yii\helpers\VarDumper;
-use yii\web\Controller;
+// use yii\db\ActiveRecord;
+// use yii\db\ColumnSchema;
+// use yii\db\Schema;
+// use yii\db\TableSchema;
+// use yii\gii\CodeFile;
+// use yii\helpers\Inflector;
+// use yii\helpers\StringHelper;
+// use yii\helpers\VarDumper;
+// use yii\web\Controller;
 
 /**
  * Generates Relational CRUD
@@ -28,6 +28,7 @@ class Generator extends BaseGenerator
     public $skippedColumns = 'created_at, updated_at, created_by, updated_by, deleted_at, deleted_by, created, modified, deleted, approved_at, approved_by, check_by';
     public $nsModel = 'common\models';
     public $nsSearchModel = 'common\models\search';
+    public $enableI18N = true;
     public $generateSearchModel = true;
     public $searchModelClass;
     public $generateQuery = true;
@@ -52,7 +53,7 @@ class Generator extends BaseGenerator
     public $nsController = 'frontend\controllers';
     public $controllerClass;
     public $pluralize;
-    public $loggedUserOnly;
+    public $loggedUserOnly = true;
     public $expandable = true;
     public $cancelable = true;
     public $saveAsNew;
@@ -69,7 +70,7 @@ class Generator extends BaseGenerator
      */
     public function getName()
     {
-        return 'Custom2 I/O Generator (CRUD)';
+        return 'Custom I/O Generator (CRUD)';
     }
 
 
