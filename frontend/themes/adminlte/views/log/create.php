@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Profile */
+/* @var $model common\models\Log */
 
-$this->title = Yii::t('app', 'Create Profile');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Profile'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Log');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Log'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="profile-create">
+<div class="log-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

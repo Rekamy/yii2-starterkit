@@ -5,23 +5,22 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Company;
+use common\models\Log;
 
 /**
- * common\models\search\CompanySearch represents the model behind the search form about `common\models\Company`.
+ * common\models\search\LogSearch represents the model behind the search form about `common\models\Log`.
  */
- class CompanySearch extends Company
+ class LogSearch extends Log
 {
-    // use \common\components\RelationSFTrait;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['name', 'address', 'contact', 'email', 'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
+            [['id', 'level'], 'integer'],
+            [['category', 'prefix', 'message'], 'safe'],
+            [['log_time'], 'number'],
         ];
     }
 
@@ -43,7 +42,7 @@ use common\models\Company;
      */
     public function search($params)
     {
-        $query = Company::find();
+        $query = Log::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -63,19 +62,13 @@ use common\models\Company;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-            'deleted_by' => $this->deleted_by,
+            'level' => $this->level,
+            'log_time' => $this->log_time,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'contact', $this->contact])
-            ->andFilterWhere(['like', 'email', $this->email]);
+        $query->andFilterWhere(['like', 'category', $this->category])
+            ->andFilterWhere(['like', 'prefix', $this->prefix])
+            ->andFilterWhere(['like', 'message', $this->message]);
 
         // $query->andFilterWhere(['like', 'attribute', $this->$property]);
 

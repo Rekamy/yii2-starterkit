@@ -3,11 +3,11 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\query\Migration]].
+ * This is the ActiveQuery class for [[\common\models\query\Setting]].
  *
- * @see \common\models\query\Migration
+ * @see \common\models\query\Setting
  */
-class MigrationQuery extends \yii\db\ActiveQuery
+class SettingQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -25,7 +25,7 @@ class MigrationQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \common\models\query\Migration[]|array
+     * @return \common\models\query\Setting[]|array
      */
     public function all($db = null, $bypass = false)
     {
@@ -40,7 +40,7 @@ class MigrationQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \common\models\query\Migration|array|null
+     * @return \common\models\query\Setting|array|null
      */
     public function one($db = null)
     {

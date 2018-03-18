@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\search\ProfileSearch */
+/* @var $model common\models\search\SettingSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="form-profile-search">
+<div class="form-setting-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,13 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Name']) ?>
+    <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'placeholder' => 'Key']) ?>
 
-    <?= $form->field($model, 'ic_no')->textInput(['placeholder' => 'Ic No']) ?>
+    <?= $form->field($model, 'label')->textInput(['maxlength' => true, 'placeholder' => 'Label']) ?>
 
-    <?= $form->field($model, 'contact')->textInput(['maxlength' => true, 'placeholder' => 'Contact']) ?>
+    <?= $form->field($model, 'value')->textInput(['maxlength' => true, 'placeholder' => 'Value']) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Email']) ?>
+    <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'placeholder' => 'Description']) ?>
+
+    <?php /* echo $form->field($model, 'remark')->textInput(['maxlength' => true, 'placeholder' => 'Remark']) */ ?>
 
     <?php /* echo $form->field($model, 'status')->textInput(['placeholder' => 'Status']) */ ?>
 

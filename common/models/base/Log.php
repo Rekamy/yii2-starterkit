@@ -7,25 +7,16 @@ use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 
 /**
- * This is the base model class for table "branch".
+ * This is the base model class for table "log".
  *
  * @property integer $id
- * @property integer $company_id
- * @property string $name
- * @property string $address
- * @property string $contact
- * @property string $email
- * @property integer $status
- * @property string $created_at
- * @property string $updated_at
- * @property string $deleted_at
- * @property string $created_by
- * @property string $updated_by
- * @property string $deleted_by
- *
- * @property \common\models\Company $company
+ * @property integer $level
+ * @property string $category
+ * @property double $log_time
+ * @property string $prefix
+ * @property string $message
  */
-class Branch extends \yii\db\ActiveRecord
+class Log extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -51,7 +42,7 @@ class Branch extends \yii\db\ActiveRecord
     public static function relationNames()
     {
         return [
-            'company'
+            ''
         ];
     }
 
@@ -61,11 +52,10 @@ class Branch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'status'], 'integer'],
-            [['email'], 'required'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
-            [['name', 'address', 'contact', 'email'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            [['level'], 'integer'],
+            [['log_time'], 'number'],
+            [['prefix', 'message'], 'string'],
+            [['category'], 'string', 'max' => 255]
         ];
     }
 
@@ -74,7 +64,7 @@ class Branch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'branch';
+        return 'log';
     }
 
     /**
@@ -83,24 +73,15 @@ class Branch extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'company_id' => 'Company ID',
-            'name' => 'Name',
-            'address' => 'Address',
-            'contact' => 'Contact',
-            'email' => 'Email',
-            'status' => 'Status',
+            'id' => Yii::t('app', 'ID'),
+            'level' => Yii::t('app', 'Level'),
+            'category' => Yii::t('app', 'Category'),
+            'log_time' => Yii::t('app', 'Log Time'),
+            'prefix' => Yii::t('app', 'Prefix'),
+            'message' => Yii::t('app', 'Message'),
         ];
     }
-    
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCompany()
-    {
-        return $this->hasOne(\common\models\Company::className(), ['id' => 'company_id']);
-    }
-    
+
     /**
      * @inheritdoc
      * @return array mixed
@@ -146,11 +127,10 @@ class Branch extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \common\models\query\BranchQuery the active query used by this AR class.
+     * @return \common\models\query\LogQuery the active query used by this AR class.
      */
     public static function find()
     {
-        $query = new \common\models\query\BranchQuery(get_called_class());
-        return $query->where(['branch.deleted_by' => 0]);
+        return new \common\models\query\LogQuery(get_called_class());
     }
 }

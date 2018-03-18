@@ -3,16 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\Company;
-use common\models\search\CompanySearch;
+use common\models\Log;
+use common\models\search\LogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CompanyController implements the CRUD actions for Company model.
+ * LogController implements the CRUD actions for Log model.
  */
-class CompanyController extends Controller
+class LogController extends Controller
 {
     public function behaviors()
     {
@@ -23,16 +23,44 @@ class CompanyController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow' => false
+                    ]
+                ]
+            ]
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $toRedir = [
+            'update' => 'view',
+            'create' => 'view',
+            'delete' => 'index',
+        ];
+
+        if (isset($toRedir[$action->id])) {
+            Yii::$app->response->redirect(Url::to([$toRedir[$action->id]]), 301);
+            Yii::$app->end();
+        }
+        return parent::beforeAction($action);
+    }
+
     /**
-     * Lists all Company models.
+     * Lists all Log models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CompanySearch();
+        $searchModel = new LogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,30 +70,26 @@ class CompanyController extends Controller
     }
 
     /**
-     * Displays a single Company model.
+     * Displays a single Log model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerBranch = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->branches,
-        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerBranch' => $providerBranch,
         ]);
     }
 
     /**
-     * Creates a new Company model.
+     * Creates a new Log model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Company();
+        $model = new Log();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -77,7 +101,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * Updates an existing Company model.
+     * Updates an existing Log model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +120,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * Deletes an existing Company model.
+     * Deletes an existing Log model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -108,40 +132,40 @@ class CompanyController extends Controller
         return $this->redirect(['index']);
     }
 
-    
     /**
-     * Finds the Company model based on its primary key value.
+     * Permanently deletes an existing Log model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+
+        $model = $this->findModel($id);
+        if($model->deleted_by != 0) {
+            if($model->delete()) {
+                Yii::$app->notify->success();
+                return $this->redirect(['index']);
+            }
+        }
+        Yii::$app->notify->fail();
+        return $this->redirect(['index']);
+    }
+
+
+    /**
+     * Finds the Log model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Company the loaded model
+     * @return Log the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Company::findOne($id)) !== null) {
+        if (($model = Log::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Branch
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddBranch()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Branch');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formBranch', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }

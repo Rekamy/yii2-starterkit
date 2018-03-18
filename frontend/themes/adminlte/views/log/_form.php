@@ -4,12 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Profile */
+/* @var $model common\models\Log */
 /* @var $form yii\widgets\ActiveForm */
 
 ?>
 
-<div class="profile-form">
+<div class="log-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -17,15 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Name']) ?>
+    <?= $form->field($model, 'level')->textInput(['placeholder' => 'Level']) ?>
 
-    <?= $form->field($model, 'ic_no')->textInput(['placeholder' => 'Ic No']) ?>
+    <?= $form->field($model, 'category')->textInput(['maxlength' => true, 'placeholder' => 'Category']) ?>
 
-    <?= $form->field($model, 'contact')->textInput(['maxlength' => true, 'placeholder' => 'Contact']) ?>
+    <?= $form->field($model, 'log_time')->textInput(['placeholder' => 'Log Time']) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Email']) ?>
+    <?= $form->field($model, 'prefix')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'status')->textInput(['placeholder' => 'Status']) ?>
+    <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

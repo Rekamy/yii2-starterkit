@@ -12,8 +12,6 @@ use common\models\User;
  */
  class UserSearch extends User
 {
-    // use \common\components\RelationSFTrait;
-
     /**
      * @inheritdoc
      */

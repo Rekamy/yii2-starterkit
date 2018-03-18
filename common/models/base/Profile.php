@@ -84,12 +84,12 @@ class Profile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'ic_no' => 'Ic No',
-            'contact' => 'Contact',
-            'email' => 'Email',
-            'status' => 'Status',
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'ic_no' => Yii::t('app', 'Ic No'),
+            'contact' => Yii::t('app', 'Contact'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
         ];
     }
     
@@ -159,6 +159,10 @@ class Profile extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new \common\models\query\ProfileQuery(get_called_class());
-        return $query->where(['profile.deleted_by' => 0]);
+        // uncomment and edit permission rule to view deleted items
+        /* if(\Yii::$app->user->can('see_deleted')){
+           return $query;
+        } */
+        return $query->andWhere(['profile.deleted_by' => 0]);
     }
 }

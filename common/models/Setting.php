@@ -3,12 +3,12 @@
 namespace common\models;
 
 use Yii;
-use \common\models\base\Profile as BaseProfile;
+use \common\models\base\Setting as BaseSetting;
 
 /**
- * This is the model class for table "profile".
+ * This is the model class for table "setting".
  */
-class Profile extends BaseProfile
+class Setting extends BaseSetting
 {
     /**
      * @inheritdoc
@@ -17,11 +17,9 @@ class Profile extends BaseProfile
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['ic_no', 'status'], 'integer'],
-            [['email'], 'required'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
-            [['name', 'contact', 'email'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['key', 'label', 'value', 'description', 'remark'], 'string', 'max' => 255]
         ]
         );
     }

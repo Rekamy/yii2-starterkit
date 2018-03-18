@@ -11,7 +11,15 @@ class ProfileQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
+        if(!\Yii::$app->user->can('Administrator')) {
+            $this->andWhere('[[status]]=1');
+        }
+        return $this;
+    }*/
+
+    /*public function mine()
+    {
+            $this->andWhere('[[created_by]]='.\Yii::$app->user->id);
         return $this;
     }*/
 
@@ -19,8 +27,14 @@ class ProfileQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return \common\models\query\Profile[]|array
      */
-    public function all($db = null)
+    public function all($db = null, $bypass = false)
     {
+        if($bypass) {
+            return parent::all($db);
+        }
+        if(!\Yii::$app->user->can('Administrator')) {
+            $this->mine();
+        }
         return parent::all($db);
     }
 

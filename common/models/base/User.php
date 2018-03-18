@@ -88,13 +88,13 @@ class User extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email',
-            'status' => 'Status',
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
         ];
     }
     
@@ -164,6 +164,10 @@ class User extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new \common\models\query\UserQuery(get_called_class());
-        return $query->where(['user.deleted_by' => 0]);
+        // uncomment and edit permission rule to view deleted items
+        /* if(\Yii::$app->user->can('see_deleted')){
+           return $query;
+        } */
+        return $query->andWhere(['user.deleted_by' => 0]);
     }
 }

@@ -3,12 +3,12 @@
 namespace common\models;
 
 use Yii;
-use \common\models\base\Profile as BaseProfile;
+use \common\models\base\Log as BaseLog;
 
 /**
- * This is the model class for table "profile".
+ * This is the model class for table "log".
  */
-class Profile extends BaseProfile
+class Log extends BaseLog
 {
     /**
      * @inheritdoc
@@ -17,11 +17,10 @@ class Profile extends BaseProfile
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['ic_no', 'status'], 'integer'],
-            [['email'], 'required'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
-            [['name', 'contact', 'email'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            [['level'], 'integer'],
+            [['log_time'], 'number'],
+            [['prefix', 'message'], 'string'],
+            [['category'], 'string', 'max' => 255]
         ]
         );
     }

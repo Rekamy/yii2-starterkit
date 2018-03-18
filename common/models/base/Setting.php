@@ -7,24 +7,23 @@ use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 
 /**
- * This is the base model class for table "company".
+ * This is the base model class for table "setting".
  *
  * @property integer $id
- * @property string $name
- * @property string $address
- * @property string $contact
- * @property string $email
+ * @property string $key
+ * @property string $label
+ * @property string $value
+ * @property string $description
+ * @property string $remark
  * @property integer $status
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
- * @property string $created_by
- * @property string $updated_by
- * @property string $deleted_by
- *
- * @property \common\models\Branch[] $branches
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
  */
-class Company extends \yii\db\ActiveRecord
+class Setting extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -50,7 +49,7 @@ class Company extends \yii\db\ActiveRecord
     public static function relationNames()
     {
         return [
-            'branches'
+            ''
         ];
     }
 
@@ -60,11 +59,9 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email'], 'required'],
-            [['status'], 'integer'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
-            [['name', 'address', 'contact', 'email'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['key', 'label', 'value', 'description', 'remark'], 'string', 'max' => 255]
         ];
     }
 
@@ -73,7 +70,7 @@ class Company extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'company';
+        return 'setting';
     }
 
     /**
@@ -82,21 +79,14 @@ class Company extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app','ID'),
-            'name' => Yii::t('app','Name'),
-            'address' => Yii::t('app','Address'),
-            'contact' => Yii::t('app','Contact'),
-            'email' => Yii::t('app','Email'),
-            'status' => Yii::t('app','Status'),
+            'id' => Yii::t('app', 'ID'),
+            'key' => Yii::t('app', 'Key'),
+            'label' => Yii::t('app', 'Label'),
+            'value' => Yii::t('app', 'Value'),
+            'description' => Yii::t('app', 'Description'),
+            'remark' => Yii::t('app', 'Remark'),
+            'status' => Yii::t('app', 'Status'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBranches()
-    {
-        return $this->hasMany(\common\models\Branch::className(), ['company_id' => 'id']);
     }
 
     /**
@@ -144,11 +134,15 @@ class Company extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \common\models\query\CompanyQuery the active query used by this AR class.
+     * @return \common\models\query\SettingQuery the active query used by this AR class.
      */
     public static function find()
     {
-        $query = new \common\models\query\CompanyQuery(get_called_class());
-        return $query->where(['company.deleted_by' => 0]);
+        $query = new \common\models\query\SettingQuery(get_called_class());
+        // uncomment and edit permission rule to view deleted items
+        /* if(\Yii::$app->user->can('see_deleted')){
+           return $query;
+        } */
+        return $query->andWhere(['setting.deleted_by' => 0]);
     }
 }

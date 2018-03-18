@@ -6,10 +6,9 @@
 
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
-use kartik\dynagrid\DynaGrid;
 use kartik\grid\GridView;
 
-$this->title = 'Profile';
+$this->title = Yii::t('app', 'Profile');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -19,6 +18,13 @@ $this->registerJs($search);
 ?>
 <div class="profile-index">
 
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Create Profile'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
+    </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
@@ -35,8 +41,7 @@ $this->registerJs($search);
                 return Yii::$app->controller->renderPartial('_expand', ['model' => $model]);
             },
             'headerOptions' => ['class' => 'kartik-sheet-style'],
-            'expandOneOnly' => true,
-            'visible' => false
+            'expandOneOnly' => true
         ],
         ['attribute' => 'id', 'visible' => false],
         'name',
@@ -47,43 +52,39 @@ $this->registerJs($search);
         [
             'class' => 'yii\grid\ActionColumn',
         ],
-    ];
+    ]; 
     ?>
-    <?= DynaGrid::widget([
-        'columns'=>$gridColumn,
-        'storage'=>DynaGrid::TYPE_COOKIE,
-        'theme'=>'panel-primary',
-        'showPersonalize'=>true,
-        'gridOptions'=>[
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'filterSelector' => 'select[name="per-page"]',
-            // 'showPageSummary'=>true,
-            //'floatHeader'=>true,
-            'responsiveWrap'=>false,
-            'pjax' => true,
-            'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-profile']],
-            'panel' => [
-                'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
-                'before' =>  '<div style="padding-top: 7px;"><em>* The table header sticks to the top in this demo as you scroll</em></div>',
-                'after' => false,
-            ],
-            // 'export' => false,
-            // your toolbar can include the additional full export menu
-            'toolbar' => [
-                ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['class' => 'btn btn-success', 'title'=>'Create Profile']) . ' '.
-                    Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])
-                ],
-                ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],
-                '{export}',
-                '{toggleData}',
-                'exportConfig' => [
-                    // ExportMenu::FORMAT_PDF => false
-                ]
-            ],
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => $gridColumn,
+        'pjax' => true,
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-profile']],
+        'panel' => [
+            'type' => GridView::TYPE_PRIMARY,
+            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
         ],
-        'options'=>['id'=>'dynagrid-1'] // a unique identifier is important
+        'export' => false,
+        // your toolbar can include the additional full export menu
+        'toolbar' => [
+            '{export}',
+            ExportMenu::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => $gridColumn,
+                'target' => ExportMenu::TARGET_BLANK,
+                'fontAwesome' => true,
+                'dropdownOptions' => [
+                    'label' => 'Full',
+                    'class' => 'btn btn-default',
+                    'itemsBefore' => [
+                        '<li class="dropdown-header">Export All Data</li>',
+                    ],
+                ],
+                'exportConfig' => [
+                    ExportMenu::FORMAT_PDF => false
+                ]
+            ]) ,
+        ],
     ]); ?>
 
 </div>

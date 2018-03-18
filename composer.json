@@ -44,6 +44,10 @@
     "repositories": [
         {
             "type": "git",
+            "url": "https://github.com/kidzen/yii2-relation-trait.git"
+        },
+        {
+            "type": "git",
             "url": "https://github.com/kidzen/yii2-enhanced-gii.git"
         },
         {

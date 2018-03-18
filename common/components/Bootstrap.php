@@ -46,8 +46,9 @@ class Bootstrap implements BootstrapInterface
         $settings = $sql->queryAll();
         // Now let's load the settings into the global params array
         foreach ($settings as $key => $val) {
-            $app->params['settings'][$val['key']] = $val['value'];
+            $app->params[$val['key']] = $val['value'];
         }
+        // var_dump($app->params);die;
 
     }
 }

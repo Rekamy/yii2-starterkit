@@ -12,8 +12,6 @@ use common\models\Profile;
  */
  class ProfileSearch extends Profile
 {
-    // use \common\components\RelationSFTrait;
-
     /**
      * @inheritdoc
      */

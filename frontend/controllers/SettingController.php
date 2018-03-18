@@ -3,16 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\Branch;
-use common\models\search\BranchSearch;
+use common\models\Setting;
+use common\models\search\SettingSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BranchController implements the CRUD actions for Branch model.
+ * SettingController implements the CRUD actions for Setting model.
  */
-class BranchController extends Controller
+class SettingController extends Controller
 {
     public function behaviors()
     {
@@ -23,16 +23,44 @@ class BranchController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow' => false
+                    ]
+                ]
+            ]
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $toRedir = [
+            'update' => 'view',
+            'create' => 'view',
+            'delete' => 'index',
+        ];
+
+        if (isset($toRedir[$action->id])) {
+            Yii::$app->response->redirect(Url::to([$toRedir[$action->id]]), 301);
+            Yii::$app->end();
+        }
+        return parent::beforeAction($action);
+    }
+
     /**
-     * Lists all Branch models.
+     * Lists all Setting models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BranchSearch();
+        $searchModel = new SettingSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +70,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Displays a single Branch model.
+     * Displays a single Setting model.
      * @param integer $id
      * @return mixed
      */
@@ -55,13 +83,13 @@ class BranchController extends Controller
     }
 
     /**
-     * Creates a new Branch model.
+     * Creates a new Setting model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Branch();
+        $model = new Setting();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -73,7 +101,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Updates an existing Branch model.
+     * Updates an existing Setting model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -92,7 +120,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Deletes an existing Branch model.
+     * Deletes an existing Setting model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,20 +132,40 @@ class BranchController extends Controller
         return $this->redirect(['index']);
     }
 
-    
     /**
-     * Finds the Branch model based on its primary key value.
+     * Permanently deletes an existing Setting model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+
+        $model = $this->findModel($id);
+        if($model->deleted_by != 0) {
+            if($model->delete()) {
+                Yii::$app->notify->success();
+                return $this->redirect(['index']);
+            }
+        }
+        Yii::$app->notify->fail();
+        return $this->redirect(['index']);
+    }
+
+
+    /**
+     * Finds the Setting model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Branch the loaded model
+     * @return Setting the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Branch::findOne($id)) !== null) {
+        if (($model = Setting::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }
