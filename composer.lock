@@ -2771,7 +2771,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kidzen/yii2-enhanced-gii.git",
-                "reference": "c5cc653ba489fadc9eb9d50742362e9a3a2cb4f6"
+                "reference": "e9445caa4f801e442b63ffa83289d3bcb25ea084"
             },
             "require": {
                 "kartik-v/yii2-builder": "*",
@@ -2815,7 +2815,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-03-18T03:04:11+00:00"
+            "time": "2018-03-18T06:53:58+00:00"
         },
         {
             "name": "mootensai/yii2-jsblock",

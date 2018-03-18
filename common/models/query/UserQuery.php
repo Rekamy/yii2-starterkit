@@ -17,11 +17,11 @@ class UserQuery extends \yii\db\ActiveQuery
         return $this;
     }*/
 
-    /*public function mine()
+    public function mine()
     {
             $this->andWhere('[[created_by]]='.\Yii::$app->user->id);
         return $this;
-    }*/
+    }
 
     /**
      * @inheritdoc

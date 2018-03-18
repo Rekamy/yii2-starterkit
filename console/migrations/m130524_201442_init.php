@@ -33,6 +33,7 @@ class m130524_201442_init extends Migration
         $this->createTable('{{%profile}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
+            'avatar' => $this->string(),
             'ic_no' => $this->string(),
             'contact' => $this->string(),
             'email' => $this->string()->notNull()->unique(),
@@ -75,7 +76,6 @@ class m130524_201442_init extends Migration
 
         public function insertFk() {
             $i = 1;
-            $this->addForeignKey('fk'.$i++,'{{user}}','id','{{profile}}','id');
             $this->addForeignKey('fk'.$i++,'{{profile}}','id','{{user}}','id');
 
         // $this->addForeignKey('fk'.$i++,'{{branch}}','company_id','{{company}}','id');

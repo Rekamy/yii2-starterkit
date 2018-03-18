@@ -73,12 +73,12 @@ use yii\helpers\Html;
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
+                            <img src="<?= Yii::$app->user->avatar ?>" class="img-circle"
                                  alt="User Image"/>
 
                             <p>
                                 <?= Yii::$app->user->name ?>
-                                <small><?= Yii::$app->user->role ?></small>
+                                <small></small>
                             </p>
                         </li>
                         <!-- Menu Footer-->

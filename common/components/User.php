@@ -18,7 +18,8 @@ class User extends \yii\web\User {
     public function getAvatar() {
         $identity = $this->getIdentity();
 
-        return $identity !== null ? $identity->avatar : 'dist/img/tiada_gambar.jpg';
+        return 'dist/img/tiada_gambar.jpg';
+        // return $identity !== null ? $identity->avatar : 'dist/img/tiada_gambar.jpg';
     }
     public function getUsername() {
         $identity = $this->getIdentity();
@@ -30,19 +31,19 @@ class User extends \yii\web\User {
         return $identity !== null ? $identity->profile->name : null;
     }
 
-    public function getRole() {
+/*    public function getRole() {
         $identity = $this->getIdentity();
 
         return $identity !== null ? $identity->role->name : null;
     }
-
-    public function getStoreList() {
+*/
+/*    public function getStoreList() {
         $identity = $this->getIdentity();
 
         return $identity !== null ? $identity->storeList : null;
     }
-
-    public function getIsDev() {
+*/
+/*    public function getIsDev() {
         $identity = $this->getRole();
 
         return $identity === 'Developer' ? true : false;
@@ -101,17 +102,17 @@ class User extends \yii\web\User {
 
         return $identity === 'Jurugegas' ? true : false;
     }
+*/
+/*   public function getIdentity($autoRenew = true) {
+       if ($this->_identity === false) {
+           if ($this->enableSession && $autoRenew) {
+               $this->_identity = null;
+               $this->renewAuthStatus();
+           } else {
+               return null;
+           }
+       }
 
-//    public function getIdentity($autoRenew = true) {
-//        if ($this->_identity === false) {
-//            if ($this->enableSession && $autoRenew) {
-//                $this->_identity = null;
-//                $this->renewAuthStatus();
-//            } else {
-//                return null;
-//            }
-//        }
-//
-//        return $this->_identity;
-//    }
+       return $this->_identity;
+   }*/
 }
