@@ -24,7 +24,6 @@ class MigrateController extends BaseMigrateController
 		if($auth) {
 			$this->stdOut("Remove all auth settings\n");
 			$auth->removeAll();
-
 		}
 
 		// add crud permission : add table name that require complex user management
@@ -44,6 +43,7 @@ class MigrateController extends BaseMigrateController
 			break;
 		}
 		$query->andWhere(['not like','table_name','migration'])
+		->andWhere(['not like','table_name','log'])
 		->andWhere(['not like','table_name','auth'])
 		// ->andWhere(['not in','table_name',$crudModules])
 		->all();
@@ -51,6 +51,7 @@ class MigrateController extends BaseMigrateController
 		foreach ($query->each() as $key => $value) {
 			$crudModules[] = $value['table_name'];
 		}
+		var_dump($crudModules);die;
 		foreach ($crudModules as $key => $module) {
 			$this->stdOut("Add permission : $module\n", Console::FG_RED, Console::UNDERLINE);
 			$this->addCrudPermission($module,$auth);

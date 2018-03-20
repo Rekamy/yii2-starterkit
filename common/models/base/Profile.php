@@ -11,19 +11,19 @@ use yii\behaviors\BlameableBehavior;
  *
  * @property integer $id
  * @property string $name
- * @property integer $ic_no
+ * @property string $avatar
+ * @property string $ic_no
  * @property string $contact
  * @property string $email
  * @property integer $status
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
- * @property string $created_by
- * @property string $updated_by
- * @property string $deleted_by
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
  *
  * @property \common\models\User $id0
- * @property \common\models\User $user
  */
 class Profile extends \yii\db\ActiveRecord
 {
@@ -51,8 +51,7 @@ class Profile extends \yii\db\ActiveRecord
     public static function relationNames()
     {
         return [
-            'id0',
-            'user'
+            'id0'
         ];
     }
 
@@ -62,10 +61,10 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ic_no', 'status'], 'integer'],
             [['email'], 'required'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
-            [['name', 'contact', 'email'], 'string', 'max' => 255],
+            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['name', 'avatar', 'ic_no', 'contact', 'email'], 'string', 'max' => 255],
             [['email'], 'unique']
         ];
     }
@@ -86,6 +85,7 @@ class Profile extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'avatar' => Yii::t('app', 'Avatar'),
             'ic_no' => Yii::t('app', 'Ic No'),
             'contact' => Yii::t('app', 'Contact'),
             'email' => Yii::t('app', 'Email'),
@@ -97,14 +97,6 @@ class Profile extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getId0()
-    {
-        return $this->hasOne(\common\models\User::className(), ['id' => 'id']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
     {
         return $this->hasOne(\common\models\User::className(), ['id' => 'id']);
     }
@@ -138,7 +130,7 @@ class Profile extends \yii\db\ActiveRecord
      * {
      *     public static function find()
      *     {
-     *         return parent::find()->where(['deleted' => false]);
+     *         return parent::find()->andWhere(['deleted' => false]);
      *     }
      * }
      *
@@ -148,7 +140,7 @@ class Profile extends \yii\db\ActiveRecord
      *
      * // Use where() to ignore the default condition
      * // SELECT FROM customer WHERE age>30
-     * $customers = Customer::find()->where('age>30')->all();
+     * $customers = Customer::find()->andWhere('age>30')->all();
      * ```
      */
 
@@ -159,8 +151,12 @@ class Profile extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new \common\models\query\ProfileQuery(get_called_class());
+        // uncomment and edit permission rule to view own items only
+        /*if(\Yii::$app->user->can('permission')){
+           $query->mine();
+        } */
         // uncomment and edit permission rule to view deleted items
-        /* if(\Yii::$app->user->can('see_deleted')){
+        /*if(\Yii::$app->user->can('see_deleted')){
            return $query;
         } */
         return $query->andWhere(['profile.deleted_by' => 0]);

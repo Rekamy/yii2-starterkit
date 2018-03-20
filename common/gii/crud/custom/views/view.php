@@ -13,7 +13,7 @@ $fk = $generator->generateFK($tableSchema);
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
@@ -136,7 +136,7 @@ if($provider<?= $rel[1] ?>->totalCount){
 <?php elseif(empty($rel[2])): ?>
     <?= "<?php " ?>if ($model-><?= $name ?>) : ?>
     <div class="col-sm-12">
-    <div class="box box-primary">
+    <div class="box box-danger">
         <div class="box-header">
             <h4 class="title"><?= $rel[1] ?><?= "<?= " ?>' '. Html::encode($this->title) ?></h4>
     <?= "<?php \n" ?>

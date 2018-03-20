@@ -27,16 +27,28 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
+        if(!\Yii::$app->user->can('Administrator')) {
+            $this->andWhere('[[status]]=1');
+        }
         return $this;
     }*/
+
+    public function mine()
+    {
+            $this->andWhere('[[created_by]]='.\Yii::$app->user->id);
+        return $this;
+    }
 
     /**
      * @inheritdoc
      * @return <?= $modelFullClassName ?>[]|array
      */
-    public function all($db = null)
+    public function all($db = null, $bypass = false)
     {
+        // uncomment and edit permission rule to view all
+        /*if(!\Yii::$app->user->can('Administrator')) {
+            $this->mine();
+        }*/
         return parent::all($db);
     }
 

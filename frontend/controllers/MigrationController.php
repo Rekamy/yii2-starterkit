@@ -8,6 +8,8 @@ use common\models\search\MigrationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\base\Exception;
+use yii\helpers\Url;
 
 /**
  * MigrationController implements the CRUD actions for Migration model.
@@ -38,7 +40,7 @@ class MigrationController extends Controller
             ]
         ];
     }
-
+    /*
     public function beforeAction($action)
     {
         $toRedir = [
@@ -53,6 +55,7 @@ class MigrationController extends Controller
         }
         return parent::beforeAction($action);
     }
+    */
 
     /**
      * Lists all Migration models.
@@ -138,7 +141,7 @@ class MigrationController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDeletePermanent($id)
     {
 
         $model = $this->findModel($id);

@@ -21,13 +21,13 @@ class m130524_201442_init extends Migration
             'password_reset_token' => $this->string()->unique(),
             'email' => $this->string()->notNull()->unique(),
 
-            'status' => $this->smallInteger()->defaultValue(10),
+            'status' => $this->smallInteger()->defaultValue(1),
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
             'deleted_at' => $this->timestamp(),
-            'created_by' => $this->timestamp(),
-            'updated_by' => $this->timestamp(),
-            'deleted_by' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
         ], $tableOptions);
 
         $this->createTable('{{%profile}}', [
@@ -38,13 +38,13 @@ class m130524_201442_init extends Migration
             'contact' => $this->string(),
             'email' => $this->string()->notNull()->unique(),
 
-            'status' => $this->smallInteger()->defaultValue(10),
+            'status' => $this->smallInteger()->defaultValue(1),
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
             'deleted_at' => $this->timestamp(),
-            'created_by' => $this->timestamp(),
-            'updated_by' => $this->timestamp(),
-            'deleted_by' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
         ], $tableOptions);
 
         $this->createTable('{{%setting}}', [

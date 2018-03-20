@@ -118,7 +118,7 @@ class Setting extends \yii\db\ActiveRecord
      * {
      *     public static function find()
      *     {
-     *         return parent::find()->where(['deleted' => false]);
+     *         return parent::find()->andWhere(['deleted' => false]);
      *     }
      * }
      *
@@ -128,7 +128,7 @@ class Setting extends \yii\db\ActiveRecord
      *
      * // Use where() to ignore the default condition
      * // SELECT FROM customer WHERE age>30
-     * $customers = Customer::find()->where('age>30')->all();
+     * $customers = Customer::find()->andWhere('age>30')->all();
      * ```
      */
 
@@ -139,8 +139,12 @@ class Setting extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new \common\models\query\SettingQuery(get_called_class());
+        // uncomment and edit permission rule to view own items only
+        /*if(\Yii::$app->user->can('permission')){
+           $query->mine();
+        } */
         // uncomment and edit permission rule to view deleted items
-        /* if(\Yii::$app->user->can('see_deleted')){
+        /*if(\Yii::$app->user->can('see_deleted')){
            return $query;
         } */
         return $query->andWhere(['setting.deleted_by' => 0]);

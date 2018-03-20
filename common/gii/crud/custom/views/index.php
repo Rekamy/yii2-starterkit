@@ -18,7 +18,7 @@ echo "<?php\n";
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\dynagrid\DynaGrid;
 use <?= $generator->indexWidgetType === 'grid' ? "kartik\\grid\\GridView;" : "yii\\widgets\\ListView;" ?>
@@ -46,7 +46,8 @@ if ($generator->indexWidgetType === 'grid'):
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 <?php
-    if ($generator->expandable && !empty($fk)):
+    // if ($generator->expandable && !empty($fk)):
+    if ($generator->expandable):
 ?>
         [
             'class' => 'kartik\grid\ExpandRowColumn',
@@ -59,7 +60,7 @@ if ($generator->indexWidgetType === 'grid'):
             },
             'headerOptions' => ['class' => 'kartik-sheet-style'],
             'expandOneOnly' => true,
-            'visible' => false
+            'visible' => true,
         ],
 <?php
     endif;
@@ -84,13 +85,23 @@ if ($generator->indexWidgetType === 'grid'):
         [
             'class' => 'yii\grid\ActionColumn',
 <?php if($generator->saveAsNew): ?>
-            'template' => '{save-as-new} {view} {update} {delete}',
+            'template' => '{save-as-new} {view} {update} {delete} {delete-permanent}',
+<?php else : ?>
+            'template' => '{view} {update} {delete} {delete-permanent}',
+<?php endif; ?>
             'buttons' => [
+                'delete-permanent' => function ($url) {
+                    return Html::a('<span class="glyphicon glyphicon-trash" style="color:red"></span>', $url, ['title' => 'Delete Permanent']);
+                },
+<?php if($generator->saveAsNew): ?>
                 'save-as-new' => function ($url) {
                     return Html::a('<span class="glyphicon glyphicon-copy"></span>', $url, ['title' => 'Save As New']);
                 },
-            ],
 <?php endif; ?>
+            ],
+            'visibleButtons' => [
+                'delete-permanent' => \Yii::$app->user->can('admin'),
+            ]
         ],
     ];
 <?php
@@ -100,7 +111,7 @@ if ($generator->indexWidgetType === 'grid'):
     <?= "<?= " ?>DynaGrid::widget([
         'columns'=>$gridColumn,
         'storage'=>DynaGrid::TYPE_COOKIE,
-        'theme'=>'panel-primary',
+        'theme'=>'panel-danger',
         'showPersonalize'=>true,
         'gridOptions'=>[
             'dataProvider' => $dataProvider,
@@ -108,7 +119,7 @@ if ($generator->indexWidgetType === 'grid'):
             'filterSelector' => 'select[name="per-page"]',
             // 'showPageSummary'=>true,
             //'floatHeader'=>true,
-            'responsiveWrap'=>false,
+            //'responsiveWrap'=>false,
             'pjax' => true,
             'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id(StringHelper::basename($generator->modelClass))?>']],
             'panel' => [

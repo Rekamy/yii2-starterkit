@@ -4,8 +4,9 @@
 /* @var $searchModel common\models\search\SettingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\export\ExportMenu;
+use kartik\dynagrid\DynaGrid;
 use kartik\grid\GridView;
 
 $this->title = Yii::t('app', 'Setting');
@@ -18,13 +19,6 @@ $this->registerJs($search);
 ?>
 <div class="setting-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Setting'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
-    </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
@@ -41,7 +35,8 @@ $this->registerJs($search);
                 return Yii::$app->controller->renderPartial('_expand', ['model' => $model]);
             },
             'headerOptions' => ['class' => 'kartik-sheet-style'],
-            'expandOneOnly' => true
+            'expandOneOnly' => true,
+            'visible' => true,
         ],
         ['attribute' => 'id', 'visible' => false],
         'key',
@@ -49,43 +44,70 @@ $this->registerJs($search);
         'value',
         'description',
         'remark',
-        'status',
+        [
+            'attribute' => 'status',
+            'format' => 'raw',
+            'value' => function($model) {
+                switch ($model['status']) {
+                    case 1:
+                    return \kartik\helpers\Html::bsLabel('Active','success');
+                    break;
+
+                    default:
+                    return \kartik\helpers\Html::bsLabel('Inactive','danger');
+                    break;
+                }
+            }
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
+            'template' => '{view} {update} {delete} {delete-permanent}',
+            'buttons' => [
+                'delete-permanent' => function ($url) {
+                    return Html::a('<span class="glyphicon glyphicon-trash" style="color:red"></span>', $url, ['title' => 'Delete Permanent']);
+                },
+            ],
+            'visibleButtons' => [
+                'delete-permanent' => \Yii::$app->user->can('admin'),
+            ]
         ],
-    ]; 
+    ];
     ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => $gridColumn,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-setting']],
-        'panel' => [
-            'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
-        ],
-        'export' => false,
-        // your toolbar can include the additional full export menu
-        'toolbar' => [
-            '{export}',
-            ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => true,
-                'dropdownOptions' => [
-                    'label' => 'Full',
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">Export All Data</li>',
-                    ],
+    <?= DynaGrid::widget([
+        'columns'=>$gridColumn,
+        'storage'=>DynaGrid::TYPE_COOKIE,
+        'theme'=>'panel-danger',
+        'showPersonalize'=>true,
+        'gridOptions'=>[
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'filterSelector' => 'select[name="per-page"]',
+            // 'showPageSummary'=>true,
+            //'floatHeader'=>true,
+            //'responsiveWrap'=>false,
+            'pjax' => true,
+            'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-setting']],
+            'panel' => [
+                'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
+                'before' =>  '<div style="padding-top: 7px;"><em>* The table header sticks to the top in this demo as you scroll</em></div>',
+                'after' => false,
+            ],
+            // 'export' => false,
+            // your toolbar can include the additional full export menu
+            'toolbar' => [
+                ['content'=>
+                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['class' => 'btn btn-success', 'title'=>Yii::t('app', 'Create Setting')]) . ' '.
+                    Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button'])
                 ],
+                ['content'=>'{dynagridFilter}{dynagridSort}{dynagrid}'],
+                '{export}',
+                '{toggleData}',
                 'exportConfig' => [
-                    ExportMenu::FORMAT_PDF => false
+                    // ExportMenu::FORMAT_PDF => false
                 ]
-            ]) ,
+            ],
         ],
+        'options'=>['id'=>'dynagrid-1'] // a unique identifier is important
     ]); ?>
 
 </div>

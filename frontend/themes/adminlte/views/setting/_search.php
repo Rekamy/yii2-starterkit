@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -27,7 +27,13 @@ use yii\widgets\ActiveForm;
 
     <?php /* echo $form->field($model, 'remark')->textInput(['maxlength' => true, 'placeholder' => 'Remark']) */ ?>
 
-    <?php /* echo $form->field($model, 'status')->textInput(['placeholder' => 'Status']) */ ?>
+    <?php /* echo $form->field($model, 'status')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => [1 => 'Active', 0 => 'Inactive'],
+            'options' => ['placeholder' => 'Select status ...'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ]); */ ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

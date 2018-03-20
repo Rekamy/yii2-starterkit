@@ -51,13 +51,15 @@ $config = [
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         // uncomment to use rbac
-/*        'authManager' => [
+        'authManager' => [
             // use php file
             'class' => 'yii\rbac\PhpManager',
-            'assignmentFile' => '@common/rbac/assignments.php'
+            // 'assignmentFile' => '@common/rbac/assignments.php'
+            // 'itemFile' => '@common/rbac/items.php'
+            // 'ruleFile' => '@common/rbac/rules.php'
             // use db
             // 'class' => 'yii\rbac\DbManager',
-        ],*/
+        ],
         'notify' => [
             'class' => 'common\components\Notify',
         ],
@@ -144,6 +146,9 @@ $config = [
                 ],
             ],
         ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+        ]
     ],
     'params' => $params,
 ];

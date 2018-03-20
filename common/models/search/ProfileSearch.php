@@ -12,14 +12,16 @@ use common\models\Profile;
  */
  class ProfileSearch extends Profile
 {
+    // use \common\components\RelationSFTrait;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'ic_no', 'status'], 'integer'],
-            [['name', 'contact', 'email', 'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
+            [['id', 'status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['name', 'avatar', 'ic_no', 'contact', 'email', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
         ];
     }
 
@@ -61,7 +63,6 @@ use common\models\Profile;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'ic_no' => $this->ic_no,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -72,6 +73,8 @@ use common\models\Profile;
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'avatar', $this->avatar])
+            ->andFilterWhere(['like', 'ic_no', $this->ic_no])
             ->andFilterWhere(['like', 'contact', $this->contact])
             ->andFilterWhere(['like', 'email', $this->email]);
 

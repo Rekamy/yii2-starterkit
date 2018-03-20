@@ -12,6 +12,8 @@ use common\models\Migration;
  */
  class MigrationSearch extends Migration
 {
+    // use \common\components\RelationSFTrait;
+
     /**
      * @inheritdoc
      */

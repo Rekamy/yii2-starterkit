@@ -9,7 +9,7 @@ use yii\helpers\StringHelper;
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 
 
 /* @var $this yii\web\View */
@@ -20,7 +20,7 @@ $this->title = <?= $generator->generateString('Create ' . Inflector::camel2words
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">
-	<div class="panel panel-primary">
+	<div class="panel panel-danger">
 		<div class="panel-heading">
 			<h1 class="panel-title"><?= "<?= " ?>Html::encode($this->title) ?></h1>
 		</div>

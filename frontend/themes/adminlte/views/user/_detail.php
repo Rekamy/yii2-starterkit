@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
@@ -21,16 +21,27 @@ use kartik\grid\GridView;
     $gridColumn = [
         ['attribute' => 'id', 'visible' => false],
         'username',
-        'auth_key',
-        'password_hash',
-        'password_reset_token',
         'email:email',
-        'status',
+        [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function($model) {
+                    switch($model['status']) {
+                        case 1:
+                        return \kartik\helpers\Html::bsLabel('Active','success');
+                        break;
+                        default:
+                        return \kartik\helpers\Html::bsLabel('Inactive','danger');
+                        break;
+                    }
+                },
+                'visible' => true,
+            ],
     ];
     echo DetailView::widget([
         'model' => $model,
         'attributes' => $gridColumn
-    ]); 
+    ]);
 ?>
     </div>
 </div>

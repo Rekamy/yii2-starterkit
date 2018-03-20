@@ -17,15 +17,15 @@ class User extends BaseUser
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['status'], 'integer'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
+            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
             [['email'], 'unique'],
-            [['password_reset_token'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['password_reset_token'], 'unique']
         ];
     }
 

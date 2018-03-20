@@ -29,12 +29,10 @@ class SettingQuery extends \yii\db\ActiveQuery
      */
     public function all($db = null, $bypass = false)
     {
-        if($bypass) {
-            return parent::all($db);
-        }
-        if(!\Yii::$app->user->can('Administrator')) {
+        // uncomment and edit permission rule to view all
+        /*if(!\Yii::$app->user->can('Administrator')) {
             $this->mine();
-        }
+        }*/
         return parent::all($db);
     }
 

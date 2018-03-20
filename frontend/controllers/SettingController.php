@@ -8,6 +8,8 @@ use common\models\search\SettingSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\base\Exception;
+use yii\helpers\Url;
 
 /**
  * SettingController implements the CRUD actions for Setting model.
@@ -38,7 +40,7 @@ class SettingController extends Controller
             ]
         ];
     }
-
+    /*
     public function beforeAction($action)
     {
         $toRedir = [
@@ -53,6 +55,7 @@ class SettingController extends Controller
         }
         return parent::beforeAction($action);
     }
+    */
 
     /**
      * Lists all Setting models.
@@ -138,7 +141,7 @@ class SettingController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDeletePermanent($id)
     {
 
         $model = $this->findModel($id);

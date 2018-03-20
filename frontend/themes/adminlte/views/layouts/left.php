@@ -70,10 +70,11 @@ if($script){
                 ['label' => Yii::t('app','Admin Section'), 'options' => ['class' => 'header']],
                 [
                     'label' => Yii::t('app','System Management'),
+                    // 'visible' => Yii::$app->user->can('admin'),
                     'items' => [
                         ['label' => Yii::t('app','Users'), 'icon' => 'file-code-o', 'url' => ['/user/index']],
                         ['label' => Yii::t('app','My Profile'), 'icon' => 'file-code-o', 'url' => ['/profile/index']],
-                        ['label' => Yii::t('app','Access'), 'icon' => 'file-code-o', 'url' => ['/role/index']],
+                        ['label' => Yii::t('app','Access'), 'icon' => 'file-code-o', 'url' => ['/admin/assignment']],
                         ['label' => Yii::t('app','Activity Log'), 'icon' => 'file-code-o', 'url' => ['/activity-log/index']],
                         ['label' => Yii::t('app','System Maintenance'), 'icon' => 'file-code-o', 'url' => ['/system/maintenance']],
                     ],

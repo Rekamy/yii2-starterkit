@@ -12,6 +12,8 @@ use common\models\Log;
  */
  class LogSearch extends Log
 {
+    // use \common\components\RelationSFTrait;
+
     /**
      * @inheritdoc
      */

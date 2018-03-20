@@ -11,7 +11,7 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -22,7 +22,7 @@ $this->title = <?= $generator->generateString('Update {modelClass}: ', ['modelCl
 //$this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
-	<div class="panel panel-primary">
+	<div class="panel panel-danger">
 		<div class="panel-heading">
 		    <h1 class="panel-title"><?= "<?= " ?>Html::encode($this->title) ?></h1>
 		</div>

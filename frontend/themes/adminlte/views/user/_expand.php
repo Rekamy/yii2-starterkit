@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\tabs\TabsX;
 use yii\helpers\Url;
 $items = [
@@ -9,7 +9,7 @@ $items = [
             'model' => $model,
         ]),
     ],
-        ];
+    ];
 echo TabsX::widget([
     'items' => $items,
     'position' => TabsX::POS_ABOVE,

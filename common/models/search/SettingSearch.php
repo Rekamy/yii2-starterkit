@@ -12,6 +12,8 @@ use common\models\Setting;
  */
  class SettingSearch extends Setting
 {
+    // use \common\components\RelationSFTrait;
+
     /**
      * @inheritdoc
      */

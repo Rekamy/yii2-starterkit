@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "79d3ad2a5c06f022f2592d9d78f8590a",
+    "content-hash": "c9b6b8297e9d935fe570bd1f1600b605",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -2709,16 +2709,16 @@
         },
         {
             "name": "mdmsoft/yii2-admin",
-            "version": "2.8",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mdmsoft/yii2-admin.git",
-                "reference": "48298cb2891f728ae93e59f75802607f0ed910f5"
+                "reference": "e9cc1d8adc0e34f3a053d172116c6903c2e3c1fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/48298cb2891f728ae93e59f75802607f0ed910f5",
-                "reference": "48298cb2891f728ae93e59f75802607f0ed910f5",
+                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/e9cc1d8adc0e34f3a053d172116c6903c2e3c1fb",
+                "reference": "e9cc1d8adc0e34f3a053d172116c6903c2e3c1fb",
                 "shasum": ""
             },
             "require": {
@@ -2763,7 +2763,7 @@
                 "rbac",
                 "yii"
             ],
-            "time": "2017-10-04T02:54:53+00:00"
+            "time": "2017-11-18T13:27:11+00:00"
         },
         {
             "name": "mootensai/yii2-enhanced-gii",
@@ -2771,7 +2771,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kidzen/yii2-enhanced-gii.git",
-                "reference": "e9445caa4f801e442b63ffa83289d3bcb25ea084"
+                "reference": "36b0ba3ac08cf0df0b5105d5ea7bab43cbea1bfb"
             },
             "require": {
                 "kartik-v/yii2-builder": "*",
@@ -2815,7 +2815,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-03-18T06:53:58+00:00"
+            "time": "2018-03-20T06:13:14+00:00"
         },
         {
             "name": "mootensai/yii2-jsblock",
@@ -6317,6 +6317,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "mdmsoft/yii2-admin": 20,
         "mootensai/yii2-enhanced-gii": 20,
         "mootensai/yii2-relation-trait": 20,
         "kartik-v/yii2-mpdf": 20,

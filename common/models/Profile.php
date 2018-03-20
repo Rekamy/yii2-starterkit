@@ -17,10 +17,10 @@ class Profile extends BaseProfile
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['ic_no', 'status'], 'integer'],
             [['email'], 'required'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
-            [['name', 'contact', 'email'], 'string', 'max' => 255],
+            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['name', 'avatar', 'ic_no', 'contact', 'email'], 'string', 'max' => 255],
             [['email'], 'unique']
         ]
         );

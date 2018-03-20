@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
@@ -14,10 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-view">
 
     <div class="row">
-        <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'User').' '. Html::encode($this->title) ?></h2>
+    <div class="col-sm-12">
+    <div class="box">
+        <div class="box-header">
+            <h2 class="box-title"><?= Yii::t('app', 'User').' '. Html::encode($this->title) ?></h2>
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">
+        <div class="box-body">
+        <div class="col-sm-4">
             
             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -29,58 +32,73 @@ $this->params['breadcrumbs'][] = $this->title;
             ])
             ?>
         </div>
-    </div>
 
         <div class="col-sm-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'visible' => false],
         'username',
-        'auth_key',
-        'password_hash',
-        'password_reset_token',
         'email:email',
-        'status',
+        [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function($model) {
+                    switch($model['status']) {
+                        case 1:
+                        return \kartik\helpers\Html::bsLabel('Active','success');
+                        break;
+                        default:
+                        return \kartik\helpers\Html::bsLabel('Inactive','danger');
+                        break;
+                    }
+                },
+                'visible' => true,
+            ],
     ];
     echo DetailView::widget([
         'model' => $model,
         'attributes' => $gridColumn
     ]);
 ?>
-        </div>
-        <div class="col-sm-12">
-            <h4>Profile<?= ' '. Html::encode($this->title) ?></h4>
+    </div>
+    <?php if ($model->profile) : ?>
+    <div class="col-sm-12">
+    <div class="box box-danger">
+        <div class="box-header">
+            <h4 class="title">Profile<?= ' '. Html::encode($this->title) ?></h4>
     <?php 
     $gridColumnProfile = [
         'name',
+        'avatar',
         'ic_no',
         'contact',
         'email:email',
-        'status',
+        [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function($model) {
+                    switch($model['status']) {
+                        case 1:
+                        return \kartik\helpers\Html::bsLabel('Active','success');
+                        break;
+                        default:
+                        return \kartik\helpers\Html::bsLabel('Inactive','danger');
+                        break;
+                    }
+                },
+                'visible' => true,
+            ],
     ];
-    if($model->profile) {
-        echo DetailView::widget([
-            'model' => $model->profile,
-            'attributes' => $gridColumnProfile        ]);
-    }
+    echo DetailView::widget([
+        'model' => $model->profile,
+        'attributes' => $gridColumnProfile    ]);
     ?>
         </div>
-        <div class="col-sm-12">
-            <h4>Profile<?= ' '. Html::encode($this->title) ?></h4>
-    <?php 
-    $gridColumnProfile = [
-        'name',
-        'ic_no',
-        'contact',
-        'email:email',
-        'status',
-    ];
-    if($model->id0) {
-        echo DetailView::widget([
-            'model' => $model->id0,
-            'attributes' => $gridColumnProfile        ]);
-    }
-    ?>
         </div>
+    </div>
+    <?php endif; ?>
+    </div>
+    </div>
+    </div>
     </div>
 </div>

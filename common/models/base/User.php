@@ -19,12 +19,11 @@ use yii\behaviors\BlameableBehavior;
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
- * @property string $created_by
- * @property string $updated_by
- * @property string $deleted_by
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
  *
  * @property \common\models\Profile $profile
- * @property \common\models\Profile $id0
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -52,8 +51,7 @@ class User extends \yii\db\ActiveRecord
     public static function relationNames()
     {
         return [
-            'profile',
-            'id0'
+            'profile'
         ];
     }
 
@@ -64,8 +62,8 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['status'], 'integer'],
-            [['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
+            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
@@ -105,14 +103,6 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\common\models\Profile::className(), ['id' => 'id']);
     }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getId0()
-    {
-        return $this->hasOne(\common\models\Profile::className(), ['id' => 'id']);
-    }
     
     /**
      * @inheritdoc
@@ -143,7 +133,7 @@ class User extends \yii\db\ActiveRecord
      * {
      *     public static function find()
      *     {
-     *         return parent::find()->where(['deleted' => false]);
+     *         return parent::find()->andWhere(['deleted' => false]);
      *     }
      * }
      *
@@ -153,7 +143,7 @@ class User extends \yii\db\ActiveRecord
      *
      * // Use where() to ignore the default condition
      * // SELECT FROM customer WHERE age>30
-     * $customers = Customer::find()->where('age>30')->all();
+     * $customers = Customer::find()->andWhere('age>30')->all();
      * ```
      */
 
@@ -164,8 +154,12 @@ class User extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new \common\models\query\UserQuery(get_called_class());
+        // uncomment and edit permission rule to view own items only
+        /*if(\Yii::$app->user->can('permission')){
+           $query->mine();
+        } */
         // uncomment and edit permission rule to view deleted items
-        /* if(\Yii::$app->user->can('see_deleted')){
+        /*if(\Yii::$app->user->can('see_deleted')){
            return $query;
         } */
         return $query->andWhere(['user.deleted_by' => 0]);

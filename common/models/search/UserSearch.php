@@ -12,14 +12,16 @@ use common\models\User;
  */
  class UserSearch extends User
 {
+    // use \common\components\RelationSFTrait;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'], 'safe'],
+            [['id', 'status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
         ];
     }
 

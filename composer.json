@@ -19,7 +19,7 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
 
-        "mdmsoft/yii2-admin": "~2.0",
+        "mdmsoft/yii2-admin": "2.x-dev",
         "dmstr/yii2-adminlte-asset": "^2.4",
         "mootensai/yii2-enhanced-gii": "dev-custom@dev",
         "mootensai/yii2-relation-trait": "dev-custom@dev",

@@ -102,7 +102,7 @@ class Migration extends \yii\db\ActiveRecord
      * {
      *     public static function find()
      *     {
-     *         return parent::find()->where(['deleted' => false]);
+     *         return parent::find()->andWhere(['deleted' => false]);
      *     }
      * }
      *
@@ -112,7 +112,7 @@ class Migration extends \yii\db\ActiveRecord
      *
      * // Use where() to ignore the default condition
      * // SELECT FROM customer WHERE age>30
-     * $customers = Customer::find()->where('age>30')->all();
+     * $customers = Customer::find()->andWhere('age>30')->all();
      * ```
      */
 

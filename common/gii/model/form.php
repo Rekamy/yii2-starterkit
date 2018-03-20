@@ -9,10 +9,6 @@
         <strong>If table contains all the defined columns, the generator will automatically generate model that extends </strong><code>\kartik\tree\models\Tree</code>
     </blockquote>
 <?php
-// $generator['timestampValue'] ="new \\yii\\db\\Expression('CURRENT_TIMESTAMP')";
-// $generator['deletedAtValue'] ="new \\yii\\db\\Expression('CURRENT_TIMESTAMP')";
-// $generator['deletedAtValueRestored'] ="new \\yii\\db\\Expression('CURRENT_TIMESTAMP')";
-
 echo $form->field($generator, 'db');
 echo $form->field($generator, 'tableName');
 echo $form->field($generator, 'enableI18N')->checkbox();

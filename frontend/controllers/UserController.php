@@ -8,6 +8,7 @@ use common\models\search\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\base\Exception;
 use yii\helpers\Url;
 
 /**
@@ -30,7 +31,7 @@ class UserController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        // 'roles' => ['@']
+                        'roles' => ['@']
                     ],
                     [
                         'allow' => false
@@ -39,21 +40,22 @@ class UserController extends Controller
             ]
         ];
     }
+    /*
+    public function beforeAction($action)
+    {
+        $toRedir = [
+            'update' => 'view',
+            'create' => 'view',
+            'delete' => 'index',
+        ];
 
-    // public function beforeAction($action)
-    // {
-    //     $toRedir = [
-    //         'update' => 'view',
-    //         'create' => 'view',
-    //         'delete' => 'index',
-    //     ];
-
-    //     if (isset($toRedir[$action->id])) {
-    //         Yii::$app->response->redirect(Url::to([$toRedir[$action->id]]), 301);
-    //         Yii::$app->end();
-    //     }
-    //     return parent::beforeAction($action);
-    // }
+        if (isset($toRedir[$action->id])) {
+            Yii::$app->response->redirect(Url::to([$toRedir[$action->id]]), 301);
+            Yii::$app->end();
+        }
+        return parent::beforeAction($action);
+    }
+    */
 
     /**
      * Lists all User models.

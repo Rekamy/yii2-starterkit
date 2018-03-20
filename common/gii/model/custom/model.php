@@ -216,7 +216,7 @@ class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n
      * {
      *     public static function find()
      *     {
-     *         return parent::find()->where(['deleted' => false]);
+     *         return parent::find()->andWhere(['deleted' => false]);
      *     }
      * }
      *
@@ -226,7 +226,7 @@ class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n
      *
      * // Use where() to ignore the default condition
      * // SELECT FROM customer WHERE age>30
-     * $customers = Customer::find()->where('age>30')->all();
+     * $customers = Customer::find()->andWhere('age>30')->all();
      * ```
      */
 <?php endif; ?>
@@ -239,7 +239,15 @@ class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n
     {
 <?php if($generator->deletedBy && array_key_exists($generator->deletedBy, $labels)): ?>
         $query = new <?= $queryClassFullName ?>(get_called_class());
-        return $query->where(['<?= $tableName ?>.<?= $generator->deletedBy ?>' => <?= $generator->deletedByValueRestored ?>]);
+        // uncomment and edit permission rule to view own items only
+        /*if(\Yii::$app->user->can('permission')){
+           $query->mine();
+        } */
+        // uncomment and edit permission rule to view deleted items
+        /*if(\Yii::$app->user->can('see_deleted')){
+           return $query;
+        } */
+        return $query->andWhere(['<?= $tableName ?>.<?= $generator->deletedBy ?>' => <?= $generator->deletedByValueRestored ?>]);
 <?php else: ?>
         return new <?= $queryClassFullName ?>(get_called_class());
 <?php endif; ?>
