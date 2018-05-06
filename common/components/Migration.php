@@ -18,20 +18,20 @@ class Migration extends YiiMigration
 
     // empty database function
     protected function emptyDatabase() {
-        switch (Yii::$app->db->driverName) {
+        switch ($this->db->driverName) {
             case 'oci':
-            $sqlObject = Yii::$app->db->createCommand("select 'truncate table \"' || table_name ||'\"' as sql FROM user_tables WHERE table_name != 'migration'")->queryAll();
+            $sqlObject = $this->db->createCommand("select 'truncate table \"' || table_name ||'\"' as sql FROM user_tables WHERE table_name != 'migration'")->queryAll();
             foreach ($sqlObject as $query) {
                 $this->execute($query['SQL']);
             }
             break;
             case 'mysql':
             $fkCheckOff = "SET FOREIGN_KEY_CHECKS = 0";
-            $sqlObject = Yii::$app->db->createCommand($fkCheckOff)->execute();
-            $command = Yii::$app->db->createCommand('set sql_mode=PIPES_AS_CONCAT');
+            $sqlObject = $this->db->createCommand($fkCheckOff)->execute();
+            $command = $this->db->createCommand('set sql_mode=PIPES_AS_CONCAT');
             $command->execute();
-            $sqlObject = Yii::$app->db->createCommand("select 'truncate table  ".$this->dbName.".' || table_name || ';' as 'SQL' from information_schema.tables
-                WHERE table_schema = '".$this->dbName."' and table_name != 'migration' and table_type = 'BASE_TABLE'")->queryAll();
+            $sqlObject = $this->db->createCommand("select 'truncate table  ".$this->getDbName($this->db).".' || table_name || ';' as 'SQL' from information_schema.tables
+                WHERE table_schema = '".$this->getDbName($this->db)."' and table_name != 'migration' and table_type = 'BASE_TABLE'")->queryAll();
             foreach ($sqlObject as $query) {
                 $this->execute($query);
             }
@@ -49,12 +49,12 @@ class Migration extends YiiMigration
     public function customDrop() {
         if ($this->db->driverName === 'oci') {
             //drop for confirm
-            $tables = Yii::$app->db->createCommand("select 'drop table \"' || table_name || '\" cascade constraints' as sql from user_tables where table_name != 'migration'")->queryAll();
+            $tables = $this->db->createCommand("select 'drop table \"' || table_name || '\" cascade constraints' as sql from user_tables where table_name != 'migration'")->queryAll();
             foreach ($tables as $table) {
                 $this->execute($table['SQL']);
             }
 
-            $views = Yii::$app->db->createCommand("select 'drop view \"' || view_name || '\" cascade constraints' as sql from user_views")->queryAll();
+            $views = $this->db->createCommand("select 'drop view \"' || view_name || '\" cascade constraints' as sql from user_views")->queryAll();
             foreach ($views as $view) {
                 $this->execute($view['SQL']);
             }
@@ -66,22 +66,22 @@ class Migration extends YiiMigration
                 $fkCheckOff = "SET FOREIGN_KEY_CHECKS = 0";
                 $this->execute($fkCheckOff);
                 //prepare script for dropping table and view
-                $script = "SELECT concat('DROP TABLE IF EXISTS ".$this->dbName.".', table_name, ';') as 'query'
+                $script = "SELECT concat('DROP TABLE IF EXISTS ".$this->getDbName($this->db).".', table_name, ';') as 'query'
                 FROM information_schema.tables
-                WHERE table_schema = '".$this->dbName."' and table_name != 'migration'";
+                WHERE table_schema = '".$this->getDbName($this->db)."' and table_name != 'migration'";
 
-                $viewDropScript = "SELECT CONCAT('DROP VIEW IF EXISTS ".$this->dbName.".', table_name, ';') AS query
+                $viewDropScript = "SELECT CONCAT('DROP VIEW IF EXISTS ".$this->getDbName($this->db).".', table_name, ';') AS query
                 FROM information_schema.tables
-                WHERE table_schema = '".$this->dbName."' AND TABLE_TYPE LIKE 'VIEW'";
+                WHERE table_schema = '".$this->getDbName($this->db)."' AND TABLE_TYPE LIKE 'VIEW'";
 
                 //dropping view
-                $viewDropObject = Yii::$app->db->createCommand($viewDropScript)->queryAll();
+                $viewDropObject = $this->db->createCommand($viewDropScript)->queryAll();
                 foreach ($viewDropObject as $viewQuery) {
                     $this->execute($viewQuery['query']);
                 }
 
                 //dropping table
-                $sqlObject = Yii::$app->db->createCommand($script)->queryAll();
+                $sqlObject = $this->db->createCommand($script)->queryAll();
                 foreach ($sqlObject as $query) {
                     $this->execute($query['query']);
                 }
@@ -101,12 +101,12 @@ class Migration extends YiiMigration
     public function reset() {
         if ($this->db->driverName === 'oci') {
             //drop for confirm
-            $tables = Yii::$app->db->createCommand("select 'drop table \"' || table_name || '\" cascade constraints' as sql from user_tables")->queryAll();
+            $tables = $this->db->createCommand("select 'drop table \"' || table_name || '\" cascade constraints' as sql from user_tables")->queryAll();
             foreach ($tables as $table) {
                 $this->execute($table['SQL']);
             }
 
-            $views = Yii::$app->db->createCommand("select 'drop view \"' || view_name || '\" cascade constraints' as sql from user_views")->queryAll();
+            $views = $this->db->createCommand("select 'drop view \"' || view_name || '\" cascade constraints' as sql from user_views")->queryAll();
             foreach ($views as $view) {
                 $this->execute($view['SQL']);
             }
@@ -118,22 +118,22 @@ class Migration extends YiiMigration
                 $fkCheckOff = "SET FOREIGN_KEY_CHECKS = 0";
                 $this->execute($fkCheckOff);
                 //prepare script for dropping table and view
-                $script = "SELECT concat('DROP TABLE IF EXISTS ".$this->dbName.".', table_name, ';') as 'query'
+                $script = "SELECT concat('DROP TABLE IF EXISTS ".$this->getDbName($this->db).".', table_name, ';') as 'query'
                 FROM information_schema.tables
-                WHERE table_schema = '".$this->dbName."'";
+                WHERE table_schema = '".$this->getDbName($this->db)."'";
 
-                $viewDropScript = "SELECT CONCAT('DROP VIEW IF EXISTS ".$this->dbName.".', table_name, ';') AS query
+                $viewDropScript = "SELECT CONCAT('DROP VIEW IF EXISTS ".$this->getDbName($this->db).".', table_name, ';') AS query
                 FROM information_schema.tables
-                WHERE table_schema = '".$this->dbName."' AND TABLE_TYPE LIKE 'VIEW'";
+                WHERE table_schema = '".$this->getDbName($this->db)."' AND TABLE_TYPE LIKE 'VIEW'";
 
                 //dropping view
-                $viewDropObject = Yii::$app->db->createCommand($viewDropScript)->queryAll();
+                $viewDropObject = $this->db->createCommand($viewDropScript)->queryAll();
                 foreach ($viewDropObject as $viewQuery) {
                     $this->execute($viewQuery['query']);
                 }
 
                 //dropping table
-                $sqlObject = Yii::$app->db->createCommand($script)->queryAll();
+                $sqlObject = $this->db->createCommand($script)->queryAll();
                 foreach ($sqlObject as $query) {
                     $this->execute($query['query']);
                 }
@@ -157,7 +157,7 @@ class Migration extends YiiMigration
             select 'ALTER TABLE \"' || table_name || '\" MODIFY \"id\" GENERATED BY DEFAULT ON NULL AS IDENTITY (START WITH LIMIT VALUE)' as sql from user_tables where table_name != 'migration'
             ";
             //reinitialize identity sequence
-            $alterIdentityScript = Yii::$app->db->createCommand($alterIdentity)->queryAll();
+            $alterIdentityScript = $this->db->createCommand($alterIdentity)->queryAll();
             foreach ($alterIdentityScript as $script) {
                 $this->execute($script['SQL']);
             }
@@ -167,14 +167,14 @@ class Migration extends YiiMigration
 
     public static function getDbDriver()
     {
-        return Yii::$app->db->driverName;
+        return $this->db->driverName;
     }
 
-    public static function getDbName($name='dbname')
+    public static function getDbName($db,$name='dbname')
     {
-        switch (Yii::$app->db->driverName) {
+        switch ($this->db->driverName) {
             case 'mysql':
-            if (preg_match('/' . $name . '=([^;]*)/', Yii::$app->db->dsn, $match)) {
+            if (preg_match('/' . $name . '=([^;]*)/', $this->db->dsn, $match)) {
                 return $match[1];
             } else {
                 return null;
@@ -182,7 +182,7 @@ class Migration extends YiiMigration
             break;
 
             case 'oci':
-            return Yii::$app->db->username;
+            return $this->db->username;
             break;
 
             default:

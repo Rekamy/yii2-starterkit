@@ -329,6 +329,18 @@ $container = [
             'firstPageLabel' => '<<',
             'lastPageLabel'  => '>>'
         ],
+        '\kartik\datecontrol\Module' => [
+            'autoWidgetSettings' => [
+                'date' => [
+                    'pluginOptions'=> [
+                        'autoclose'=>true,
+                        'todayHighlight' => true
+                    ],
+                ],
+                'datetime' => [],
+                'time' => [],
+            ],
+        ],
         'kartik\export\ExportMenu' => [
             'dynagridOptions' => true,
             'target' => ExportMenu::TARGET_BLANK,
