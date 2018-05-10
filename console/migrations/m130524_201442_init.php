@@ -227,7 +227,7 @@ class m130524_201442_init extends Migration
         if($idx){
             $query = $this->db->createCommand($idx)->queryAll();
             foreach ($query as $key => $value) {
-                $this->createIndex('fk'.$i++,'{{'.$value['TABLE_NAME'].'}}',$value['COLUMN_NAME']);
+                $this->createIndex('idx'.$i++,'{{'.$value['TABLE_NAME'].'}}',$value['COLUMN_NAME']);
             }
         }
 
