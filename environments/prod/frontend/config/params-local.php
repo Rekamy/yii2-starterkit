@@ -1,10 +1,20 @@
 <?php
 return [
-	'version'=>2.0,
-    'appName' => 'FEMS Fire Extinguisher Management System', //size 132x132
+	// system params
+    'adminEmail' => 'support@sarraglobal.com',
+	'version'=>'1.0',
+
+	// company params
+    'appNameShort' => 'APP NAME', //size 132x132
+    'appName' => 'Sarra System Template', //size 132x132
+    'companyNameShort' => 'SGSB',
+    'companyName' => 'Sarra Global Sdn Bhd',
+    'companyWebsite' => 'http://www.fems.com.my/',
+
+    // custom params
     'leftMenuImg' => 'dist/img/logo.png', //size 132x132
-    'companyNameShort' => 'FEMS',
-    'companyNameFull' => 'Aito Firework Holdings',
-    // 'companyLogoIcon' => 'dist/img/favicon-32x32.png', //size 32x32
-    'companyLogoIcon' => 'dist/img/logo.png', //size 32x32
+    'iconPath' => 'dist/img/favicon-aito.png', //size 132x132
+    'companyLogoIcon' => 'dist/img/company-logo-icon.png', //size 32x32
+    'companyLogo' => 'dist/img/company-logo.png', //size 32x32
+    'companyLogoAlt' => 'dist/img/company-logo.png', //size 32x32
 ];

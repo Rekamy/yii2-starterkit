@@ -1,5 +1,5 @@
 <?php
-$dbName = \common\components\Migration::getDbName();
+$dbName = \common\components\Migration::getDbName(Yii::$app->db);
 switch (Yii::$app->db->driverName) {
     case 'mysql':
     $script = "SELECT table_name as TABLE_NAME
@@ -44,7 +44,7 @@ if($script){
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div style="text-align: center">
-                <img src="<?= Yii::$app->params['leftMenuImg'] ?>" style="width: 200px" alt="Mohor_rasmi_Majlis_Perbandaran_Seberang_Perai"/>
+                <img src="<?= Yii::$app->params['leftMenuImg'] ?>" style="width: 80%" alt="Mohor_rasmi_Majlis_Perbandaran_Seberang_Perai"/>
             </div>
         </div>
 

@@ -11,7 +11,7 @@ return [
             // 'schemaCacheDuration' => false,
             'charset' => 'utf8',
         ],
-        'db2' => [
+        'db-oci' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'oci:host=localhost:1521;dbname=yii2dev',
             'username' => 'root',

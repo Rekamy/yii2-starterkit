@@ -159,13 +159,23 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         $model = new <?= $modelClass ?>();
 
-        if ($model->loadAll(Yii::$app->request->post()<?= !empty($generator->skippedRelations) ? ", [".implode(", ", $skippedRelations)."]" : ""; ?>) && $model->saveAll(<?= !empty($generator->skippedRelations) ? "[".implode(", ", $skippedRelations)."]" : ""; ?>)) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->loadAll(Yii::$app->request->post()<?= !empty($generator->skippedRelations) ? ", [".implode(", ", $skippedRelations)."]" : ""; ?>)) {
+            $dbtransac = Yii::$app->db->beginTransaction();
+            try {
+                if(!$model->saveAll(<?= !empty($generator->skippedRelations) ? "[".implode(", ", $skippedRelations)."]" : ""; ?>)) {
+                    Throw new Exception('Request Fail');
+                }
+                $dbtransac->commit();
+                Yii::$app->notify->success();
+                return $this->redirect(['view', <?= $urlParams ?>]);
+            } catch (Exception $e) {
+                $dbtransac->rollback();
+                Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
+            }
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -187,13 +197,23 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $model = $this->findModel(<?= $actionParams ?>);
 
 <?php endif; ?>
-        if ($model->loadAll(Yii::$app->request->post()<?= !empty($generator->skippedRelations) ? ", [".implode(", ", $skippedRelations)."]" : ""; ?>) && $model->saveAll(<?= !empty($generator->skippedRelations) ? "[".implode(", ", $skippedRelations)."]" : ""; ?>)) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->loadAll(Yii::$app->request->post()<?= !empty($generator->skippedRelations) ? ", [".implode(", ", $skippedRelations)."]" : ""; ?>)) {
+            $dbtransac = Yii::$app->db->beginTransaction();
+            try {
+                if(!$model->saveAll(<?= !empty($generator->skippedRelations) ? "[".implode(", ", $skippedRelations)."]" : ""; ?>)) {
+                    Throw new Exception('Request Fail');
+                }
+                $dbtransac->commit();
+                Yii::$app->notify->success();
+                return $this->redirect(['view', <?= $urlParams ?>]);
+            } catch (Exception $e) {
+                $dbtransac->rollback();
+                Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
+            }
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -204,7 +224,15 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionDelete(<?= $actionParams ?>)
     {
-        $this->findModel(<?= $actionParams ?>)->deleteWithRelated();
+        $dbtransac = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel(<?= $actionParams ?>)->deleteWithRelated();
+            $dbtransac->commit();
+            Yii::$app->notify->success();
+        } catch (Exception $e) {
+            $dbtransac->rollback();
+            Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
+        }
 
         return $this->redirect(['index']);
     }
@@ -217,15 +245,22 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionDeletePermanent(<?= $actionParams ?>)
     {
-
         $model = $this->findModel(<?= $actionParams ?>);
-        if($model->deleted_by != 0) {
-            if($model->delete()) {
-                Yii::$app->notify->success();
-                return $this->redirect(['index']);
+        $dbtransac = Yii::$app->db->beginTransaction();
+        try {
+            if($model->deleted_by != 0) {
+                if(!$model->delete()) {
+                    Throw new Exception('Fail');
+                }
             }
+
+            $dbtransac->commit();
+            Yii::$app->notify->success();
+        } catch (Exception $e) {
+            $dbtransac->rollback();
+            Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
         }
-        Yii::$app->notify->fail();
+
         return $this->redirect(['index']);
     }
 <?php if ($generator->pdf):?>

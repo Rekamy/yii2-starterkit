@@ -172,9 +172,9 @@ class Migration extends YiiMigration
 
     public static function getDbName($db,$name='dbname')
     {
-        switch ($this->db->driverName) {
+        switch ($db->driverName) {
             case 'mysql':
-            if (preg_match('/' . $name . '=([^;]*)/', $this->db->dsn, $match)) {
+            if (preg_match('/' . $name . '=([^;]*)/', $db->dsn, $match)) {
                 return $match[1];
             } else {
                 return null;
@@ -182,7 +182,7 @@ class Migration extends YiiMigration
             break;
 
             case 'oci':
-            return $this->db->username;
+            return $db->username;
             break;
 
             default:

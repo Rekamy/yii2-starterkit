@@ -47,7 +47,7 @@ class Generator extends BaseGenerator {
     public $generateRelations = self::RELATIONS_ALL;
     public $generateAttributeHints = false;
     public $generateMigrations = false;
-    public $optimisticLock = 'lock';
+    public $optimisticLock = '';
     public $createdAt = 'created_at';
     public $updatedAt = 'updated_at';
     public $timestampValue = "new \\yii\\db\\Expression('CURRENT_TIMESTAMP')";
@@ -61,7 +61,7 @@ class Generator extends BaseGenerator {
     public $deletedAtValue = "new \\yii\\db\\Expression('CURRENT_TIMESTAMP')";
     public $deletedAtValueRestored = "new \\yii\\db\\Expression('CURRENT_TIMESTAMP')";
     public $generateBaseOnly = false;
-    public $UUIDColumn = 'id';
+    public $UUIDColumn = '';
 
     /**
      * @inheritdoc

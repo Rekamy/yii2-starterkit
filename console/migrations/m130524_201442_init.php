@@ -81,21 +81,12 @@ class m130524_201442_init extends Migration
     }
 
     public function insertIdx() {
-        // pk idx
-        $i = 1;
-        $this->createIndex('idx'.$i++,'user','id');
-        $this->createIndex('idx'.$i++,'profile','id');
-        $this->createIndex('idx'.$i++,'setting','id');
-
-        // deleted idx
-        $i = 1;
-        $this->createIndex('idx_deleted'.$i++,'user','deleted_by');
-        $this->createIndex('idx_deleted'.$i++,'profile','deleted_by');
-
         // custom idx
         $i = 1;
         $this->createIndex('idx_custom'.$i++,'user','username');
         $this->createIndex('idx_custom'.$i++,'setting','key');
+
+        $this->addExtraIdx($i);
     }
 
     public function defaultScenario() {
@@ -212,18 +203,6 @@ class m130524_201442_init extends Migration
             $userBy = false;
             break;
         }
-/*        if($userBy){
-            $query = $this->db->createCommand($userBy)->queryAll();
-            foreach ($query as $key => $value) {
-                $this->createIndex('fk'.$i++,'{{'.$value['TABLE_NAME'].'}}',$value['COLUMN_NAME']);
-            }
-        }
-        if($approved){
-            $query = $this->db->createCommand($approved)->queryAll();
-            foreach ($query as $key => $value) {
-                $this->createIndex('fk'.$i++,'{{'.$value['TABLE_NAME'].'}}',$value['COLUMN_NAME']);
-            }
-        }*/
         if($idx){
             $query = $this->db->createCommand($idx)->queryAll();
             foreach ($query as $key => $value) {

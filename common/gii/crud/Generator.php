@@ -39,14 +39,14 @@ class Generator extends BaseGenerator
     public $useTablePrefix = false;
     public $generateRelations = true;
     public $generateMigrations = true;
-    public $optimisticLock = 'lock';
+    public $optimisticLock = '';
     public $createdAt = 'created_at';
     public $updatedAt = 'updated_at';
     public $timestampValue = "new \\yii\\db\\Expression('CURRENT_TIMESTAMP')";
     public $createdBy = 'created_by';
     public $updatedBy = 'updated_by';
     public $blameableValue = 'Yii::\$app->user->id';
-    public $UUIDColumn = 'id';
+    public $UUIDColumn = '';
     public $deletedBy = 'deleted_by';
     public $deletedAt = 'deleted_at';
     public $nsController = 'app\controllers';

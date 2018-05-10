@@ -13,33 +13,40 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
 
-    <div class="row">
-    <div class="col-sm-12">
     <div class="box">
         <div class="box-header">
             <h2 class="box-title"><?= Yii::t('app', 'User').' '. Html::encode($this->title) ?></h2>
+            <div class="pull-right">
+                <?= Html::a(Yii::t('app', 'Back'), Yii::$app->request->referrer, ['class' => 'btn btn-sm btn-default']) ?>                        
+                <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+                <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-sm btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
+                ])
+                ?>
+            </div>
         </div>
         <div class="box-body">
-        <div class="col-sm-4">
-            
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ],
-            ])
-            ?>
-        </div>
 
-        <div class="col-sm-12">
-<?php 
-    $gridColumn = [
-        ['attribute' => 'id', 'visible' => false],
-        'username',
-        'email:email',
-        [
+            <div class="nav-tabs-custom">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#User" data-toggle="tab"><?= Yii::t('app', 'User') ?></a></li>
+                    <?php if ($model->profile) : ?>
+                        <li><a href="#Profile" data-toggle="tab"><?= Yii::t('app', 'Profile') ?></a></li>
+                    <?php endif; ?>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="User">
+                        <?php 
+                        $gridColumn = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'username',
+                        'email:email',
+                        [
                 'attribute' => 'status',
                 'format' => 'raw',
                 'value' => function($model) {
@@ -54,26 +61,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'visible' => true,
             ],
-    ];
-    echo DetailView::widget([
-        'model' => $model,
-        'attributes' => $gridColumn
-    ]);
-?>
-    </div>
-    <?php if ($model->profile) : ?>
-    <div class="col-sm-12">
-    <div class="box box-danger">
-        <div class="box-header">
-            <h4 class="title">Profile<?= ' '. Html::encode($this->title) ?></h4>
-    <?php 
-    $gridColumnProfile = [
-        'name',
-        'avatar',
-        'ic_no',
-        'contact',
-        'email:email',
-        [
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model,
+                            'attributes' => $gridColumn
+                        ]);
+                    ?>
+                    </div>
+                        <?php if ($model->profile) : ?>
+                        <div class="tab-pane" id="Profile">
+                        <?php 
+                        $gridColumnProfile = [
+                        'name',
+                        'avatar',
+                        'ic_no',
+                        'contact',
+                        'email:email',
+                        [
                 'attribute' => 'status',
                 'format' => 'raw',
                 'value' => function($model) {
@@ -88,17 +92,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'visible' => true,
             ],
-    ];
-    echo DetailView::widget([
-        'model' => $model->profile,
-        'attributes' => $gridColumnProfile    ]);
-    ?>
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->profile,
+                            'attributes' => $gridColumnProfile
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-        </div>
-    </div>
-    <?php endif; ?>
-    </div>
-    </div>
-    </div>
     </div>
 </div>

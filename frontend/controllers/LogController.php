@@ -94,13 +94,23 @@ class LogController extends Controller
     {
         $model = new Log();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->loadAll(Yii::$app->request->post())) {
+            $dbtransac = Yii::$app->db->beginTransaction();
+            try {
+                if(!$model->saveAll()) {
+                    Throw new Exception('Request Fail');
+                }
+                $dbtransac->commit();
+                Yii::$app->notify->success();
+                return $this->redirect(['view', 'id' => $model->id]);
+            } catch (Exception $e) {
+                $dbtransac->rollback();
+                Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
+            }
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -113,13 +123,23 @@ class LogController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->loadAll(Yii::$app->request->post())) {
+            $dbtransac = Yii::$app->db->beginTransaction();
+            try {
+                if(!$model->saveAll()) {
+                    Throw new Exception('Request Fail');
+                }
+                $dbtransac->commit();
+                Yii::$app->notify->success();
+                return $this->redirect(['view', 'id' => $model->id]);
+            } catch (Exception $e) {
+                $dbtransac->rollback();
+                Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
+            }
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -130,7 +150,15 @@ class LogController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $dbtransac = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->deleteWithRelated();
+            $dbtransac->commit();
+            Yii::$app->notify->success();
+        } catch (Exception $e) {
+            $dbtransac->rollback();
+            Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
+        }
 
         return $this->redirect(['index']);
     }
@@ -143,15 +171,22 @@ class LogController extends Controller
      */
     public function actionDeletePermanent($id)
     {
-
         $model = $this->findModel($id);
-        if($model->deleted_by != 0) {
-            if($model->delete()) {
-                Yii::$app->notify->success();
-                return $this->redirect(['index']);
+        $dbtransac = Yii::$app->db->beginTransaction();
+        try {
+            if($model->deleted_by != 0) {
+                if(!$model->delete()) {
+                    Throw new Exception('Fail');
+                }
             }
+
+            $dbtransac->commit();
+            Yii::$app->notify->success();
+        } catch (Exception $e) {
+            $dbtransac->rollback();
+            Yii::$app->notify->fail( ($e->errorInfo[2]) ?? $e->getMessage());
         }
-        Yii::$app->notify->fail();
+
         return $this->redirect(['index']);
     }
 
