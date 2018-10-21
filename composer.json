@@ -21,22 +21,25 @@
 
         "mdmsoft/yii2-admin": "2.x-dev",
         "dmstr/yii2-adminlte-asset": "^2.4",
-        "mootensai/yii2-enhanced-gii": "dev-custom@dev",
-        "mootensai/yii2-relation-trait": "dev-custom@dev",
         "bedezign/yii2-audit": "^1.0",
         "kartik-v/yii2-mpdf": "@dev",
         "kartik-v/yii2-datecontrol": "@dev",
         "kartik-v/yii2-tree-manager": "@dev",
         "kartik-v/yii2-dynagrid": "@dev",
         "vova07/yii2-console-runner-extension": "*",
+        "kartik-v/yii2-export": "dev-master",
         "kartik-v/yii2-grid": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
         "yiisoft/yii2-gii": "~2.0.0",
         "yiisoft/yii2-faker": "~2.0.0",
+
         "codeception/base": "^2.2.3",
-        "codeception/verify": "~0.3.1"
+        "codeception/verify": "~0.3.1",
+
+        "mootensai/yii2-relation-trait": "dev-custom@dev",
+        "mootensai/yii2-enhanced-gii": "dev-custom@dev"
     },
     "config": {
         "process-timeout": 1800

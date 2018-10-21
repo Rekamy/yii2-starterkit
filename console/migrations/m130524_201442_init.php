@@ -15,44 +15,11 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
+            'username' => $this->string()->notNull(),
             'auth_key' => $this->string(32)->notNull(),
-            'password_hash' => $this->string()->notNull(),
-            'password_reset_token' => $this->string()->unique(),
-            'email' => $this->string()->notNull()->unique(),
-
-            'status' => $this->smallInteger()->defaultValue(1),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
-            'deleted_at' => $this->timestamp(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'deleted_by' => $this->integer()->defaultValue(0),
-        ], $tableOptions);
-
-        $this->createTable('{{%profile}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string(),
-            'avatar' => $this->string(),
-            'ic_no' => $this->string(),
-            'contact' => $this->string(),
-            'email' => $this->string()->notNull()->unique(),
-
-            'status' => $this->smallInteger()->defaultValue(1),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
-            'deleted_at' => $this->timestamp(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'deleted_by' => $this->integer()->defaultValue(0),
-        ], $tableOptions);
-
-        $this->createTable('{{%setting}}', [
-            'id' => $this->primaryKey(),
-            'key' => $this->string(),
-            'label' => $this->string(),
-            'value' => $this->string(),
-            'description' => $this->string(),
+            'password_hash' => $this->string()->notNull()->comment('password'),
+            'password_reset_token' => $this->string(),
+            'email' => $this->string()->notNull(),
 
             'remark' => $this->string(),
             'status' => $this->smallInteger()->defaultValue(1),
@@ -64,9 +31,299 @@ class m130524_201442_init extends Migration
             'deleted_by' => $this->integer()->defaultValue(0),
         ], $tableOptions);
 
+        $this->createTable('{{%profile}}', [
+            'user_id' => $this->primaryKey(),
+            'name' => $this->string(),
+            'ic_no' => $this->integer(),
+            'contact' => $this->string(),
+            'staff_no' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->smallInteger()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+        $this->createTable('{{%company}}', [
+            'id' => $this->primaryKey(),
+            'code' => $this->string(),
+            'name' => $this->string()->notNull(),
+            'logo' => $this->string(),
+            'address' => $this->string(),
+            'city' => $this->string(),
+            'poscode' => $this->integer(),
+            'state' => $this->string(),
+            'country' => $this->string(),
+            'contact' => $this->string(),
+            'fax' => $this->string(),
+            'email' => $this->string()->notNull(),
+            'email_secondary' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->smallInteger()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%branch}}', [
+            'id' => $this->primaryKey(),
+            'code' => $this->string(),
+            'company_id' => $this->integer(),
+            'name' => $this->string()->notNull(),
+            'address' => $this->string(),
+            'city' => $this->string(),
+            'poscode' => $this->integer(),
+            'state' => $this->string(),
+            'country' => $this->string(),
+            'contact' => $this->string(),
+            'fax' => $this->string(),
+            'email' => $this->string()->notNull(),
+            'email_secondary' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->smallInteger()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%company_pic}}', [
+            'id' => $this->primaryKey(),
+            'company_id' => $this->integer(),
+            'branch_id' => $this->integer(),
+            'user_id' => $this->integer(),
+
+            'remark' => $this->string(),
+            'status' => $this->smallInteger()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%location}}', [
+            'id' => $this->primaryKey(),
+            'company_id' => $this->integer(),
+            'branch_id' => $this->integer(),
+            'name' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->smallInteger()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%order}}', [
+            'id' => $this->primaryKey(),
+            'order_no' => $this->string()->notNull(),
+            'order_date' => $this->date(),
+            'type' => $this->integer(),
+            'company_id' => $this->integer(),
+            'approved_at' => $this->timestamp(),
+            'approved_by' => $this->integer(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%purchase}}', [
+            'id' => $this->primaryKey(),
+            'purchase_no' => $this->string()->notNull(),
+            'purchase_date' => $this->date(),
+            'company_id' => $this->integer()->comment('Supplier'),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%asset}}', [
+            'id' => $this->primaryKey(),
+            'asset_no' => $this->string()->notNull(),
+            'supplier_asset_no' => $this->string(),
+            'manufacturer_asset_no' => $this->string(),
+            'client_asset_no' => $this->string(),
+            'order_date' => $this->date(),
+            'supplier_id' => $this->integer(),
+            'category' => $this->string(),
+            'subcategory' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%movement}}', [
+            'id' => $this->primaryKey(),
+            'asset_id' => $this->integer()->notNull(),
+            'type' => $this->string(),
+            'date' => $this->date(),
+            'from' => $this->integer(),
+            'to' => $this->integer(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%maintenance}}', [
+            'id' => $this->primaryKey(),
+            'asset_id' => $this->integer()->notNull(),
+            'type' => $this->string(),
+            'date' => $this->date(),
+            'supplier_id' => $this->integer(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%gen_type}}', [
+            'id' => $this->primaryKey(),
+            'gen_modref_code' => $this->string()->notNull(),
+            'name' => $this->string()->notNull(),
+            'description' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%gen_status}}', [
+            'id' => $this->primaryKey(),
+            'gen_modref_code' => $this->string()->notNull(),
+            'name' => $this->string()->notNull(),
+            'description' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%gen_mod}}', [
+            'id' => $this->primaryKey(),
+            'code' => $this->string()->notNull(),
+            'name' => $this->string()->notNull(),
+            'description' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%gen_modtype}}', [
+            'id' => $this->primaryKey(),
+            'code' => $this->string()->notNull(),
+            'name' => $this->string()->notNull(),
+            'description' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%gen_modref}}', [
+            'id' => $this->primaryKey(),
+            'code' => $this->string()->notNull(),
+            'gen_mod_id' => $this->integer()->notNull(),
+            'gen_modtype_id' => $this->integer()->notNull(),
+            'name' => $this->string()->notNull(),
+            'description' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%gen_modref_progress}}', [
+            'id' => $this->primaryKey(),
+            'code' => $this->string()->notNull(),
+            'next' => $this->string(),
+            'return' => $this->string(),
+            'description' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
         $this->insertFk();
         $this->insertIdx();
-        $this->defaultScenario();
+        $this->defaultData();
+        $this->insertScenario();
+
     }
 
     public function down()

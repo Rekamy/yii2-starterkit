@@ -33,7 +33,7 @@ if (!YII_ENV_TEST) {
                 'class'     => 'common\gii\model\Generator',
                 'templates' => [
                     'mootensai' => '@vendor/mootensai/yii2-enhanced-gii/model/default',
-                    'custom' => '@common/gii/crud/custom',
+                    'custom' => '@common/gii/model/custom',
                     // 'stable' => '@common/gii/crud/stable',
                     // 'dev' => '@common/gii/crud/dev',
                 ]

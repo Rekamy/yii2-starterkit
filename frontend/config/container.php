@@ -3,7 +3,7 @@ use yii\web\JsExpression;
 use kartik\grid\GridView;
 use kartik\export\ExportMenu;
 
-
+$isFa = true;
 $pdfHeader = [
     'L' => [
         'content' => Yii::t('kvgrid', 'FEMS Fire Extinguisher Management System'),
@@ -353,7 +353,7 @@ $container = [
                     '<li class="dropdown-header">Export All Data</li>',
                 ],
             ],
-            'exportConfig' => [$ExportMenuExportConfig],
+            'exportConfig' => $exportMenuExportConfig,
             /*'exportConfig' => [
                 ExportMenu::FORMAT_PDF => false,
             ],*/
