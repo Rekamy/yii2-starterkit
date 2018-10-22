@@ -49,7 +49,7 @@ if($script){
         </div>
 
         <!-- search form -->
-<!--         <form action="#" method="get" class="sidebar-form">
+        <!-- <form id="search-menu" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search..."/>
                 <span class="input-group-btn">
@@ -57,53 +57,60 @@ if($script){
                     </button>
                 </span>
             </div>
-        </form>
-    -->        <!-- /.search form -->
-    <?= dmstr\widgets\Menu::widget(
+        </form> -->
+           <!-- /.search form -->
+    <?php 
+    $menus = [];
+    
+    $menus = [
+        ['label' => Yii::t('app','Admin Section'), 'options' => ['class' => 'header']],
         [
-            'options' => ['class' => 'sidebar-menu tree delay', 'data-widget'=> 'tree'],
+            'label' => Yii::t('app','System Management'),
+            // 'visible' => Yii::$app->user->can('admin'),
+            'items' => [
+                ['label' => Yii::t('app','Users'), 'icon' => 'file-code-o', 'url' => ['/user/index']],
+                ['label' => Yii::t('app','My Profile'), 'icon' => 'file-code-o', 'url' => ['/profile/index']],
+                ['label' => Yii::t('app','Access'), 'icon' => 'file-code-o', 'url' => ['/admin/assignment']],
+                ['label' => Yii::t('app','Activity Log'), 'icon' => 'file-code-o', 'url' => ['/activity-log/index']],
+                ['label' => Yii::t('app','System Maintenance'), 'icon' => 'file-code-o', 'url' => ['/system/maintenance']],
+            ],
+            // 'visible' => Yii::$app->user->isGuest,
+        ],
+
+        ['label' => Yii::t('app','Module Developer'), 'options' => ['class' => 'header']],
+        [
+            'label' => Yii::t('app','Developer'), 'icon' => 'file-code-o',
             'items' => [
                 [
                     'label' => Yii::t('app','Login'), 'url' => ['/site/login'],
                     'visible' => Yii::$app->user->isGuest
                 ],
-                ['label' => Yii::t('app','Admin Section'), 'options' => ['class' => 'header']],
+                ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+                ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                 [
-                    'label' => Yii::t('app','System Management'),
-                    // 'visible' => Yii::$app->user->can('admin'),
+                    'label' => 'Under Development', 'icon' => 'file-code-o',
                     'items' => [
-                        ['label' => Yii::t('app','Users'), 'icon' => 'file-code-o', 'url' => ['/user/index']],
-                        ['label' => Yii::t('app','My Profile'), 'icon' => 'file-code-o', 'url' => ['/profile/index']],
-                        ['label' => Yii::t('app','Access'), 'icon' => 'file-code-o', 'url' => ['/admin/assignment']],
-                        ['label' => Yii::t('app','Activity Log'), 'icon' => 'file-code-o', 'url' => ['/activity-log/index']],
-                        ['label' => Yii::t('app','System Maintenance'), 'icon' => 'file-code-o', 'url' => ['/system/maintenance']],
-                    ],
-                    // 'visible' => Yii::$app->user->isGuest,
+                        ['label' => Yii::t('app','Workshop Report'), 'icon' => 'file-code-o', 'url' => ['/workshop-usage/index']],
+                        ['label' => Yii::t('app','Store Report'), 'icon' => 'file-code-o', 'url' => ['/store-usage/index']],
+                    ]
                 ],
-                ['label' => Yii::t('app','Module Developer'), 'options' => ['class' => 'header']],
                 [
-                    'label' => Yii::t('app','Developer'), 'icon' => 'file-code-o',
-                    'items' => [
-                        ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                        ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
-                        [
-                            'label' => 'Under Development', 'icon' => 'file-code-o',
-                            'items' => [
-                                ['label' => Yii::t('app','Workshop Report'), 'icon' => 'file-code-o', 'url' => ['/workshop-usage/index']],
-                                ['label' => Yii::t('app','Store Report'), 'icon' => 'file-code-o', 'url' => ['/store-usage/index']],
-                            ]
-                        ],
-                        [
-                            'label' => 'Database', 'icon' => 'database',
-                            'items' => $items
-                        ],
-                    ],
-                    // 'visible' => Yii::$app->user->isGuest,
+                    'label' => 'Database', 'icon' => 'database',
+                    'items' => $items
                 ],
             ],
-        ]
-        ) ?>
+        ],
+    ];
+    
 
-    </section>
+
+    echo dmstr\widgets\Menu::widget(
+        [
+            'options' => ['class' => 'sidebar-menu tree delay', 'data-widget'=> 'tree'],
+            'items' => $menus
+        ]
+    ) ?>
+
+</section>
 
 </aside>
