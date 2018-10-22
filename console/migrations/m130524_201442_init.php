@@ -47,6 +47,7 @@ class m130524_201442_init extends Migration
             'updated_by' => $this->integer(),
             'deleted_by' => $this->integer()->defaultValue(0),
         ], $tableOptions);
+
         $this->createTable('{{%company}}', [
             'id' => $this->primaryKey(),
             'code' => $this->string(),
@@ -101,7 +102,7 @@ class m130524_201442_init extends Migration
             'id' => $this->primaryKey(),
             'company_id' => $this->integer(),
             'branch_id' => $this->integer(),
-            'user_id' => $this->integer(),
+            'profile_id' => $this->integer(),
 
             'remark' => $this->string(),
             'status' => $this->smallInteger()->defaultValue(1),
@@ -133,7 +134,7 @@ class m130524_201442_init extends Migration
             'id' => $this->primaryKey(),
             'order_no' => $this->string()->notNull(),
             'order_date' => $this->date(),
-            'type' => $this->integer(),
+            'type' => $this->string(),
             'company_id' => $this->integer(),
             'approved_at' => $this->timestamp(),
             'approved_by' => $this->integer(),
@@ -166,14 +167,57 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%asset}}', [
             'id' => $this->primaryKey(),
-            'asset_no' => $this->string()->notNull(),
-            'supplier_asset_no' => $this->string(),
-            'manufacturer_asset_no' => $this->string(),
-            'client_asset_no' => $this->string(),
-            'order_date' => $this->date(),
-            'supplier_id' => $this->integer(),
             'category' => $this->string(),
             'subcategory' => $this->string(),
+            'asset_no' => $this->string()->notNull(),
+
+            'supplier_id' => $this->integer(),
+            'supplier_code_no' => $this->string(),
+            'manufacturer_id' => $this->integer(),
+            'manufacturer_code_no' => $this->string(),
+            'client_id' => $this->integer(),
+            'client_code_no' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%inventory}}', [
+            'id' => $this->primaryKey(),
+            'code_no' => $this->string()->notNull(),
+            'card_no' => $this->string()->notNull(),
+            'category' => $this->string(),
+            'subcategory' => $this->string(),
+
+            'supplier_id' => $this->integer(),
+            'supplier_code_no' => $this->string(),
+            'manufacturer_id' => $this->integer(),
+            'manufacturer_code_no' => $this->string(),
+            'client_id' => $this->integer(),
+            'client_code_no' => $this->string(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%inventory_item}}', [
+            'id' => $this->primaryKey(),
+            'order_id' => $this->integer(),
+            'code_no' => $this->integer(),
+            'card_no' => $this->string()->notNull(),
+            'serial_no' => $this->string()->notNull(),
 
             'remark' => $this->string(),
             'status' => $this->integer()->defaultValue(1),
@@ -220,11 +264,13 @@ class m130524_201442_init extends Migration
             'deleted_by' => $this->integer()->defaultValue(0),
         ], $tableOptions);
 
-        $this->createTable('{{%gen_type}}', [
+        $this->createTable('{{%warranty}}', [
             'id' => $this->primaryKey(),
-            'gen_modref_code' => $this->string()->notNull(),
-            'name' => $this->string()->notNull(),
-            'description' => $this->string(),
+            'asset_id' => $this->integer()->notNull(),
+            'supplier_id' => $this->integer(),
+            'type' => $this->string(),
+            'start_date' => $this->date(),
+            'end_date' => $this->date(),
 
             'remark' => $this->string(),
             'status' => $this->integer()->defaultValue(1),
@@ -236,7 +282,26 @@ class m130524_201442_init extends Migration
             'deleted_by' => $this->integer()->defaultValue(0),
         ], $tableOptions);
 
-        $this->createTable('{{%gen_status}}', [
+        $this->createTable('{{%setting}}', [
+            'id' => $this->primaryKey(),
+            'label' => $this->string()->notNull(),
+            'description' => $this->string()->notNull(),
+            'key' => $this->string()->notNull(),
+            'value' => $this->string()->notNull(),
+            'start_date' => $this->date(),
+            'end_date' => $this->date(),
+
+            'remark' => $this->string(),
+            'status' => $this->integer()->defaultValue(1),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'deleted_at' => $this->timestamp(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer()->defaultValue(0),
+        ], $tableOptions);
+
+        $this->createTable('{{%gen_value}}', [
             'id' => $this->primaryKey(),
             'gen_modref_code' => $this->string()->notNull(),
             'name' => $this->string()->notNull(),
@@ -365,9 +430,9 @@ class m130524_201442_init extends Migration
             case 'mysql':
             $userBy = "
             SELECT
-                -- table_name as TABLE_NAME
-                column_name as COLUMN_NAME
-                , table_name as TABLE_NAME
+            -- table_name as TABLE_NAME
+            column_name as COLUMN_NAME
+            , table_name as TABLE_NAME
             FROM information_schema.`COLUMNS`
             WHERE table_schema = '$dbName'
             AND table_name NOT IN  ('log')
@@ -376,9 +441,9 @@ class m130524_201442_init extends Migration
             ";
             $approved = "
             SELECT
-                -- table_name as TABLE_NAME
-                column_name as COLUMN_NAME
-                , table_name as TABLE_NAME
+            -- table_name as TABLE_NAME
+            column_name as COLUMN_NAME
+            , table_name as TABLE_NAME
             FROM information_schema.`COLUMNS`
             WHERE table_schema = '$dbName'
             AND table_name NOT IN  ('log')
@@ -426,12 +491,13 @@ class m130524_201442_init extends Migration
             case 'mysql':
             $idx = "
             SELECT
-                -- table_name as TABLE_NAME
-                column_name as COLUMN_NAME
-                , table_name as TABLE_NAME
+            -- table_name as TABLE_NAME
+            column_name as COLUMN_NAME
+            , table_name as TABLE_NAME
             FROM information_schema.`COLUMNS`
             WHERE table_schema = '$dbName'
             AND table_name NOT IN  ('log')
+            AND table_name NOT like  'gen_%'
             AND column_name LIKE '%_id'
             AND column_name LIKE '%_by'
             AND column_name LIKE 'deleted'
@@ -466,6 +532,110 @@ class m130524_201442_init extends Migration
                 $this->createIndex('idx'.$i++,'{{'.$value['TABLE_NAME'].'}}',$value['COLUMN_NAME']);
             }
         }
+
+    }
+
+    public function insertScenario() {
+        $this->batchInsert('{{user}}',['username','email','password_hash','auth_key','updated_at'],[
+            ['admin1','admin1@mail.com',Yii::$app->security->generatePasswordHash('admin1'),Yii::$app->security->generateRandomString(),new \yii\db\Expression('CURRENT_TIMESTAMP')],
+            ['staf1','staf1@mail.com',Yii::$app->security->generatePasswordHash('staf1'),Yii::$app->security->generateRandomString(),new \yii\db\Expression('CURRENT_TIMESTAMP')],
+            ['staf2','staf2@mail.com',Yii::$app->security->generatePasswordHash('staf2'),Yii::$app->security->generateRandomString(),new \yii\db\Expression('CURRENT_TIMESTAMP')],
+            ['pic1','pic1@mail.com',Yii::$app->security->generatePasswordHash('pic1'),Yii::$app->security->generateRandomString(),new \yii\db\Expression('CURRENT_TIMESTAMP')],
+            ['pic2','pic2@mail.com',Yii::$app->security->generatePasswordHash('pic2'),Yii::$app->security->generateRandomString(),new \yii\db\Expression('CURRENT_TIMESTAMP')],
+            ['pic3','pic3@mail.com',Yii::$app->security->generatePasswordHash('pic3'),Yii::$app->security->generateRandomString(),new \yii\db\Expression('CURRENT_TIMESTAMP')],
+        ]);
+        $this->batchInsert('{{profile}}',['name'],[
+            ['admin1'],
+            ['staf1'],
+            ['staf2'],
+            ['pic1'],
+            ['pic2'],
+            ['pic3'],
+        ]);
+        $this->batchInsert('{{company}}',['name','email'],[
+            ['company A','a@mail.com'],
+            ['company B','b@mail.com'],
+            ['company C','c@mail.com'],
+        ]);
+        $this->batchInsert('{{company_pic}}',['company_id','profile_id'],[
+            [1,4],
+            [2,5],
+            [3,6],
+        ]);
+        $this->batchInsert('{{branch}}',['company_id','name','email'],[
+            [1,'Branch A-1','a@mail.com'],
+            [1,'Branch A-1','a@mail.com'],
+            [2,'Branch B-1','a@mail.com'],
+            [3,'Branch C-1','a@mail.com'],
+            [3,'Branch C-1','a@mail.com'],
+            [3,'Branch C-1','a@mail.com'],
+        ]);
+        $this->batchInsert('{{location}}',['company_id','branch_id','name'],[
+            [1,1,'Loc A-1'],
+            [2,2,'Loc B-1'],
+            [3,3,'Loc C-1'],
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function defaultData()
+    {
+        $this->batchInsert('{{%gen_mod}}', ['id','code','name'], [
+            [1,'01','Order'],
+            [2,'02','Purchase'],
+            [3,'03','Asset'],
+            [4,'04','Inventory'],
+            [5,'05','Maintenance'],
+            [6,'06','Warranty'],
+        ]);
+
+        $this->batchInsert('{{%gen_modtype}}', ['id','code','name'], [
+            [1,'01','Status'],
+            [2,'02','Progress'],
+            [3,'03','Type'],
+        ]);
+
+        $this->batchInsert('{{%gen_value}}', ['gen_modref_code','name'], [
+            // order status
+            ['0101','SUCCESS'],
+            
+            // order progress
+            ['0102','NEW'],
+            ['0102','WAITING FOR APPROVAL'],
+            ['0102','DELIVERING'],
+            ['0102','DELIVERED'],
+            
+            // order type
+            ['0103','PURCHASE'],
+            ['0103','RENTAL'],
+            ['0103','PLACEMENT'],
+
+            ['0402','PICKUP'],
+            ['0402','RECEIVED'],
+            ['0402','IN PROGRESS'],
+            ['0402','COMPLETED'],
+            ['0402','RETURNED'],
+        ]);
+
+        $this->batchInsert('{{%gen_modref}}', ['code','gen_mod_id','gen_modtype_id','name'], [
+            ['0101',1,1,'Order Status'],
+            ['0102',1,2,'Order Progress'],
+            ['0103',1,3,'Order Type'],
+
+            ['0201',2,1,'Purchase Status'],
+            ['0202',2,2,'Purchase Progress'],
+            ['0203',2,3,'Purchase Type'],
+
+            ['0301',3,1,'Asset Status'],
+            ['0302',3,2,'Asset Progress'],
+            ['0303',3,3,'Asset Type'],
+
+            ['0401',4,1,'Maintenance Status'],
+            ['0402',4,2,'Maintenance Progress'],
+            ['0403',4,3,'Maintenance Type'],
+        ]);
 
     }
 }
