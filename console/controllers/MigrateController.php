@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Console;
 use common\components\Migration;
 use yii\console\Controller;
+use yii\helpers\Inflector;
 use yii\console\controllers\MigrateController as BaseMigrateController;
 
 class MigrateController extends BaseMigrateController
@@ -17,6 +18,66 @@ class MigrateController extends BaseMigrateController
 		return 1;
 	}
 
+
+	public function actionSimpleAuth() {
+		$migrate = new Migration();
+		$auth = Yii::$app->authManager;
+
+		if($auth) {
+			$this->stdOut("Remove all auth settings\n");
+			$auth->removeAll();
+		}
+		$roleList = [
+			'Administrator',
+			'Asset Admin',
+			'Asset User',
+			'Store Admin',
+			'Store User',
+			'Supplier',
+			'Vendor',
+			'Client',
+		];
+		$authList = [
+			// profile
+			'superadmin',
+			'admin',
+			'purchase',
+			
+			'manage-asset',
+			'manage-asset-warranty',
+			'manage-asset-maintenance',
+			'manage-asset-placement',
+
+			'manage-inventory',
+			'manage-inventory-warranty',
+			'manage-inventory-maintenance',
+			'manage-inventory-checkin',
+			'manage-inventory-checkout',
+
+		];
+		foreach ($authList as $key => $permission) {
+			$createPermission = $auth->createPermission($permission);
+			$createPermission->description = 'User can '. Inflector::camel2words($permission);
+			$auth->add($createPermission);
+			$this->stdOut("Add permission : $createPermission->name ($createPermission->description)\n");
+		}
+		foreach ($roleList as $key => $role) {
+			$createRole = $auth->createRole($role);
+			$createRole->description = $role;
+			$auth->add($createRole);
+			$this->stdOut("Add role : $createRole->name\n");
+		}
+
+		$administrator = $auth->getRole('Administrator');
+		$auth->assign($administrator, 1);
+		$this->stdOut("Append $administrator->name to Admin User\n");
+		foreach ($authList as $key => $permisson) {
+			$permissionRule = $auth->getPermission($permisson);
+			$auth->addChild($administrator, $permissionRule);
+			$this->stdOut("Append $permissionRule->name to $administrator->name User\n");
+		}
+
+	}
 
 	public function actionAuth2() {
 		$migrate = new Migration();
@@ -32,6 +93,9 @@ class MigrateController extends BaseMigrateController
 			'Asset User',
 			'Store Admin',
 			'Store User',
+			'Supplier',
+			'Vendor',
+			'Client',
 		];
 		$authList = [
 			// profile
@@ -50,7 +114,6 @@ class MigrateController extends BaseMigrateController
 			'report_generate',
 
 		];
-
 		foreach ($authList as $key => $permission) {
 			$createPermission = $auth->createPermission($permission);
 			$createPermission->description = str_replace($permission, '_', ' ');

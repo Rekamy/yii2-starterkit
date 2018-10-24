@@ -12,7 +12,7 @@ echo "<?php\n";
 ?>
 
 use kartik\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -74,7 +74,7 @@ foreach ($relations as $name => $rel) {
             "        ],\n";
     }
 }
-echo "    <div class=\"clearfix\"></div>\n";
+echo "    <div class=\"clearfix\"></div>\n\n";
 if(!empty($forms)){
     echo "<div class=\"col-md-12\">\n";
     echo "    <?php\n";
@@ -96,7 +96,9 @@ if(!empty($forms)){
 }
 ?>
     <div class="clearfix"></div>
+
     <div class="col-md-4">
+    
     <div class="form-group">
 <?php if($generator->saveAsNew): ?>
 <?= "    <?php if(Yii::\$app->controller->action->id != 'save-as-new'): ?>\n" ?>
@@ -112,6 +114,7 @@ if(!empty($forms)){
         <?= "<?= " ?>Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
 <?php endif; ?>
     </div>
+
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

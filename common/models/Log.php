@@ -25,6 +25,20 @@ class Log extends BaseLog
         );
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'level' => Yii::t('app', 'Level'),
+            'category' => Yii::t('app', 'Category'),
+            'log_time' => Yii::t('app', 'Log Time'),
+            'prefix' => Yii::t('app', 'Prefix'),
+            'message' => Yii::t('app', 'Message'),
+        ];
+    }
 
     /**
      * @inheritdoc

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c9b6b8297e9d935fe570bd1f1600b605",
+    "content-hash": "626898ec13038142a1c255f5fe9ba56f",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -919,50 +919,6 @@
             "time": "2018-10-04T08:55:01+00:00"
         },
         {
-            "name": "kartik-v/bootstrap-tabs-x",
-            "version": "v1.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kartik-v/bootstrap-tabs-x.git",
-                "reference": "e85a731d79f030fb7f7742e3e2e0ac828c3233a1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-tabs-x/zipball/e85a731d79f030fb7f7742e3e2e0ac828c3233a1",
-                "reference": "e85a731d79f030fb7f7742e3e2e0ac828c3233a1",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "kartik\\plugins\\tabs\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Kartik Visweswaran",
-                    "email": "kartikv2@gmail.com",
-                    "homepage": "http://www.krajee.com/"
-                }
-            ],
-            "description": "Extended Bootstrap Tabs with ability to align tabs in multiple ways, add borders, rotated titles, and more.",
-            "homepage": "https://github.com/kartik-v/bootstrap-tabs-x",
-            "keywords": [
-                "bootstrap",
-                "extended",
-                "jquery",
-                "modal",
-                "modal-tabs",
-                "tabs",
-                "tabs-x"
-            ],
-            "time": "2015-06-26T14:48:16+00:00"
-        },
-        {
             "name": "kartik-v/dependent-dropdown",
             "version": "v1.4.8",
             "source": {
@@ -1060,22 +1016,22 @@
         },
         {
             "name": "kartik-v/yii2-builder",
-            "version": "v1.6.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-builder.git",
-                "reference": "5a5822d8af17b0c64e92c718ce1ddc80228b1ab3"
+                "reference": "271a18d1d2aa72982074251da50e3eca78c72984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/5a5822d8af17b0c64e92c718ce1ddc80228b1ab3",
-                "reference": "5a5822d8af17b0c64e92c718ce1ddc80228b1ab3",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/271a18d1d2aa72982074251da50e3eca78c72984",
+                "reference": "271a18d1d2aa72982074251da50e3eca78c72984",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-grid": "~3.2",
-                "kartik-v/yii2-helpers": "~1.3",
-                "kartik-v/yii2-widget-activeform": "~1.5"
+                "kartik-v/yii2-grid": ">=3.2.5",
+                "kartik-v/yii2-helpers": ">=1.3.8",
+                "kartik-v/yii2-widget-activeform": ">=1.5.6"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1108,7 +1064,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-09-26T14:07:35+00:00"
+            "time": "2018-10-03T02:47:18+00:00"
         },
         {
             "name": "kartik-v/yii2-datecontrol",
@@ -1275,7 +1231,7 @@
         },
         {
             "name": "kartik-v/yii2-export",
-            "version": "v1.3.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-export.git",
@@ -1587,59 +1543,6 @@
                 "yii2"
             ],
             "time": "2018-10-09T13:25:05+00:00"
-        },
-        {
-            "name": "kartik-v/yii2-tabs-x",
-            "version": "v1.2.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kartik-v/yii2-tabs-x.git",
-                "reference": "196dfc6aaa593c3f2011e23cf9a2da35208919fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-tabs-x/zipball/196dfc6aaa593c3f2011e23cf9a2da35208919fc",
-                "reference": "196dfc6aaa593c3f2011e23cf9a2da35208919fc",
-                "shasum": ""
-            },
-            "require": {
-                "kartik-v/bootstrap-tabs-x": "~1.3",
-                "kartik-v/yii2-krajee-base": ">=1.9"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "kartik\\tabs\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Kartik Visweswaran",
-                    "email": "kartikv2@gmail.com",
-                    "homepage": "http://www.krajee.com/"
-                }
-            ],
-            "description": "An extended bootstrap 3.0 tabs widget with ability to align tabs in multiple ways, add borders, rotated titles, and more.",
-            "homepage": "https://github.com/kartik-v/yii2-tabs-x",
-            "keywords": [
-                "bootstrap",
-                "extended",
-                "jquery",
-                "modal",
-                "modal-tabs",
-                "tabs",
-                "tabs-x"
-            ],
-            "time": "2018-09-26T10:53:28+00:00"
         },
         {
             "name": "kartik-v/yii2-tree-manager",
@@ -2653,7 +2556,7 @@
         },
         {
             "name": "kartik-v/yii2-widgets",
-            "version": "v3.4.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widgets.git",
@@ -2870,243 +2773,6 @@
                 "yii"
             ],
             "time": "2017-11-18T13:27:11+00:00"
-        },
-        {
-            "name": "mootensai/yii2-enhanced-gii",
-            "version": "dev-custom",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kidzen/yii2-enhanced-gii.git",
-                "reference": "990ca2f201a91ee39c9464cade7e2da5fb1e5d1b"
-            },
-            "require": {
-                "kartik-v/yii2-builder": "*",
-                "kartik-v/yii2-export": "*",
-                "kartik-v/yii2-grid": "*",
-                "kartik-v/yii2-tabs-x": "*",
-                "kartik-v/yii2-widgets": "*",
-                "mootensai/yii2-jsblock": "*",
-                "mootensai/yii2-optimistic-lock-validator": "*",
-                "mootensai/yii2-relation-trait": "*",
-                "mootensai/yii2-uuid-behavior": "*",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "bootstrap": "mootensai\\enhancedgii\\Bootstrap"
-            },
-            "autoload": {
-                "psr-4": {
-                    "mootensai\\enhancedgii\\": ""
-                }
-            },
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Yohanes Candrajaya",
-                    "email": "moo.tensai@gmail.com"
-                },
-                {
-                    "name": "Jiwantoro Ndaru",
-                    "email": "jiwanndaru@gmail.com"
-                }
-            ],
-            "description": "Generate Relational (hasMany, hasOne, belongsTo, & nested) Models & CRUD.",
-            "keywords": [
-                "enhanced",
-                "gii",
-                "relation",
-                "yii",
-                "yii2"
-            ],
-            "time": "2018-05-19T05:33:16+00:00"
-        },
-        {
-            "name": "mootensai/yii2-jsblock",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mootensai/yii2-jsblock.git",
-                "reference": "d27864ba27760ffa634c01081f3e47ebddace9d5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mootensai/yii2-jsblock/zipball/d27864ba27760ffa634c01081f3e47ebddace9d5",
-                "reference": "d27864ba27760ffa634c01081f3e47ebddace9d5",
-                "shasum": ""
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "mootensai\\components\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "mdmunir",
-                    "email": "misbahuldmunir@gmail.com"
-                }
-            ],
-            "description": "Embed Javascript block with IDE checking",
-            "keywords": [
-                "block",
-                "javascript",
-                "yii2"
-            ],
-            "time": "2015-06-27T03:49:10+00:00"
-        },
-        {
-            "name": "mootensai/yii2-optimistic-lock-validator",
-            "version": "0.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mootensai/yii2-optimistic-lock-validator.git",
-                "reference": "422b012a87973bb296080f3572e1e45c7643a31a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mootensai/yii2-optimistic-lock-validator/zipball/422b012a87973bb296080f3572e1e45c7643a31a",
-                "reference": "422b012a87973bb296080f3572e1e45c7643a31a",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "mootensai\\components\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Yohanes Candrajaya",
-                    "email": "moo.tensai@gmail.com"
-                },
-                {
-                    "name": "Jiwantoro Ndaru",
-                    "email": "jiwanndaru@gmail.com"
-                }
-            ],
-            "description": "Yii 2 Optimistic Lock validator",
-            "keywords": [
-                "lock",
-                "optimistic",
-                "optimistic-lock",
-                "validator",
-                "yii",
-                "yii2"
-            ],
-            "time": "2015-08-15T03:27:57+00:00"
-        },
-        {
-            "name": "mootensai/yii2-relation-trait",
-            "version": "dev-custom",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kidzen/yii2-relation-trait.git",
-                "reference": "f76a99f2a2720b17e0ba735ab8fab86aa98d7710"
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "yiisoft/yii2": "~2.0"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "mootensai\\relation\\": ""
-                }
-            },
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Yohanes Candrajaya",
-                    "email": "moo.tensai@gmail.com"
-                }
-            ],
-            "description": "Yii 2 Models load with relation, & transaction save with relation",
-            "homepage": "http://github.com/mootensai/yii2-relation-trait",
-            "keywords": [
-                "Yii2",
-                "load",
-                "loadall",
-                "loadwithrelation",
-                "related",
-                "relation",
-                "save",
-                "saveall",
-                "savewithrelation",
-                "transaction"
-            ],
-            "support": {
-                "issues": "https://github.com/mootensai/yii2-relation-trait/issues",
-                "source": "https://github.com/mootensai/yii2-relation-trait"
-            },
-            "time": "2018-03-16T11:52:46+00:00"
-        },
-        {
-            "name": "mootensai/yii2-uuid-behavior",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mootensai/yii2-uuid-behavior.git",
-                "reference": "aaeb5c6268e77647af48ddc4757c5cb3fb726e55"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mootensai/yii2-uuid-behavior/zipball/aaeb5c6268e77647af48ddc4757c5cb3fb726e55",
-                "reference": "aaeb5c6268e77647af48ddc4757c5cb3fb726e55",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "mootensai\\behaviors\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Yohanes Candrajaya",
-                    "email": "moo.tensai@gmail.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Jiwantoro Ndaru",
-                    "email": "jiwanndaru@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Set UUID before save on Yii 2 models",
-            "homepage": "http://github.com/mootensai/yii2-uuid-behavior",
-            "keywords": [
-                "before",
-                "beforesave",
-                "save",
-                "uuid",
-                "yii2"
-            ],
-            "time": "2015-06-22T02:06:14+00:00"
         },
         {
             "name": "mpdf/mpdf",
@@ -4459,6 +4125,340 @@
             "time": "2017-03-20T17:10:46+00:00"
         },
         {
+            "name": "kartik-v/bootstrap-tabs-x",
+            "version": "v1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/bootstrap-tabs-x.git",
+                "reference": "e85a731d79f030fb7f7742e3e2e0ac828c3233a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-tabs-x/zipball/e85a731d79f030fb7f7742e3e2e0ac828c3233a1",
+                "reference": "e85a731d79f030fb7f7742e3e2e0ac828c3233a1",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\plugins\\tabs\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Extended Bootstrap Tabs with ability to align tabs in multiple ways, add borders, rotated titles, and more.",
+            "homepage": "https://github.com/kartik-v/bootstrap-tabs-x",
+            "keywords": [
+                "bootstrap",
+                "extended",
+                "jquery",
+                "modal",
+                "modal-tabs",
+                "tabs",
+                "tabs-x"
+            ],
+            "time": "2015-06-26T14:48:16+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-tabs-x",
+            "version": "v1.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-tabs-x.git",
+                "reference": "196dfc6aaa593c3f2011e23cf9a2da35208919fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-tabs-x/zipball/196dfc6aaa593c3f2011e23cf9a2da35208919fc",
+                "reference": "196dfc6aaa593c3f2011e23cf9a2da35208919fc",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/bootstrap-tabs-x": "~1.3",
+                "kartik-v/yii2-krajee-base": ">=1.9"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\tabs\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An extended bootstrap 3.0 tabs widget with ability to align tabs in multiple ways, add borders, rotated titles, and more.",
+            "homepage": "https://github.com/kartik-v/yii2-tabs-x",
+            "keywords": [
+                "bootstrap",
+                "extended",
+                "jquery",
+                "modal",
+                "modal-tabs",
+                "tabs",
+                "tabs-x"
+            ],
+            "time": "2018-09-26T10:53:28+00:00"
+        },
+        {
+            "name": "mootensai/yii2-enhanced-gii",
+            "version": "dev-custom",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kidzen/yii2-enhanced-gii.git",
+                "reference": "990ca2f201a91ee39c9464cade7e2da5fb1e5d1b"
+            },
+            "require": {
+                "kartik-v/yii2-builder": "*",
+                "kartik-v/yii2-export": "*",
+                "kartik-v/yii2-grid": "*",
+                "kartik-v/yii2-tabs-x": "*",
+                "kartik-v/yii2-widgets": "*",
+                "mootensai/yii2-jsblock": "*",
+                "mootensai/yii2-optimistic-lock-validator": "*",
+                "mootensai/yii2-relation-trait": "*",
+                "mootensai/yii2-uuid-behavior": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "bootstrap": "mootensai\\enhancedgii\\Bootstrap"
+            },
+            "autoload": {
+                "psr-4": {
+                    "mootensai\\enhancedgii\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Yohanes Candrajaya",
+                    "email": "moo.tensai@gmail.com"
+                },
+                {
+                    "name": "Jiwantoro Ndaru",
+                    "email": "jiwanndaru@gmail.com"
+                }
+            ],
+            "description": "Generate Relational (hasMany, hasOne, belongsTo, & nested) Models & CRUD.",
+            "keywords": [
+                "enhanced",
+                "gii",
+                "relation",
+                "yii",
+                "yii2"
+            ],
+            "time": "2018-05-19T05:33:16+00:00"
+        },
+        {
+            "name": "mootensai/yii2-jsblock",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mootensai/yii2-jsblock.git",
+                "reference": "d27864ba27760ffa634c01081f3e47ebddace9d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mootensai/yii2-jsblock/zipball/d27864ba27760ffa634c01081f3e47ebddace9d5",
+                "reference": "d27864ba27760ffa634c01081f3e47ebddace9d5",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "mootensai\\components\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "mdmunir",
+                    "email": "misbahuldmunir@gmail.com"
+                }
+            ],
+            "description": "Embed Javascript block with IDE checking",
+            "keywords": [
+                "block",
+                "javascript",
+                "yii2"
+            ],
+            "time": "2015-06-27T03:49:10+00:00"
+        },
+        {
+            "name": "mootensai/yii2-optimistic-lock-validator",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mootensai/yii2-optimistic-lock-validator.git",
+                "reference": "422b012a87973bb296080f3572e1e45c7643a31a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mootensai/yii2-optimistic-lock-validator/zipball/422b012a87973bb296080f3572e1e45c7643a31a",
+                "reference": "422b012a87973bb296080f3572e1e45c7643a31a",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "mootensai\\components\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Yohanes Candrajaya",
+                    "email": "moo.tensai@gmail.com"
+                },
+                {
+                    "name": "Jiwantoro Ndaru",
+                    "email": "jiwanndaru@gmail.com"
+                }
+            ],
+            "description": "Yii 2 Optimistic Lock validator",
+            "keywords": [
+                "lock",
+                "optimistic",
+                "optimistic-lock",
+                "validator",
+                "yii",
+                "yii2"
+            ],
+            "time": "2015-08-15T03:27:57+00:00"
+        },
+        {
+            "name": "mootensai/yii2-relation-trait",
+            "version": "dev-custom",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kidzen/yii2-relation-trait.git",
+                "reference": "f76a99f2a2720b17e0ba735ab8fab86aa98d7710"
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "mootensai\\relation\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Yohanes Candrajaya",
+                    "email": "moo.tensai@gmail.com"
+                }
+            ],
+            "description": "Yii 2 Models load with relation, & transaction save with relation",
+            "homepage": "http://github.com/mootensai/yii2-relation-trait",
+            "keywords": [
+                "Yii2",
+                "load",
+                "loadall",
+                "loadwithrelation",
+                "related",
+                "relation",
+                "save",
+                "saveall",
+                "savewithrelation",
+                "transaction"
+            ],
+            "support": {
+                "issues": "https://github.com/mootensai/yii2-relation-trait/issues",
+                "source": "https://github.com/mootensai/yii2-relation-trait"
+            },
+            "time": "2018-03-16T11:52:46+00:00"
+        },
+        {
+            "name": "mootensai/yii2-uuid-behavior",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mootensai/yii2-uuid-behavior.git",
+                "reference": "aaeb5c6268e77647af48ddc4757c5cb3fb726e55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mootensai/yii2-uuid-behavior/zipball/aaeb5c6268e77647af48ddc4757c5cb3fb726e55",
+                "reference": "aaeb5c6268e77647af48ddc4757c5cb3fb726e55",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mootensai\\behaviors\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Yohanes Candrajaya",
+                    "email": "moo.tensai@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Jiwantoro Ndaru",
+                    "email": "jiwanndaru@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Set UUID before save on Yii 2 models",
+            "homepage": "http://github.com/mootensai/yii2-uuid-behavior",
+            "keywords": [
+                "before",
+                "beforesave",
+                "save",
+                "uuid",
+                "yii2"
+            ],
+            "time": "2015-06-22T02:06:14+00:00"
+        },
+        {
             "name": "phar-io/manifest",
             "version": "1.0.3",
             "source": {
@@ -4777,16 +4777,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "6.1.1",
+            "version": "6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "b097681a19a48e52706f57e47a09594bac4f7cab"
+                "reference": "4d3ae9b21a7d7e440bd0cf65565533117976859f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/b097681a19a48e52706f57e47a09594bac4f7cab",
-                "reference": "b097681a19a48e52706f57e47a09594bac4f7cab",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/4d3ae9b21a7d7e440bd0cf65565533117976859f",
+                "reference": "4d3ae9b21a7d7e440bd0cf65565533117976859f",
                 "shasum": ""
             },
             "require": {
@@ -4836,7 +4836,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-18T09:01:38+00:00"
+            "time": "2018-10-23T05:59:32+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -6442,13 +6442,16 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "mdmsoft/yii2-admin": 20,
-        "mootensai/yii2-enhanced-gii": 20,
-        "mootensai/yii2-relation-trait": 20,
         "kartik-v/yii2-mpdf": 20,
         "kartik-v/yii2-datecontrol": 20,
         "kartik-v/yii2-tree-manager": 20,
         "kartik-v/yii2-dynagrid": 20,
-        "kartik-v/yii2-grid": 20
+        "kartik-v/yii2-export": 20,
+        "kartik-v/yii2-widgets": 20,
+        "kartik-v/yii2-builder": 20,
+        "kartik-v/yii2-grid": 20,
+        "mootensai/yii2-relation-trait": 20,
+        "mootensai/yii2-enhanced-gii": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

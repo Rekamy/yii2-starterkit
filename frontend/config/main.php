@@ -34,6 +34,7 @@ $config = [
             'theme' => [
                 'pathMap' => [
                     '@frontend/views' => '@frontend/themes/adminlte/views',
+                    '@app/views' => '@frontend/themes/adminlte/views',
                     // '@frontend/views' => '@frontend/themes/gentella/views',
                     // '@frontend/views' => '@vendor/yiister/yii2-gentelella/views',
                     // '@frontend/views' => '@frontend/themes/sbadmin2/views',
@@ -53,12 +54,12 @@ $config = [
         // uncomment to use rbac
         'authManager' => [
             // use php file
-            'class' => 'yii\rbac\PhpManager',
-            // 'assignmentFile' => '@common/rbac/assignments.php'
-            // 'itemFile' => '@common/rbac/items.php'
-            // 'ruleFile' => '@common/rbac/rules.php'
+            // 'class' => 'yii\rbac\PhpManager',
+            // 'assignmentFile' => '@common/rbac/assignments.php',
+            // 'itemFile' => '@common/rbac/items.php',
+            // 'ruleFile' => '@common/rbac/rules.php',
             // use db
-            // 'class' => 'yii\rbac\DbManager',
+            'class' => 'yii\rbac\DbManager',
         ],
         'notify' => [
             'class' => 'common\components\Notify',
@@ -101,14 +102,19 @@ $config = [
             'appendTimestamp' => true,
            // 'forceCopy' => false,
         ],*/
-        /*
-        'urlManager' => [
+        
+        /*'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<alias:\w+>' => 'site/<alias>',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
-        ],
-        */
+        ],*/
+        
     ],
     'modules' => [
         // If you use tree table
@@ -146,6 +152,15 @@ $config = [
                 ],
             ],
         ],
+/*        'profile' => [
+            'class' => 'frontend\module\profile\Module',
+        ],
+        'asset' => [
+            'class' => 'frontend\module\asset\Module',
+        ],
+        'inventory' => [
+            'class' => 'frontend\module\inventory\Module',
+        ],*/
         'admin' => [
             'class' => 'mdm\admin\Module',
         ]

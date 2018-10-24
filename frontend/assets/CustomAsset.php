@@ -23,5 +23,6 @@ class CustomAsset extends AssetBundle
         'dmstr\web\AdminLteAsset',
         // 'frontend\assets\AdminLtePluginAsset',
         'frontend\assets\AdminLteBowerAsset',
+        'frontend\assets\VueAsset',
     ];
 }

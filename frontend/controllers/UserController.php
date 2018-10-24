@@ -30,7 +30,7 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-profile'],
                         'roles' => ['@']
                     ],
                     [
@@ -80,8 +80,12 @@ class UserController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $providerProfile = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->profiles,
+        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'providerProfile' => $providerProfile,
         ]);
     }
 
@@ -203,7 +207,27 @@ class UserController extends Controller
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+    * Action to load a tabular form grid
+    * for Profile
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddProfile()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('Profile');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formProfile', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

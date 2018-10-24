@@ -10,18 +10,24 @@ use yii\behaviors\BlameableBehavior;
  * This is the base model class for table "setting".
  *
  * @property integer $id
- * @property string $key
  * @property string $label
- * @property string $value
  * @property string $description
+ * @property string $key
+ * @property string $value
+ * @property string $start_date
+ * @property string $end_date
  * @property string $remark
- * @property integer $status
+ * @property integer $status_id
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
+ *
+ * @property \common\models\GenValue $status
+ * @property \common\models\Profile $createdBy
+ * @property \common\models\Profile $updatedBy
  */
 class Setting extends \yii\db\ActiveRecord
 {
@@ -49,7 +55,9 @@ class Setting extends \yii\db\ActiveRecord
     public static function relationNames()
     {
         return [
-            ''
+            'status',
+            'createdBy',
+            'updatedBy'
         ];
     }
 
@@ -59,9 +67,10 @@ class Setting extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['key', 'label', 'value', 'description', 'remark'], 'string', 'max' => 255]
+            [['label', 'description', 'key', 'value'], 'required'],
+            [['start_date', 'end_date', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['label', 'description', 'key', 'value', 'remark'], 'string', 'max' => 255]
         ];
     }
 
@@ -80,15 +89,41 @@ class Setting extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'key' => Yii::t('app', 'Key'),
             'label' => Yii::t('app', 'Label'),
-            'value' => Yii::t('app', 'Value'),
             'description' => Yii::t('app', 'Description'),
+            'key' => Yii::t('app', 'Key'),
+            'value' => Yii::t('app', 'Value'),
+            'start_date' => Yii::t('app', 'Start Date'),
+            'end_date' => Yii::t('app', 'End Date'),
             'remark' => Yii::t('app', 'Remark'),
-            'status' => Yii::t('app', 'Status'),
+            'status_id' => Yii::t('app', 'Status'),
         ];
     }
-
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatus()
+    {
+        return $this->hasOne(\common\models\GenValue::className(), ['id' => 'status_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(\common\models\Profile::className(), ['id' => 'created_by']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(\common\models\Profile::className(), ['id' => 'updated_by']);
+    }
+    
     /**
      * @inheritdoc
      * @return array mixed

@@ -17,13 +17,31 @@ class Setting extends BaseSetting
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['key', 'label', 'value', 'description', 'remark'], 'string', 'max' => 255]
+            [['label', 'description', 'key', 'value'], 'required'],
+            [['start_date', 'end_date', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['label', 'description', 'key', 'value', 'remark'], 'string', 'max' => 255]
         ]
         );
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'label' => Yii::t('app', 'Label'),
+            'description' => Yii::t('app', 'Description'),
+            'key' => Yii::t('app', 'Key'),
+            'value' => Yii::t('app', 'Value'),
+            'start_date' => Yii::t('app', 'Start Date'),
+            'end_date' => Yii::t('app', 'End Date'),
+            'remark' => Yii::t('app', 'Remark'),
+            'status_id' => Yii::t('app', 'Status'),
+        ];
+    }
 
     /**
      * @inheritdoc

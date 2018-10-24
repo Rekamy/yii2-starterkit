@@ -15,7 +15,8 @@ use yii\behaviors\BlameableBehavior;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
- * @property integer $status
+ * @property string $remark
+ * @property integer $status_id
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
@@ -23,7 +24,10 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $updated_by
  * @property integer $deleted_by
  *
- * @property \common\models\Profile $profile
+ * @property \common\models\Profile[] $profiles
+ * @property \common\models\GenValue $status
+ * @property \common\models\Profile $createdBy
+ * @property \common\models\Profile $updatedBy
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -51,7 +55,10 @@ class User extends \yii\db\ActiveRecord
     public static function relationNames()
     {
         return [
-            'profile'
+            'profiles',
+            'status',
+            'createdBy',
+            'updatedBy'
         ];
     }
 
@@ -62,13 +69,10 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
-            [['password_reset_token'], 'unique']
+            [['username', 'password_hash', 'password_reset_token', 'email', 'remark'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32]
         ];
     }
 
@@ -89,19 +93,44 @@ class User extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'username' => Yii::t('app', 'Username'),
             'auth_key' => Yii::t('app', 'Auth Key'),
-            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_hash' => Yii::t('app', 'password'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'email' => Yii::t('app', 'Email'),
-            'status' => Yii::t('app', 'Status'),
+            'remark' => Yii::t('app', 'Remark'),
+            'status_id' => Yii::t('app', 'Status'),
         ];
     }
     
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProfile()
+    public function getProfiles()
     {
-        return $this->hasOne(\common\models\Profile::className(), ['id' => 'id']);
+        return $this->hasMany(\common\models\Profile::className(), ['user_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatus()
+    {
+        return $this->hasOne(\common\models\GenValue::className(), ['id' => 'status_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(\common\models\Profile::className(), ['id' => 'created_by']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(\common\models\Profile::className(), ['id' => 'updated_by']);
     }
     
     /**

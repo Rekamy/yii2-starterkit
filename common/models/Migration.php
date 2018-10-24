@@ -24,6 +24,16 @@ class Migration extends BaseMigration
         );
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'version' => Yii::t('app', 'Version'),
+            'apply_time' => Yii::t('app', 'Apply Time'),
+        ];
+    }
 
     /**
      * @inheritdoc

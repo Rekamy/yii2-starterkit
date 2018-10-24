@@ -15,7 +15,7 @@ echo "<?php\n";
 ?>
 
 use kartik\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var <?= $model?> <?= ltrim($generator->modelClass, '\\') ?> */

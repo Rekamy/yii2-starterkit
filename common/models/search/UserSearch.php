@@ -20,8 +20,8 @@ use common\models\User;
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['id', 'status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'remark', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
         ];
     }
 
@@ -63,7 +63,7 @@ use common\models\User;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'status_id' => $this->status_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -76,7 +76,8 @@ use common\models\User;
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'remark', $this->remark]);
 
         // $query->andFilterWhere(['like', 'attribute', $this->$property]);
 

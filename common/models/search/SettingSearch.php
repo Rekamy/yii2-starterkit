@@ -20,8 +20,8 @@ use common\models\Setting;
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
-            [['key', 'label', 'value', 'description', 'remark', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['id', 'status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['label', 'description', 'key', 'value', 'start_date', 'end_date', 'remark', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
         ];
     }
 
@@ -63,7 +63,9 @@ use common\models\Setting;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'status_id' => $this->status_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -72,10 +74,10 @@ use common\models\Setting;
             'deleted_by' => $this->deleted_by,
         ]);
 
-        $query->andFilterWhere(['like', 'key', $this->key])
-            ->andFilterWhere(['like', 'label', $this->label])
-            ->andFilterWhere(['like', 'value', $this->value])
+        $query->andFilterWhere(['like', 'label', $this->label])
             ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'key', $this->key])
+            ->andFilterWhere(['like', 'value', $this->value])
             ->andFilterWhere(['like', 'remark', $this->remark]);
 
         // $query->andFilterWhere(['like', 'attribute', $this->$property]);

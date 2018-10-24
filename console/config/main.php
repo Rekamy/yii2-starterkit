@@ -27,7 +27,7 @@ return [
                 // uncomment to db log
                 '@yii/log/migrations', // Just in case you forgot to run it on console (see next note)
                 // uncomment to use rbac
-                // '@yii/rbac/migrations', // Just in case you forgot to run it on console (see next note)
+                '@yii/rbac/migrations', // Just in case you forgot to run it on console (see next note)
             ],
         ],
     ],

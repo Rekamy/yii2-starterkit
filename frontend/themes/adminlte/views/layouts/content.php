@@ -83,7 +83,7 @@ $this->registerCss('
             <div class="col-xs-6 col-sm-2 placeholder delay-child">
                 <div class="nav-div">
                     <?= Html::a(Yii::t('app', '<i style="text-align: center;font-size: 4em;" class="fa fa-line-chart" aria-hidden="true"></i>'), ['report/quaterly'], ['class' => 'cnavreport']); ?>
-                    <h4 class="text-muted"><?= Yii::t('app', 'Laporan') ?></h4>
+                    <h4 class="text-muted"><?= Yii::t('app', 'Report') ?></h4>
                 </div>
             </div>
             <div class="col-xs-6 col-sm-2 placeholder delay-child">

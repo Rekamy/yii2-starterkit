@@ -1,0 +1,317 @@
+<?php
+
+use kartik\helpers\Html;
+use yii\widgets\DetailView;
+use kartik\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $model common\models\DiposalItem */
+
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Diposal Item', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="diposal-item-view">
+
+    <div class="box">
+        <div class="box-header">
+            <h2 class="box-title"><?= 'Diposal Item'.' '. Html::encode($this->title) ?></h2>
+            <div class="pull-right">
+                <?= Html::a(Yii::t('app', 'Back'), Yii::$app->request->referrer, ['class' => 'btn btn-sm btn-default']) ?>                        
+                <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-sm btn-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this item?',
+                        'method' => 'post',
+                    ],
+                ])
+                ?>
+            </div>
+        </div>
+        <div class="box-body">
+
+            <div class="nav-tabs-custom">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#DiposalItem" data-toggle="tab"><?= 'Diposal Item' ?></a></li>
+                    <?php if ($model->orderBy) : ?>
+                        <li><a href="#Profile" data-toggle="tab"><?= 'Profile' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->attendBy) : ?>
+                        <li><a href="#Profile" data-toggle="tab"><?= 'Profile' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->approvedBy) : ?>
+                        <li><a href="#Profile" data-toggle="tab"><?= 'Profile' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->createdBy) : ?>
+                        <li><a href="#Profile" data-toggle="tab"><?= 'Profile' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->updatedBy) : ?>
+                        <li><a href="#Profile" data-toggle="tab"><?= 'Profile' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->type) : ?>
+                        <li><a href="#GenValue" data-toggle="tab"><?= 'Gen Value' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->reason) : ?>
+                        <li><a href="#GenValue" data-toggle="tab"><?= 'Gen Value' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->method) : ?>
+                        <li><a href="#GenValue" data-toggle="tab"><?= 'Gen Value' ?></a></li>
+                    <?php endif; ?>
+                    <?php if ($model->status) : ?>
+                        <li><a href="#GenValue" data-toggle="tab"><?= 'Gen Value' ?></a></li>
+                    <?php endif; ?>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="DiposalItem">
+                        <?php 
+                        $gridColumn = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'disposal_id',
+                        'item_id',
+                        'order_no',
+                        'order_date',
+                        'attend_date',
+                        [
+            'attribute' => 'type.name',
+            'label' => 'Type',
+        ],
+                        [
+            'attribute' => 'reason.name',
+            'label' => 'Reason',
+        ],
+                        [
+            'attribute' => 'method.name',
+            'label' => 'Method',
+        ],
+                        [
+            'attribute' => 'orderBy.name',
+            'label' => 'Order By',
+        ],
+                        [
+            'attribute' => 'attendBy.name',
+            'label' => 'Attend By',
+        ],
+                        'approved_at',
+                        [
+            'attribute' => 'approvedBy.name',
+            'label' => 'Approved By',
+        ],
+                        'remark',
+                        [
+            'attribute' => 'status.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model,
+                            'attributes' => $gridColumn
+                        ]);
+                    ?>
+                    </div>
+                        <?php if ($model->orderBy) : ?>
+                        <div class="tab-pane" id="Profile">
+                        <?php 
+                        $gridColumnProfile = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'user_id',
+                        'name',
+                        'ic_no',
+                        'contact',
+                        'staff_no',
+                        'email',
+                        'remark',
+                        [
+            'attribute' => 'status.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->orderBy,
+                            'attributes' => $gridColumnProfile
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->attendBy) : ?>
+                        <div class="tab-pane" id="Profile">
+                        <?php 
+                        $gridColumnProfile = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'user_id',
+                        'name',
+                        'ic_no',
+                        'contact',
+                        'staff_no',
+                        'email',
+                        'remark',
+                        [
+            'attribute' => 'status.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->attendBy,
+                            'attributes' => $gridColumnProfile
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->approvedBy) : ?>
+                        <div class="tab-pane" id="Profile">
+                        <?php 
+                        $gridColumnProfile = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'user_id',
+                        'name',
+                        'ic_no',
+                        'contact',
+                        'staff_no',
+                        'email',
+                        'remark',
+                        [
+            'attribute' => 'status.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->approvedBy,
+                            'attributes' => $gridColumnProfile
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->createdBy) : ?>
+                        <div class="tab-pane" id="Profile">
+                        <?php 
+                        $gridColumnProfile = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'user_id',
+                        'name',
+                        'ic_no',
+                        'contact',
+                        'staff_no',
+                        'email',
+                        'remark',
+                        [
+            'attribute' => 'status.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->createdBy,
+                            'attributes' => $gridColumnProfile
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->updatedBy) : ?>
+                        <div class="tab-pane" id="Profile">
+                        <?php 
+                        $gridColumnProfile = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'user_id',
+                        'name',
+                        'ic_no',
+                        'contact',
+                        'staff_no',
+                        'email',
+                        'remark',
+                        [
+            'attribute' => 'status.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->updatedBy,
+                            'attributes' => $gridColumnProfile
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->type) : ?>
+                        <div class="tab-pane" id="GenValue">
+                        <?php 
+                        $gridColumnGenValue = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'code',
+                        'name',
+                        'description',
+                        'remark',
+                        [
+            'attribute' => 'profiles.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->type,
+                            'attributes' => $gridColumnGenValue
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->reason) : ?>
+                        <div class="tab-pane" id="GenValue">
+                        <?php 
+                        $gridColumnGenValue = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'code',
+                        'name',
+                        'description',
+                        'remark',
+                        [
+            'attribute' => 'profiles.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->reason,
+                            'attributes' => $gridColumnGenValue
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->method) : ?>
+                        <div class="tab-pane" id="GenValue">
+                        <?php 
+                        $gridColumnGenValue = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'code',
+                        'name',
+                        'description',
+                        'remark',
+                        [
+            'attribute' => 'profiles.name',
+            'label' => 'Status',
+        ],
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->method,
+                            'attributes' => $gridColumnGenValue
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                        <?php if ($model->status) : ?>
+                        <div class="tab-pane" id="GenValue">
+                        <?php 
+                        $gridColumnGenValue = [
+                        ['attribute' => 'id', 'visible' => false],
+                        'code',
+                        'name',
+                        'description',
+                        'remark',
+                        ];
+                        echo DetailView::widget([
+                            'model' => $model->status,
+                            'attributes' => $gridColumnGenValue
+                        ]);
+                        ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

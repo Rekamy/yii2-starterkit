@@ -341,6 +341,9 @@ $container = [
                 'time' => [],
             ],
         ],
+        'kartik\form\ActiveField' => [
+            'hintType' => \kartik\form\ActiveField::HINT_SPECIAL
+        ],
         'kartik\export\ExportMenu' => [
             'dynagridOptions' => true,
             'target' => ExportMenu::TARGET_BLANK,

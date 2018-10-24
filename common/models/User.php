@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-use \common\models\identity\User as BaseUser;
+use \common\models\base\User as BaseUser;
 
 /**
  * This is the model class for table "user".
@@ -15,20 +15,33 @@ class User extends BaseUser
      */
     public function rules()
     {
-        return [
+        return array_replace_recursive(parent::rules(),
+	    [
             [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            [['password_reset_token'], 'unique']
-        ];
+            [['username', 'password_hash', 'password_reset_token', 'email', 'remark'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32]
+        ]
+        );
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'password_hash' => Yii::t('app', 'password'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'email' => Yii::t('app', 'Email'),
+            'remark' => Yii::t('app', 'Remark'),
+            'status_id' => Yii::t('app', 'Status'),
+        ];
+    }
 
     /**
      * @inheritdoc

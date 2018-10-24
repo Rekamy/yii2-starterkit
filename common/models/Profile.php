@@ -17,15 +17,30 @@ class Profile extends BaseProfile
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['email'], 'required'],
-            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['user_id', 'status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['name', 'avatar', 'ic_no', 'contact', 'email'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            [['name', 'ic_no', 'contact', 'staff_no', 'email', 'remark'], 'string', 'max' => 255]
         ]
         );
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'user_id' => Yii::t('app', 'User'),
+            'name' => Yii::t('app', 'Name'),
+            'ic_no' => Yii::t('app', 'Ic No'),
+            'contact' => Yii::t('app', 'Contact'),
+            'staff_no' => Yii::t('app', 'Staff No'),
+            'email' => Yii::t('app', 'Email'),
+            'remark' => Yii::t('app', 'Remark'),
+            'status_id' => Yii::t('app', 'Status'),
+        ];
+    }
 
     /**
      * @inheritdoc

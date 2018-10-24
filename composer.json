@@ -22,12 +22,14 @@
         "mdmsoft/yii2-admin": "2.x-dev",
         "dmstr/yii2-adminlte-asset": "^2.4",
         "bedezign/yii2-audit": "^1.0",
+        "vova07/yii2-console-runner-extension": "*",
         "kartik-v/yii2-mpdf": "@dev",
         "kartik-v/yii2-datecontrol": "@dev",
         "kartik-v/yii2-tree-manager": "@dev",
-        "kartik-v/yii2-dynagrid": "@dev",
-        "vova07/yii2-console-runner-extension": "*",
+        "kartik-v/yii2-dynagrid": "dev-master",
         "kartik-v/yii2-export": "dev-master",
+        "kartik-v/yii2-widgets": "dev-master",
+        "kartik-v/yii2-builder": "dev-master",
         "kartik-v/yii2-grid": "@dev"
     },
     "require-dev": {

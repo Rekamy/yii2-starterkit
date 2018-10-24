@@ -1,1 +1,3 @@
-rules
+<?php
+return [
+];

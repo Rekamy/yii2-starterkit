@@ -39,7 +39,7 @@ $directoryAsset = Yii::getAlias('@web/dist');
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
     <?php $this->head() ?>
 </head>
-<body class="hold-transition skin-purple-light sidebar-mini">
+<body class="hold-transition skin-purple-light sidebar-mini sidebar-collapse">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 

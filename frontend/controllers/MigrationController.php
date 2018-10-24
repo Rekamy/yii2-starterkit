@@ -203,7 +203,7 @@ class MigrationController extends Controller
         if (($model = Migration::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

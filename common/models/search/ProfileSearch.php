@@ -20,8 +20,8 @@ use common\models\Profile;
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
-            [['name', 'avatar', 'ic_no', 'contact', 'email', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['id', 'user_id', 'status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['name', 'ic_no', 'contact', 'staff_no', 'email', 'remark', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
         ];
     }
 
@@ -63,7 +63,8 @@ use common\models\Profile;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'user_id' => $this->user_id,
+            'status_id' => $this->status_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -73,10 +74,11 @@ use common\models\Profile;
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'avatar', $this->avatar])
             ->andFilterWhere(['like', 'ic_no', $this->ic_no])
             ->andFilterWhere(['like', 'contact', $this->contact])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'staff_no', $this->staff_no])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'remark', $this->remark]);
 
         // $query->andFilterWhere(['like', 'attribute', $this->$property]);
 

@@ -10,12 +10,14 @@ use yii\behaviors\BlameableBehavior;
  * This is the base model class for table "profile".
  *
  * @property integer $id
+ * @property integer $user_id
  * @property string $name
- * @property string $avatar
  * @property string $ic_no
  * @property string $contact
+ * @property string $staff_no
  * @property string $email
- * @property integer $status
+ * @property string $remark
+ * @property integer $status_id
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
@@ -23,7 +25,35 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $updated_by
  * @property integer $deleted_by
  *
- * @property \common\models\User $id0
+ * @property \common\models\Asset[] $assets
+ * @property \common\models\Category[] $categories
+ * @property \common\models\Company[] $companies
+ * @property \common\models\Diposal[] $diposals
+ * @property \common\models\DiposalItem[] $diposalItems
+ * @property \common\models\GenMod[] $genMods
+ * @property \common\models\GenModref[] $genModrefs
+ * @property \common\models\GenModrefProgress[] $genModrefProgresses
+ * @property \common\models\GenModtype[] $genModtypes
+ * @property \common\models\GenValue[] $genValues
+ * @property \common\models\Inventory[] $inventories
+ * @property \common\models\InventoryItem[] $inventoryItems
+ * @property \common\models\JtSubcategory[] $jtSubcategories
+ * @property \common\models\Location[] $locations
+ * @property \common\models\Maintenance[] $maintenances
+ * @property \common\models\Movement[] $movements
+ * @property \common\models\Order[] $orders
+ * @property \common\models\OrderItem[] $orderItems
+ * @property \common\models\PersonInCharge[] $personInCharges
+ * @property \common\models\GenValue $status
+ * @property \common\models\Profile $createdBy
+ * @property \common\models\Profile[] $profiles
+ * @property \common\models\Profile $updatedBy
+ * @property \common\models\User $user
+ * @property \common\models\Setting[] $settings
+ * @property \common\models\Subcategory[] $subcategories
+ * @property \common\models\Transaction[] $transactions
+ * @property \common\models\User[] $users
+ * @property \common\models\Warranty[] $warranties
  */
 class Profile extends \yii\db\ActiveRecord
 {
@@ -51,7 +81,35 @@ class Profile extends \yii\db\ActiveRecord
     public static function relationNames()
     {
         return [
-            'id0'
+            'assets',
+            'categories',
+            'companies',
+            'diposals',
+            'diposalItems',
+            'genMods',
+            'genModrefs',
+            'genModrefProgresses',
+            'genModtypes',
+            'genValues',
+            'inventories',
+            'inventoryItems',
+            'jtSubcategories',
+            'locations',
+            'maintenances',
+            'movements',
+            'orders',
+            'orderItems',
+            'personInCharges',
+            'status',
+            'createdBy',
+            'profiles',
+            'updatedBy',
+            'user',
+            'settings',
+            'subcategories',
+            'transactions',
+            'users',
+            'warranties'
         ];
     }
 
@@ -61,11 +119,9 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email'], 'required'],
-            [['status', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
+            [['user_id', 'status_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['name', 'avatar', 'ic_no', 'contact', 'email'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            [['name', 'ic_no', 'contact', 'staff_no', 'email', 'remark'], 'string', 'max' => 255]
         ];
     }
 
@@ -84,21 +140,247 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'user_id' => Yii::t('app', 'User'),
             'name' => Yii::t('app', 'Name'),
-            'avatar' => Yii::t('app', 'Avatar'),
             'ic_no' => Yii::t('app', 'Ic No'),
             'contact' => Yii::t('app', 'Contact'),
+            'staff_no' => Yii::t('app', 'Staff No'),
             'email' => Yii::t('app', 'Email'),
-            'status' => Yii::t('app', 'Status'),
+            'remark' => Yii::t('app', 'Remark'),
+            'status_id' => Yii::t('app', 'Status'),
         ];
     }
     
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
+    public function getAssets()
     {
-        return $this->hasOne(\common\models\User::className(), ['id' => 'id']);
+        return $this->hasMany(\common\models\Asset::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategories()
+    {
+        return $this->hasMany(\common\models\Category::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompanies()
+    {
+        return $this->hasMany(\common\models\Company::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDiposals()
+    {
+        return $this->hasMany(\common\models\Diposal::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDiposalItems()
+    {
+        return $this->hasMany(\common\models\DiposalItem::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGenMods()
+    {
+        return $this->hasMany(\common\models\GenMod::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGenModrefs()
+    {
+        return $this->hasMany(\common\models\GenModref::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGenModrefProgresses()
+    {
+        return $this->hasMany(\common\models\GenModrefProgress::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGenModtypes()
+    {
+        return $this->hasMany(\common\models\GenModtype::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGenValues()
+    {
+        return $this->hasMany(\common\models\GenValue::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInventories()
+    {
+        return $this->hasMany(\common\models\Inventory::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInventoryItems()
+    {
+        return $this->hasMany(\common\models\InventoryItem::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJtSubcategories()
+    {
+        return $this->hasMany(\common\models\JtSubcategory::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocations()
+    {
+        return $this->hasMany(\common\models\Location::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMaintenances()
+    {
+        return $this->hasMany(\common\models\Maintenance::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMovements()
+    {
+        return $this->hasMany(\common\models\Movement::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(\common\models\Order::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderItems()
+    {
+        return $this->hasMany(\common\models\OrderItem::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPersonInCharges()
+    {
+        return $this->hasMany(\common\models\PersonInCharge::className(), ['profile_id' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatus()
+    {
+        return $this->hasOne(\common\models\GenValue::className(), ['id' => 'status_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(\common\models\Profile::className(), ['id' => 'created_by']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfiles()
+    {
+        return $this->hasMany(\common\models\Profile::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(\common\models\Profile::className(), ['id' => 'updated_by']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(\common\models\User::className(), ['id' => 'user_id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSettings()
+    {
+        return $this->hasMany(\common\models\Setting::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubcategories()
+    {
+        return $this->hasMany(\common\models\Subcategory::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransactions()
+    {
+        return $this->hasMany(\common\models\Transaction::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(\common\models\User::className(), ['updated_by' => 'id']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWarranties()
+    {
+        return $this->hasMany(\common\models\Warranty::className(), ['updated_by' => 'id']);
     }
     
     /**
