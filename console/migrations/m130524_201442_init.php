@@ -735,177 +735,219 @@ class m130524_201442_init extends Migration
      */
     public function defaultData()
     {
-        $this->batchInsert('{{%gen_mod}}', ['id','code','name'], [
-            [1,'01','General'],
-            [2,'02','Order'],
-            [3,'03','Asset'],
-            [4,'04','Inventory'],
-            [5,'05','Maintenance'],
-            [6,'06','Warranty'],
-            [7,'07','Disposal'],
-            [8,'08','Company'],
-            [9,'09','Location'],
-            [10,'10','Placement'],
-            [11,'11','Transaction'],
-            [12,'12','Order Item'],
-        ]);
+        $modes = [
+            'General' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'GENERAL'
+                ],
+            ],
+            'Direct Issue' => [
+                'Status' => [
+                    'NEW','RECEIVED',
+                ],
+                'Progress' => [
+                    'PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'DIRECT ISSUE','SOFTWARE','JOBSHEET','TELEPHONE','TRANSAPORTATION','ADMIN','OTHERS',
+                ],
+            ],
+            'Order' => [
+                'Status' => [
+                    'NEW','RECEIVED',
+                ],
+                'Progress' => [
+                    'PENDING','WAITING FOR APPROVAL','DELIVERING','DELIVERED',
+                ],
+                'Type' => [
+                    'ASSET PURCHASE','ASSET RENTAL','ASSET PLACEMENT','INVENTORY CHECKIN','INVENTORY CHECKOUT',
+                ],
+            ],
+            'Order Item' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'ASSET', 'INVENTORY'
+                ],
+            ],
+            'Category' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'GENERAL'
+                ],
+            ],
+            'Subcategory' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'GENERAL'
+                ],
+            ],
+            'Asset' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE', 'DISPOSED'
+                ],
+                'Progress' => [
+                    'PENDING', 'WAITING FOR APPROVAL', 'DELIVERING', 'DELIVERED'
+                ],
+                'Type' => [
+                    'PURCHASE', 'RENTAL', 'PLACEMENT'
+                ],
+            ],
+            'Inventory' => [
+                'Status' => [
+                    'NEW', 'RECEIVED'
+                ],
+                'Progress' => [
+                    'PENDING', 'WAITING FOR APPROVAL', 'DELIVERING', 'DELIVERED', 'WAITING FOR PICKUP', 'RECEIVED', 'IN PROGRESS', 'COMPLETED', 'RETURNED'
+                ],
+                'Type' => [
+                    'PURCHASE', 'RENTAL', 'PLACEMENT'
+                ],
+            ],
+            'Movement' => [
+                'Status' => [
+                    'NEW', 'COMPLETED'
+                ],
+                'Progress' => [
+                    'PENDING', 'WAITING FOR APPROVAL', 'MAINTENANCE COMPLETED', 'DELIVERING', 'DELIVERED'
+                ],
+                'Type' => [
+                    'INVENTORY', 'ASSET'
+                ],
+            ],
+            'Maintenance' => [
+                'Status' => [
+                    'NEW', 'COMPLETED'
+                ],
+                'Progress' => [
+                    'PENDING', 'WAITING FOR APPROVAL', 'MAINTENANCE COMPLETED', 'DELIVERING', 'DELIVERED'
+                ],
+                'Type' => [
+                    'PURCHASE', 'RENTAL', 'PLACEMENT'
+                ],
+            ],
+            'Warranty' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'PENDING', 'WAITING FOR APPROVAL', 'DELIVERING', 'DELIVERED'
+                ],
+                'Type' => [
+                    'SCHEDULED SCHEME', 'LIFETIME'
+                ],
+            ],
+            'Disposal' => [
+                'Status' => [
+                    'NEW', 'COMPLETED'
+                ],
+                'Progress' => [
+                    'PENDING', 'WAITING FOR APPROVAL', 'DIPOSED'
+                ],
+                'Method' => [
+                    'SELL', 'DISPOSE'
+                ],
+                'Reason' => [
+                    'BROKEN', 'DISPOSE'
+                ],
+            ],
+            'Company' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'GENERAL'
+                ],
+            ],
+            'Location' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'GENERAL'
+                ],
+            ],
+            'Placement' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'GENERAL'
+                ],
+            ],
+            'Transaction' => [
+                'Status' => [
+                    'ACTIVE', 'INACTIVE'
+                ],
+                'Progress' => [
+                    'NEW','PENDING','WAITING FOR APPROVAL','COMPLETED',
+                ],
+                'Type' => [
+                    'GENERAL'
+                ],
+            ],
+        ];
+        $modecode = 1;
+        $typecode =  1;
+        $alltype = [];
+        foreach ($modes as $mode => $modeTypes ) {
+            $genmod[] = [str_pad($modecode++, 2, 0, STR_PAD_LEFT), $mode];
+            foreach ($modeTypes as $type => $modeType ) {
+                if(!in_array($type, $alltype)) {
+                    $alltype[] = $type;
+                } 
+            }
+        }
+        foreach ($alltype as $key => $type) {
+            $gentype[] = [str_pad($typecode++, 2, 0, STR_PAD_LEFT), $type];
+        }
 
-        $this->batchInsert('{{%gen_modtype}}', ['id','code','name'], [
-            [1,'01','Status'],
-            [2,'02','Progress'],
-            [3,'03','Type'],
-            [4,'04','Reason'],
-            [5,'05','Method'],
-        ]);
+        $modecode = 0;
+        foreach ( $modes as $mode => $modeTypes ) {
+            $modecode++;
+            $typecode =  0;
+            foreach ($alltype as $type) {
+                $typecode++;
+                if(array_key_exists($type, $modeTypes)) {
+                    foreach ($modeTypes[$type] as $key => $value) {
+                        $genvalcode = str_pad($modecode, 2, 0, STR_PAD_LEFT) . str_pad($typecode, 2, 0, STR_PAD_LEFT);
+                        $genval[] = [$genvalcode, $value, $mode . ' ' . $type];
+                    }
 
-        $this->batchInsert('{{%gen_value}}', ['code','name'], [
-            // General status
-            ['0101','ACTIVE'],
-            ['0101','INACTIVE'],
-            
-            // General progress
-            ['0102','NEW'],
-            ['0102','PENDING'],
-            ['0102','WAITING FOR APPROVAL'],
-            ['0102','COMPLETED'],
-            
-            // General type
-            ['0103','GENERAL'],
-
-            // order status
-            ['0201','NEW'],
-            ['0201','RECEIVED'],
-            
-            // order progress
-            ['0202','PENDING'],
-            ['0202','WAITING FOR APPROVAL'],
-            ['0202','DELIVERING'],
-            ['0202','DELIVERED'],
-            
-            // order type
-            ['0203','ASSET PURCHASE'],
-            ['0203','ASSET RENTAL'],
-            ['0203','ASSET PLACEMENT'],
-            ['0203','INVENTORY CHECKIN'],
-            ['0203','INVENTORY CHECKOUT'],
-
-            // asset status
-            ['0301','ACTIVE'],
-            ['0301','INACTIVE'],
-            ['0301','DISPOSED'],
-            
-            // asset progress
-            ['0302','PENDING'],
-            ['0302','WAITING FOR APPROVAL'],
-            ['0302','DELIVERING'],
-            ['0302','DELIVERED'],
-            
-            // asset type
-            ['0303','PURCHASE'],
-            ['0303','RENTAL'],
-            ['0303','PLACEMENT'],
-
-            // inventory status
-            ['0401','NEW'],
-            ['0401','RECEIVED'],
-            
-            // inventory progress
-            ['0402','PENDING'],
-            ['0402','WAITING FOR APPROVAL'],
-            ['0402','DELIVERING'],
-            ['0402','DELIVERED'],
-            ['0402','WAITING FOR PICKUP'],
-            ['0402','RECEIVED'],
-            ['0402','IN PROGRESS'],
-            ['0402','COMPLETED'],
-            ['0402','RETURNED'],
-            
-            // inventory type
-            ['0403','PURCHASE'],
-            ['0403','RENTAL'],
-            ['0403','PLACEMENT'],
-
-            // maintenance status
-            ['0501','NEW'],
-            ['0501','COMPLETED'],
-            
-            // maintenance progress
-            ['0502','PENDING'],
-            ['0502','WAITING FOR APPROVAL'],
-            ['0502','MAINTENANCE COMPLETED'],
-            ['0502','DELIVERING'],
-            ['0502','DELIVERED'],
-            
-            // maintenance type
-            ['0503','PURCHASE'],
-            ['0503','RENTAL'],
-            ['0503','PLACEMENT'],
-
-            // warranty status
-            ['0601','ACTIVE'],
-            ['0601','INACTIVE'],
-            
-            // warranty progress
-            ['0602','PENDING'],
-            ['0602','WAITING FOR APPROVAL'],
-            ['0602','DELIVERING'],
-            ['0602','DELIVERED'],
-            
-            // warranty type
-            ['0603','SCHEDULED SCHEME'],
-            ['0603','LIFETIME'],
-
-            // disposal status
-            ['0701','NEW'],
-            ['0701','COMPLETED'],
-            
-            // disposal progress
-            ['0702','PENDING'],
-            ['0702','WAITING FOR APPROVAL'],
-            ['0702','DIPOSED'],
-            
-            // disposal type
-            // ['0703','SCHEDULED SCHEME'],
-
-            // disposal reason
-            ['0704','BROKEN'],
-            ['0704','MANUFACTURER DEFECT'],
-            ['0704','EXPIRED'],
-
-            // disposal method
-            ['0705','SELL'],
-            ['0705','DISPOSE'],
-
-            // order item type
-            ['1203','ASSET'],
-            ['1203','INVENTORY'],
-        ]);
-
-        $this->batchInsert('{{%gen_modref}}', ['code','gen_mod_id','gen_modtype_id','name'], [
-            ['0101',1,1,'General Status'],
-            ['0102',1,2,'General Progress'],
-            ['0103',1,3,'General Type'],
-
-            ['0201',2,1,'Order Status'],
-            ['0202',2,2,'Order Progress'],
-            ['0203',2,3,'Order Type'],
-
-            ['0301',3,1,'Asset Status'],
-            ['0302',3,2,'Asset Progress'],
-            ['0303',3,3,'Asset Type'],
-
-            ['0401',4,1,'Inventory Status'],
-            ['0402',4,2,'Inventory Progress'],
-            ['0403',4,3,'Inventory Type'],
-
-            ['0501',5,1,'Maintenance Status'],
-            ['0502',5,2,'Maintenance Progress'],
-            ['0503',5,3,'Maintenance Type'],
-
-            ['0601',6,1,'Warranty Status'],
-            ['0602',6,2,'Warranty Progress'],
-            ['0603',6,3,'Warranty Type'],
-        ]);
-
+                }
+            }
+        }
+        $this->batchInsert('{{%gen_mod}}', ['code','name'], $genmod);
+        $this->batchInsert('{{%gen_modtype}}', ['code','name'], $gentype);
+        $this->batchInsert('{{%gen_value}}', ['code','name', 'description'], $genval);
     }
 }
